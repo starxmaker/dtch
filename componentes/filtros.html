@@ -1,0 +1,83 @@
+<a id="openModalFiltros" data-toggle="modal" data-target="#modalFiltros"></a>
+<div class="modal fade" id="modalFiltros" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Filtros</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+  <div class="col-xs-4 col-sm-4 col-md-4" style="float:left">
+    <label for="inputNumero">Tipo</label>
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkTelefonoFijo" checked="true"> <label class="form-check-label" for="checkTelefonoFijo">Teléfono Fijo</label>
+    </div>
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkTelefonoCelular" checked="true"> <label class="form-check-label" for="checkTelefonoCelular">Teléfono Celular</label>
+   </div>
+   </div>
+    <div class="col-xs-4 col-sm-4 col-md-4" style="float:left">
+    <label for="inputNumero">Fuente</label>
+    <div class="form-check">
+    
+   </div>
+   </div>
+
+   <div class="col-xs-4 col-sm-4 col-md-4" style="float:left">
+    <label for="inputNumero">Última respuesta</label>
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkMarca" checked="true"> <label class="form-check-label" for="checkMarca">Marca</label>
+    </div>
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkOcupado" checked="true"> <label class="form-check-label" for="checkOcupado">Ocupado</label>
+   </div>
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkReceptivo" checked="true"> <label class="form-check-label" for="checkReceptivo">Receptivo</label>
+   </div>
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkSinInteres" checked="true"> <label class="form-check-label" for="checkSinInteres">Sin interés</label>
+   </div>
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkNoUtilizado" checked="true"> <label class="form-check-label" for="checkNoUtilizado">No utilizado</label>
+   </div>
+   </div>
+
+  
+
+
+    <div class="col-xs-4 col-sm-4 col-md-4" style="float:left; margin-top: 10px;">
+    <label for="inputNumero">Grupos</label>
+    
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input checksGrupo" id="checkGrupo0" checked="true"> <label class="form-check-label" for="checkTelefonoCelular">Desconocido</label>
+   </div>
+   </div>
+
+    <div class="col-xs-4 col-sm-4 col-md-4" style="float:left; margin-top: 10px;">
+    <label for="inputNumero">Otros</label>
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkVisto" checked="true"> <label class="form-check-label" for="checkVisto">Visualizado Hoy</label>
+    </div>
+    <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkLlamado" checked="true"> <label class="form-check-label" for="checkLlamado">Llamado esta semana</label>
+   </div>
+   <div class="form-check">
+    <input type="checkbox" class="form-check-input" id="checkCodigoArea" checked="true"> <label class="form-check-label" for="checkLlamado">Agregar código de área</label>
+   </div>
+   </div>
+
+    
+
+   </div>
+  
+</form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" onclick="guardarFiltros();" data-dismiss="modal">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>

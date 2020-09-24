@@ -1,0 +1,127 @@
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Visor de teléfonos 
+               
+                    <div class="row" style="float:right">
+                    <div class="input-group input-group-sm xs-2">
+
+                        <div class="input-group-prepend">
+    <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+  </div>
+  <input type="text" class="form-control" id="inputBuscar" placeholder="Buscar" aria-label="buscar" aria-describedby="basic-addon1">
+                    </div>
+                    </div>
+                 </div>
+                
+
+                <div class="card-body">
+                <div class="form-group">
+    <select class="form-control" id="selectGrupo" onchange="loadNewNumber()">
+    <option value="-2" disabled="disabled" selected>----Seleccione un grupo----</option>
+     <option value="-1">Cualquier grupo</option>
+    </select>
+  
+  </div>
+
+  <div class="text-center">
+      
+      <h1 class="display-3" id="fldTelefono" style="visibility:hidden" onclick="loadHistorialEspecifico()">(51) 2000000</h1>
+  </div>
+<div class="container" style="margin-top: 3%">
+<div class="row">
+    <div class="col-xs-3"><strong class="hiddenAtStart" style="visibility:hidden">Fuente: </strong></div>
+    <div class="col" id="fldFuente"></div>
+  </div>
+<div class="row">
+    <div class="col-xs-3"><strong class="hiddenAtStart" style="visibility:hidden">Dirección: </strong></div>
+    <div class="col" id="fldDireccion"></div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3"><strong class="hiddenAtStart" style="visibility:hidden">Última respuesta: </strong></div>
+    <div class="col" id="fldEstado"></div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3"><strong class="hiddenAtStart" style="visibility:hidden">Grupo: </strong></div>
+    <div class="col" id="fldGrupo"></div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-3"><strong class="hiddenAtStart" style="visibility:hidden">Ultimo publicador: </strong></div>
+    <div class="col" id="fldPublicador"></div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3"><strong class="hiddenAtStart" style="visibility:hidden">Ultima llamada: </strong></div>
+    <div class="col" id="fldUltimaLlamada"></div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3"><strong class="hiddenAtStart" style="visibility:hidden">Publicador actual: </strong></div>
+    <div class="col" id="fldPublicadorActual">
+      <input type="text" id="inputNombres" class="asd hiddenAtStart inputNombres" value="No especificado" style="visibility:hidden; width: 250px;" onclick="this.select();"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-3"><strong class="hiddenAtStart" style="visibility:hidden">Cronómetro: </strong></div>
+    <div class="col" id="fldCronometro">
+      
+<div id="basicUsage" class="hiddenAtStart" style="float:left;visibility:hidden">00:00:00</div> 
+<div style="float:left">
+<i class="fas fa-play hiddenAtStart" id="startButton" onclick="startTimer()" style="margin-left: 10px;visibility:hidden"></i> 
+<i class="fas fa-pause" id="pauseButton" onclick="stopTimer()" style="margin-left: 2px; visibility: hidden"></i>
+<i class="fas fa-undo-alt" id="resetButton" onclick="resetTimer()" style="margin-left: 2px; visibility: hidden"></i>
+</div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<div class="text-center" style="margin-top: 5%">
+<button type="button" class="btn btn-warning btn-lg mr-3" id="btnPrevious" onclick="loadHistory()" style="visibility: hidden"><i class="fas fa-backward"></i></button>
+<div class="btn-group" role="group">
+    <button id="btnGroupDrop1" type="button" class="btn btn-success btn-lg mr-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="visibility: hidden; border-radius: 4px">
+      <i class="fas fa-phone-volume"></i> Contesta
+    </button>
+    <div class="dropdown-menu p-0 main_menu" aria-labelledby="btnGroupDrop1">
+   
+      <a class="dropdown-item revisitaButtons" href="#" style="background-color: #FFA500; color:white; border-top-left-radius: 4px; border-top-right-radius: 4px;" onclick="revisitaExitosa();"><i class="fas fa-undo-alt" ></i> Revisita exitosa</a>
+      <a class="dropdown-item revisitaButtons"  href="#" style="background-color: #D0211C; color:white;" onclick="ultimaRevisita();"><i class="fas fa-ban"></i> Última revisita</a>
+        <a class="dropdown-item revisitaButtons"  href="#" style="background-color: black; color:white;  " onclick="revisitaNoEncontrada();"><i class="fas fa-question"></i> Revisita no encontrada</a>
+         <a class="dropdown-item revisitaButtons" href="#" style="background-color: #007BFF; color:white; border-top-left-radius: 4px; border-top-right-radius: 4px;" onclick="estudio();"><i class="fas fa-book-open"></i> Estudio</a>
+         <a class="dropdown-item revisitaButtons" href="#" style="background-color: #FFE924; color:black; " onclick="liberarRevisita();"><i class="far fa-meh"></i> Liberar revisita</a>
+
+         <a class="dropdown-item primeraVisita" href="#" style="background-color: #563D7C; color:white; border-top-left-radius: 4px; border-top-right-radius: 4px; border-top-right-radius: 4px; " onclick="revisita();"><i class="fas fa-undo-alt" ></i> Nueva revisita</a>
+
+      <a class="dropdown-item primeraVisita" href="#" style="background-color: #2FA360; color:white" data-dismiss="modal"  onclick="receptivo()"><i class="far fa-smile"></i> Receptivo</a>
+      <a class="dropdown-item primeraVisita" href="#" style="background-color: #FFE924; color:black" data-dismiss="modal"  onclick="sinInteres()"><i class="far fa-meh"></i> Sin interés</a>
+      <a class="dropdown-item primeraVisita" href="#" style="background-color: #D0211C; color:white;border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;" data-dismiss="modal"  onclick="noLlamar()"><i class="fas fa-ban"></i> No llamar</a>
+    </div>
+  </div>
+  <div class="btn-group" role="group">
+    <button id="btnGroupDrop2" type="button" class="btn btn-danger btn-lg mr-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="visibility: hidden; border-radius: 4px">
+      <i class="fas fa-phone-slash" ></i> No contesta
+    </button>
+    <div class="dropdown-menu p-0 main_menu" aria-labelledby="btnGroupDrop2">
+      <a class="dropdown-item" href="#" style="background-color: #2FA360; color:white; border-top-left-radius: 4px; border-top-right-radius: 4px; " data-dismiss="modal"  onclick="noContesta();"><i class="fas fa-phone-volume" ></i> Marca</a>
+      <a class="dropdown-item" href="#" style="background-color: brown; color:white" data-dismiss="modal"  onclick="ocupado()"><i class="fas fa-briefcase"></i> Ocupado</a>
+
+      <a class="dropdown-item" href="#" style="background-color: black; color:white;border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;" data-dismiss="modal"  onclick="noExiste();"><i class="fas fa-phone-slash"  ></i> No existe</a>
+    </div>
+  </div>
+                 <button type="button" class="btn btn-info btn-lg mr-3" id="btnNext" onclick="siguiente()" style="visibility: hidden"><i class="fas fa-forward"></i></button>
+
+                 
+</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+  Última versión importada de la base de datos: <b id="dataBaseVersion"></b>
+
+</div>
