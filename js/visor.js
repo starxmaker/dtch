@@ -118,8 +118,8 @@ function renderTelefono(){
                 //resetTimer();
 }
 
-function toggleRevisitaButtons(numero,estadoActual){
-  if(activeTelefono.numero==0){
+function toggleRevisitaButtons(){
+  if(activeTelefono.id==0){
     var botonesRevisita=document.getElementsByClassName("revisitaButtons");
                     for (var i=0; i<botonesRevisita.length;i++){
                       botonesRevisita[i].style.display="block";
@@ -170,6 +170,7 @@ function actualizarEstado(estado){
   var publicador = document.getElementById("inputNombres").value;
   var tiempo=chronometer;
     activeTelefono.updateEstado(estado, publicador,tiempo);
+    checkAvailableQuantity();
     renderTelefono();
 }
 
@@ -274,4 +275,9 @@ function loadHistory(){
 function deleteHistoryRecord(id){
   var record=Historial.getById(id);
   record.delete();
+}
+
+function checkAvailableQuantity(){
+  var cantidad=Telefono.checkAvailableNumbers();
+  document.getElementById("availableQuantity").innerHTML=cantidad;
 }

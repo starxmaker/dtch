@@ -9,6 +9,7 @@ fetch("./componentes/visor.html")
     document.getElementById("dataBaseVersion").innerHTML=databaseVersion();
     initAutoComplete();
     initAutoCompleteNombres();
+    checkAvailableQuantity();
     timer = new easytimer.Timer();
 
 timer.addEventListener('secondsUpdated', function (e) {
@@ -73,6 +74,15 @@ node.addEventListener("keydown", function(event) {
   .then(data => {
     document.getElementById("modal_agregar_numero").innerHTML = data;
     populateFuentes();
+    
+  });
+
+   fetch("./componentes/manage.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_manage").innerHTML = data;
     
   });
 

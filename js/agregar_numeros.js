@@ -88,7 +88,7 @@ window.localStorage.setItem("prefferedCodigoRegion", codigoRegion);
     window.localStorage.setItem("prefferedCodigoPais", codigoPais);
 
             populateGroupList();      
-        
+        checkAvailableQuantity();
 }
 
 

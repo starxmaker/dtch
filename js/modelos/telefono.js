@@ -127,6 +127,22 @@ var filters=[];
         return telefonos;
 
 	}
+	static getAll(){
+		var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t inner join publicadores p on t.publicador=p.id where estado!=5 order by t.id asc";
+		var telefonos=[];
+		var stmt=db.prepare(query);
+		 while(stmt.step()) { //
+        	var row = stmt.getAsObject();
+        	if(row.llamado_esta_semana=="true") row.estado=13;
+        	var publicador="";
+        	if (row.estado==2 || row.estado==7 || row.estado==8 || row.estado==10 || row.estado==11) publicador="("+row.publicador+")";
+        	var currentTelefono=new Telefono(row.id,row.direccion,row.codigo_pais, row.codigo_region,row.numero,row.grupo,row.estado,row.ultima_llamada,row.publicador, row.fuente, row.visualizado_hoy,row.llamado_esta_semana, row.tipo);
+        	telefonos.push(currentTelefono);
+        }
+        stmt.free();
+        return telefonos;
+
+	}
 	setVisualizacion(){
 		db.run("update telefonos set ultima_visualizacion='"+getCurrentDatetime()+"' where id="+this.id);
 	}
@@ -140,6 +156,22 @@ var filters=[];
 
 		if(this.id!=0) db.run("update telefonos set estado='"+newEstado+"', publicador="+idPublicador+",  ultima_llamada='"+getCurrentDatetime()+"' where id="+this.id);
 		Historial.insert(this.id,newEstado,idPublicador,tiempo);
+	}
+	renderRow(){
+		return "<tr><td>"+this.grupo+"</td><td>"+this.direccion+"</td><td>"+this.numero+"</td><td>"+getRenderedEstados(this.estado)+"</td><td>"+this.publicador+"</td><td>"+this.ultima_llamada+"</td><td>"+this.fuente+"</td><td><button type='button' class='btn btn-danger btn-lg mr-3' onclick='eliminarNumero("+this.id+")'>Eliminar</button></td></tr>";
+	}
+	static checkAvailableNumbers(){
+		var query="select count(*) as cantidad from telefonos where estado=0";
+		var telefonos=[];
+		var stmt=db.prepare(query);
+		var quantity=0;
+		 while(stmt.step()) { //
+        	var row = stmt.getAsObject();
+        	
+        	quantity=row.cantidad;
+        }
+        stmt.free();
+        return quantity;
 	}
 
 

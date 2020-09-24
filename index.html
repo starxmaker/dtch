@@ -41,6 +41,11 @@
     <!-- Styles -->
      <link rel="stylesheet" href="https://unpkg.com/bootstrap-darkmode@0.6.0/dist/darktheme.css"/>
      <link rel="stylesheet" href="css/main.css"/>
+
+
+
+
+
 </head>
 <body>
 <script src="https://unpkg.com/bootstrap-darkmode@0.6.0/dist/theme.js"></script>
@@ -127,7 +132,7 @@ themeConfig.initTheme();
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownDirectorio">
                                     <a  class="dropdown-item" href="#" onclick="addNewNumber();"><i class="fas fa-pencil-alt"></i> Añadir nuevo número al directorio</a>
-                                    <a  class="dropdown-item" href="#" onclick="addNewNumber();"><i class="fas fa-pencil-alt"></i> Gestionar directorio</a>
+                                    <a  class="dropdown-item" href="#" onclick="openManage();"><i class="fas fa-pencil-alt"></i> Gestionar directorio</a>
                                      <a  class="dropdown-item" href="#" onclick="openSource();"><i class="far fa-address-card"></i> Fuente del número actual</a>
                                      <a class="dropdown-item" href="#">
                                         Historial de llamados al número actual
@@ -181,6 +186,7 @@ const darkSwitch = writeDarkSwitch(themeConfig);</script>
         <div id="modal_filtros"></div>
         <div id="modal_registro_rapido"></div>
         <div id="modal_agregar_numero"></div>
+        <div id="modal_manage"></div>
     </div>
         
 </body>
@@ -208,6 +214,7 @@ const darkSwitch = writeDarkSwitch(themeConfig);</script>
 <script src="js/shortcuts.js" ></script>
 <script src="js/filtros.js" ></script>
 <script src="js/registro_rapido.js" ></script>
+<script src="js/manage.js"></script>
 
 
 
