@@ -93,49 +93,49 @@ onkeydown = onkeyup =function(e){
               loadNumeroPropio();
             }
             if (map[16] && map[82]){
-              if (estadoActual==2 || numero==0){
+              if (activeTelefono.estado==2 || activeTelefono.id==0){
                 revisitaExitosa();
               }else{
                 revisita();
               }
             }
             if (map[16] && map[85]){
-              if (estadoActual==2 || numero==0){
+              if (activeTelefono.estado==2 || activeTelefono.id==0){
                 ultimaRevisita();
               }else{
                 sendNotification("Operación no permitida");
               }
             }
              if (map[16] && map[68]){
-              if (estadoActual==2 || numero==0){
+              if (activeTelefono.estado==2 || activeTelefono.id==0){
                 revisitaNoEncontrada();
               }else{
                 sendNotification("Operación no permitida");
               }
             }
              if (map[16] && map[73]){
-              if (estadoActual!=2 || numero==0){
+             if (activeTelefono.estado==2 || activeTelefono.id==0){
                 revisita();
               }else{
                 sendNotification("Operación no permitida");
               }
             }
             if (map[16] && map[70]){
-              if (estadoActual!=2 || numero==0){
+              if (activeTelefono.estado==2 || activeTelefono.id==0){
                 receptivo();
               }else{
                 sendNotification("Operación no permitida");
               }
             }
             if (map[16] && map[83]){
-              if (estadoActual!=2 || numero==0){
+              if (activeTelefono.estado==2 || activeTelefono.id==0){
                 sinInteres();
               }else{
                 sendNotification("Operación no permitida");
               }
             }
             if (map[16] && map[78]){
-              if (estadoActual!=2 || numero==0){
+             if (activeTelefono.estado==2 || activeTelefono.id==0){
                 noLlamar();
               }else{
                 sendNotification("Operación no permitida");
