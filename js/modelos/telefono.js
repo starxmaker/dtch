@@ -87,6 +87,21 @@ var filters=[];
         stmt.free();
         return grupos;
 	}
+	static checkExistance(numero){
+		var query="select numero from telefonos where numero='"+numero+"'";
+		var stmt=db.prepare(query);
+		stmt.getAsObject(); // {col1:1, col2:111}
+		var exist=false;
+      
+      while(stmt.step()) { //
+        exist=true;
+      }
+      stmt.free();
+      return exist;
+	}
+	static insert(numero,direccion,grupo,fuente){
+		db.run("insert into telefonos (numero, direccion, grupo, fuente,estado, ultima_llamada, publicador, ultima_visualizacion) values ('"+numero+"','"+direccion+"',"+grupo+","+fuente+",0,'0000-00-00 00:00:00', 0, '0000-00-00 00:00:00');");
+	}
 	static query(search){
 		var query;
 		if (isNaN(search)){

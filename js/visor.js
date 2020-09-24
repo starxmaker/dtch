@@ -1,5 +1,14 @@
 function populateGroupList(){
 	if(document.getElementById("selectGrupo")==null) return false;
+
+
+var sel = document.getElementById('selectGrupo');
+for (i = sel.length - 1; i >= 0; i--) {
+  if (sel[i].value=="-2" || sel[i].value=="-1") continue;
+  sel.remove(i);
+}
+
+
 	var grupos=Telefono.getDifferentGroups();
 	for(var i=0;i<grupos.length;i++){
 		var valor=grupos[i];

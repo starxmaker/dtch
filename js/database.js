@@ -40,6 +40,7 @@ config = {
     function afterLoading(){
     	populateGroupList();
         populatePublicadores();
+        populateFuentes();
     }
     function saveStoredDatabase(){
     	window.localStorage.setItem("DB",toBinString(db.export()));

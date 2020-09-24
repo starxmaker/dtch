@@ -60,8 +60,19 @@ node.addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         event.preventDefault();
         agregarRegistroRapido();
+
     }
 });
+    
+  });
+
+  fetch("./componentes/agregar_numeros.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_agregar_numero").innerHTML = data;
+    populateFuentes();
     
   });
 
