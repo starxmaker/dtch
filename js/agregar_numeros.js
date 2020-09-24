@@ -70,15 +70,10 @@ function agregarNumeroDirectorio(){
 
 
 
-function formatNumero(codigoArea, nuevoNumero){
-  if (nuevoNumero.length==7){
-    codigoArea="("+codigoArea+")";
-  }else{
-    codigoArea="+"+codigoArea;
-  }
+function formatNumero(numero){
 
 var position = 1;
-var nuevoNumero = [nuevoNumero.slice(0, position), " ", nuevoNumero.slice(position)].join('');
+return [numero.slice(0, position), " ", numero.slice(position)].join('');
 
-return codigoArea+" "+nuevoNumero;
+
 }

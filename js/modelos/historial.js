@@ -1,5 +1,5 @@
 class Historial{
-	constructor(id,id_numero, estado, hora, publicador, tiempo){
+	constructor(id,id_numero, estado, hora, publicador, tiempo,tipo){
 		 	this.id=id;
             this.id_numero=id_numero;
             this.estado=estado;
@@ -9,25 +9,25 @@ class Historial{
 	}
 
   static getLastCalls(quantity){
-    var query="select t.id, h.id as 'registro', t.direccion, t.numero, t.grupo, h.estado, h.hora, p.nombre as 'publicador' , h.tiempo from  historials h left join publicadores p on h.publicador=p.id left join telefonos t on (h.id_numero=t.id) order by h.id desc limit "+quantity;
+    var query="select t.id, h.id as 'registro', t.direccion, t.numero, t.grupo, h.estado, h.hora, p.nombre as 'publicador' , h.tipo, h.tiempo from  historials h left join publicadores p on h.publicador=p.id left join telefonos t on (h.id_numero=t.id) order by h.id desc limit "+quantity;
     var stmt = db.prepare(query);
     stmt.getAsObject(); // {col1:1, col2:111}
       var records=[];
       while(stmt.step()) { //
         var row = stmt.getAsObject();
-        var record= new Historial(row.registro,row.id,row.estado,row.hora,row.publicador, secondsToTime(row.tiempo));
+        var record= new Historial(row.registro,row.id,row.estado,row.hora,row.publicador, secondsToTime(row.tiempo), row.tipo);
         records.push(record);
       }
       stmt.free();
       return records;
   }
 	static getById(id){
-		var stmt = db.prepare("select t.id as id_numero, h.id as 'registro', t.numero, t.grupo, h.estado, h.hora, p.nombre as 'publicador' from historials h left join telefonos t on (h.id_numero=t.id) left join publicadores p on t.publicador=p.id where h.id="+id);
+		var stmt = db.prepare("select t.id as id_numero, h.id as 'registro', t.numero, t.grupo, h.estado, h.hora, h.tipo, p.nombre as 'publicador' from historials h left join telefonos t on (h.id_numero=t.id) left join publicadores p on t.publicador=p.id where h.id="+id);
   stmt.getAsObject(); // {col1:1, col2:111}
      	var candidate=null;
       while(stmt.step()) { //
         var row = stmt.getAsObject();
-        candidate=new Historial(row.registro,row.id,row.estado,row.hora,row.publicador, row.tiempo);
+        candidate=new Historial(row.registro,row.id,row.estado,row.hora,row.publicador, secondsToTime(row.tiempo), row.tipo);
         
       }
       stmt.free();
@@ -37,14 +37,14 @@ class Historial{
        var hora=getCurrentDatetime();
     for(var i=0; i<cantidad; i++){
  
-    db.run("insert into historials (id_numero, estado, hora, publicador, tiempo) values (0,"+actividad+",'"+hora+"',"+publicador+",0);");
+    db.run("insert into historials (id_numero, estado, hora, publicador, tiempo, tipo) values (0,"+actividad+",'"+hora+"',"+publicador+",0,1);");
     }
   }  
 static insert(id_numero, estado, publicador, tiempo){
     var hora=getCurrentDatetime();
-    db.run("insert into historials (id_numero, estado, hora, publicador, tiempo) values ("+id_numero+","+estado+",'"+hora+"',"+publicador+","+tiempo+");");
+    db.run("insert into historials (id_numero, estado, hora, publicador, tiempo, tipo) values ("+id_numero+","+estado+",'"+hora+"',"+publicador+","+tiempo+", 0);");
     var id=getLastInsertedId();
-    return new Historial(id, id_numero, estado, hora, publicador, tiempo);  
+    return new Historial(id, id_numero, estado, hora, publicador, tiempo, 0);  
   }
   delete(){
      db.run("delete from historials where id="+this.id);
