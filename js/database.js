@@ -23,9 +23,9 @@ config = {
 
     function createDatabase(){
 
-    	 db.run("CREATE TABLE IF NOT EXISTS telefonos (id integer primary key autoincrement, direccion varchar(255) DEFAULT NULL, numero varchar(255) NOT NULL, grupo int(11) NOT NULL, estado int(11) NOT NULL, ultima_llamada datetime NOT NULL, publicador int(11) NOT NULL,ultima_visualizacion datetime DEFAULT NULL, fuente int(11) DEFAULT '0');");
-    	 db.run("CREATE TABLE IF NOT EXISTS historials (id integer primary key autoincrement, id_numero int(11) NOT NULL, estado int(11) NOT NULL, hora datetime NOT NULL, publicador int(11) NOT NULL, tiempo int(11) DEFAULT '0') ;");
-    	 db.run("CREATE TABLE IF NOT EXISTS publicadores (id integer primary key autoincrement, nombre varchar(255) NOT NULL,  grupo int(11) NOT NULL DEFAULT '0', invitado int(11) DEFAULT '1');");
+    	 db.run("CREATE TABLE IF NOT EXISTS telefonos (id integer primary key autoincrement,direccion varchar(255),codigo_pais int(11) DEFAULT NULL,codigo_region int(11) DEFAULT NULL,numero varchar(255),grupo int(11) NOT NULL,estado int(11) NOT NULL,ultima_llamada datetime NOT NULL,publicador int(11) NOT NULL,ultima_visualizacion datetime DEFAULT NULL,fuente int(11) DEFAULT '0',tipo int(11) DEFAULT NULL) ;");
+    	 db.run("CREATE TABLE IF NOT EXISTS historials (id integer primary key autoincrement, id_numero int(11) NOT NULL, estado int(11) NOT NULL,hora datetime NOT NULL,publicador int(11) NOT NULL,tiempo int(11) DEFAULT '0',tipo int(11) DEFAULT '0');");
+    	 db.run("CREATE TABLE IF NOT EXISTS publicadores (id integer primary key autoincrement, nombre varchar(255), grupo int(11) NOT NULL DEFAULT '0', invitado int(11) DEFAULT '1') ;");
     	 db.run("create table config(id integer primary key autoincrement, descripcion varchar not null, valor varchar not null);");
     	db.run("create table fuentes(id integer primary key autoincrement, nombre varchar not null, color varchar not null, descripcion varchar not null);");
     }
@@ -83,7 +83,7 @@ config = {
 		var a = document.createElement("a");
 		document.body.appendChild(a);
 		a.href = window.URL.createObjectURL(blob);
-		a.download = "base_de_datos_"+getTodayDate()+".db";
+		a.download = "base_de_datos_"+getTodayDate()+".dtch";
 		a.onclick = function () {
 			setTimeout(function () {
 				window.URL.revokeObjectURL(a.href);
