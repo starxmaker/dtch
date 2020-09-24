@@ -1,5 +1,6 @@
 function addNewNumber(){
   document.getElementById("openModalNuevoNumero").click();
+  fillCodigosPreferidos();
 }
 
 function populateFuentes(){
@@ -12,11 +13,22 @@ function populateFuentes(){
   document.getElementById("inputFuente").innerHTML=html;
 }
 
+function fillCodigosPreferidos(){
+var codigoRegionPreferido="";
+    if(window.localStorage.getItem("prefferedCodigoRegion")!=null) codigoRegionPreferido=window.localStorage.getItem("prefferedCodigoRegion");
+    var codigoPaisPreferido="";
+    if(window.localStorage.getItem("prefferedCodigoPais")!=null) codigoPaisPreferido=window.localStorage.getItem("prefferedCodigoPais");
+    document.getElementById("inputCodigoPais").value=codigoPaisPreferido;
+   document.getElementById("inputCodigoRegion").value=codigoRegionPreferido;
+}
+
 function changeTipoNewNumero(){
   if(document.getElementById("radioCelular").checked){
     document.getElementById("inputCodigoRegion").disabled=true;
+    document.getElementById("inputCodigoRegion").value="";
   }else{
     document.getElementById("inputCodigoRegion").disabled=false;
+    fillCodigosPreferidos();
   }
   checkNumeroExistance();
 }
@@ -72,6 +84,9 @@ function agregarNumeroDirectorio(){
  document.getElementById("inputDireccion").value="";
  document.getElementById("inputNumeroExist").value="true";
             sendNotification("Número agregado al directorio");  
+window.localStorage.setItem("prefferedCodigoRegion", codigoRegion);
+    window.localStorage.setItem("prefferedCodigoPais", codigoPais);
+
             populateGroupList();      
         
 }
