@@ -10,15 +10,26 @@
       </div>
       <div class="modal-body">
         <form>
-         
+        <div class="form-group" style="padding-bottom: 10px;">
+          <label>Tipo</label> <br>
+        <div class="form-check form-check-inline">
+       
+        <input type="radio" class="form-check-input" name="radioTipo" id="radioFijo" checked onclick="changeTipoNewNumero();"> <label class="form-check-label" for="radioFijo">Fijo</label>
+        <input type="radio" class="form-check-input" name="radioTipo" id="radioCelular" style="margin-left: 20px;" onclick="changeTipoNewNumero();"> <label class="form-check-label" for="radioCelular">Celular</label>
+        </div>
+        </div>
   <div class="form-group">
 
   <div class="form-row">
-    <div class="form-group col-2">
-      <label for="inputEmail4">Código</label>
-      <input type="number" class="form-control" id="inputCodigoArea" value="56" onblur="checkNumeroExistance();">
+    <div class="form-group col-3">
+      <label for="inputEmail4">Código país </label>
+      <input type="number" class="form-control" id="inputCodigoPais" value="56" onblur="checkNumeroExistance();">
     </div>
-    <div class="form-group col-6">
+    <div class="form-group col-3">
+      <label for="inputEmail4">Código región </label>
+      <input type="number" class="form-control" id="inputCodigoRegion" value="" onblur="checkNumeroExistance();">
+    </div>
+    <div class="form-group col-4">
       <label for="inputPassword4">Número</label>
      <input type="number" class="form-control" id="inputNumero" onblur="checkNumeroExistance();">
      <input type="hidden" id="inputNumeroExist" value="true">

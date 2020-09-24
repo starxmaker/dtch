@@ -103,7 +103,8 @@ var filters=[];
       return exist;
 	}
 	static insert(codigoPais, codigoRegion,numero,direccion,grupo,fuente, tipo){
-		db.run("insert into telefonos (codigo_pais, codigo_region, numero, direccion, grupo, fuente,estado, ultima_llamada, publicador, ultima_visualizacion, tipo) values ("+codigoPais+","+codigoRegion+",'"+numero+"','"+direccion+"',"+grupo+","+fuente+",0,'0000-00-00 00:00:00', 0, '0000-00-00 00:00:00',"+tipo+");");
+		var statement="insert into telefonos (codigo_pais, codigo_region, numero, direccion, grupo, fuente,estado, ultima_llamada, publicador, ultima_visualizacion, tipo) values ("+codigoPais+",'"+codigoRegion+"','"+numero+"','"+direccion+"',"+grupo+","+fuente+",0,'0000-00-00 00:00:00', 0, '0000-00-00 00:00:00',"+tipo+");";
+		db.run(statement);
 	}
 	static query(search){
 		var query;
@@ -111,7 +112,7 @@ var filters=[];
 			query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t inner join publicadores p on t.publicador=p.id where p.nombre like '%"+search+"%' and (estado=2 or estado=7 or estado=8 or estado=10 or estado=11) order by t.id asc";
 		}else{
 
-		query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t inner join publicadores p on t.publicador=p.id where replace(replace(replace(replace(t.numero,' ',''),'(',''),')',''),'+','') like '%"+search+"%' order by t.id asc";
+		query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t inner join publicadores p on t.publicador=p.id where codigo_pais || codigo_region || numero like '%"+search+"%' order by t.id asc";
 		}
 		var telefonos=[];
 		var stmt=db.prepare(query);
@@ -120,7 +121,7 @@ var filters=[];
         	if(row.llamado_esta_semana=="true") row.estado=13;
         	var publicador="";
         	if (row.estado==2 || row.estado==7 || row.estado==8 || row.estado==10 || row.estado==11) publicador="("+row.publicador+")";
-        	telefonos.push([row.id,numero,row.estado, publicador]);
+        	telefonos.push([row.id,row.numero,row.estado, publicador]);
         }
         stmt.free();
         return telefonos;

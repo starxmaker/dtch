@@ -12,26 +12,30 @@ function populateFuentes(){
   document.getElementById("inputFuente").innerHTML=html;
 }
 
+function changeTipoNewNumero(){
+  if(document.getElementById("radioCelular").checked){
+    document.getElementById("inputCodigoRegion").disabled=true;
+  }else{
+    document.getElementById("inputCodigoRegion").disabled=false;
+  }
+  checkNumeroExistance();
+}
+
 function checkNumeroExistance(){
   document.getElementById("inputNumeroExist").value="true";
   var nuevoNumero=document.getElementById("inputNumero").value.trim();
-  var codigoArea=document.getElementById("inputCodigoArea").value.trim();
+  var codigoPais=document.getElementById("inputCodigoPais").value.trim();
+   var codigoRegion=document.getElementById("inputCodigoRegion").value.trim();
 
- 
-
-  if(nuevoNumero.length<9){
-    if(nuevoNumero.length<7){
-      sendNotification("Número con formato incorrecto", "error");
-      return false;
-    }
-    nuevoNumero=nuevoNumero.slice(-7);
-  }else{
-    nuevoNumero=nuevoNumero.slice(-9);
-  }
     document.getElementById("inputNumero").value=nuevoNumero;
+
+    if(codigoPais.trim()=="" || nuevoNumero=="") return false;
+    if(document.getElementById("radioFijo").checked){
+      if (codigoRegion.trim()=="") return false;
+    }
   
     
-      var numeroToCheck=formatNumero(codigoArea,nuevoNumero);
+      var numeroToCheck=codigoPais+codigoRegion+nuevoNumero;
  
   
   
@@ -48,17 +52,21 @@ function checkNumeroExistance(){
 
 function agregarNumeroDirectorio(){
   var numeroExiste=document.getElementById("inputNumeroExist").value;
-  var codigoArea=document.getElementById("inputCodigoArea").value.trim();
+  var codigoPais=document.getElementById("inputCodigoPais").value.trim();
+   var codigoRegion=document.getElementById("inputCodigoRegion").value.trim();
   
   var nuevoNumero=document.getElementById("inputNumero").value.trim();
+  var tipo=0;
+  if(document.getElementById("radioCelular").checked) tipo=1;
 
-  var numeroToAdd= formatNumero(codigoArea,nuevoNumero);
 
   var nuevaDireccion=document.getElementById("inputDireccion").value.trim();
   var nuevoGrupo=document.getElementById("inputGrupo").value;
   var nuevaFuente=document.getElementById("inputFuente").value;
-  if(numeroExiste=="true" || numeroToAdd.length==0 || nuevaDireccion.length==0 || nuevoGrupo.trim()=="" || nuevaFuente.trim()=="") return false;
-  Telefono.insert(numeroToAdd,nuevaDireccion,nuevoGrupo,nuevaFuente);
+  if(numeroExiste=="true" || nuevoNumero.length==0 || codigoPais.length==0 || nuevaDireccion.length==0 || nuevoGrupo.trim()=="" || nuevaFuente.trim()=="") return false;
+
+  if (tipo==0 && codigoRegion.length==0) return false;
+  Telefono.insert(codigoPais,codigoRegion, nuevoNumero,nuevaDireccion,nuevoGrupo,nuevaFuente, tipo);
           document.getElementById("inputNumeroExist").value="true";
   document.getElementById("inputNumero").value="";
  document.getElementById("inputDireccion").value="";
