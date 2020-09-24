@@ -25,7 +25,7 @@ function loadNewNumber(){
     grupo=document.getElementById("selectGrupo").value; //obtener grupo seleccionado
 
   document.getElementById("fldTelefono").style.visibility="hidden";
-  telefono=Telefono.getLastCalled(grupo,[],1);
+  telefono=Telefono.getLastCalled(grupo,filtros,1);
   activeTelefono=telefono;
   renderTelefono();
 
@@ -48,6 +48,7 @@ function loadNumeroById(id){
 }
 
 function renderTelefono(){
+  telefono=activeTelefono;
   if (timer!=null) resetTimer();
   	var isVisualizado="";
                  if (telefono.visualizado_hoy=="true"){

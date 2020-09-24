@@ -5,6 +5,21 @@ var yyyy = today. getFullYear();
 today = dd + '-' + mm + '-' + yyyy;
 return today;
 }
+function sendNotification(message, type){
+  var background="#00b09b";
+  if (type=="notification") background="#00b09b";
+  if (type=="warning") background="#f0ad4e";
+  if(type=="error") background="#d9534f";
+  Toastify({
+  text: message,
+  duration: 3000, 
+  close: true,
+  gravity: "bottom", 
+  position: 'left',
+  backgroundColor: background,
+  stopOnFocus: true, // Prevents dismissing of toast on hover
+}).showToast();
+}
 
 const estados=
 	[

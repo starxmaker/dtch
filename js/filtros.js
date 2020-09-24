@@ -19,6 +19,16 @@ var filtros={
     llamadoSemana:true
   }
 }
+function onlyFijos(){
+  filtros.tipo.fijo=true;
+  filtros.tipo.celular=false;
+  sendNotification("Filtro aplicado");
+}
+function onlyCelulares(){
+   filtros.tipo.fijo=false;
+  filtros.tipo.celular=true;
+  sendNotification("Filtro aplicado");
+}
 
 function loadFiltros(){
   arrayToCheck();
@@ -91,6 +101,5 @@ function arrayToCheck(){
 
   document.getElementById("checkVisto").checked=filtros.otros.visualizadoHoy;
   document.getElementById("checkLlamado").checked=filtros.otros.llamadoSemana;
-  document.getElementById("checkCodigoArea").checked=filtros.otros.codigoArea;
 
 }
