@@ -48,6 +48,22 @@ fetch("./componentes/historial.html")
     document.getElementById("modal_filtros").innerHTML = data;
     
   });
+  fetch("./componentes/registro_rapido.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_registro_rapido").innerHTML = data;
+    initAutoCompleteQuick();
+    const node = document.getElementById("inputCantidadQuick");
+node.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        agregarRegistroRapido();
+    }
+});
+    
+  });
 
 var activeTelefono=Telefono.getBlank();
 var allPublicadores=[];
@@ -56,3 +72,5 @@ var keys_enabled=true;
 window.onbeforeunload = function(e) {
   return '¿Desea recargar la página? La lista de espera será reiniciada';
 };
+
+

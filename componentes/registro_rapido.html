@@ -1,0 +1,53 @@
+<a id="openModalRegistroRapido" data-toggle="modal" data-target="#modalRegistroRapido"></a>
+<div class="modal fade" id="modalRegistroRapido" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registro rápido</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+  <div class="form-group">
+  
+
+    <label for="inputHermanoQuick">Hermano</label>
+    <div class="input-group">
+    <input type="text" class="form-control" id="inputHermanoQuick">
+    </div>
+  </div>
+   <div class="form-group">
+    <label for="inputActividadQuick">Actividad</label>
+    <select class="form-control" id="inputActividadQuick">
+    <option value="7" selected>Revisita</option>
+    <option value="11" >Estudio</option>
+    <option value="2" >Interesado</option>
+    <option value="4" >Marca</option>
+    <option value="1">Sin interés</option>
+    <option value="6">Conversación receptiva</option>
+     <option value="3">No llamar</option>
+      <option value="5">No existe</option>
+       <option value="6">Conversación receptiva</option>
+        <option value="8">Ultima revisita</option>
+         <option value="9">Ocupado</option>
+          <option value="10">Revisita no encontrada</option>
+
+    
+    </select>
+  </div>
+   <div class="form-group">
+    <label for="inputCantidadQuick">Cantidad</label>
+    <input type="number" class="form-control" id="inputCantidadQuick" >
+  </div>
+  
+  
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="agregarRegistroRapido();">Agregar</button>
+      </div>
+    </div>
+  </div>
+</div>
