@@ -103,6 +103,14 @@ fetch("./componentes/historial.html")
     document.getElementById("modal_historial_especifico").innerHTML = data;
     
   });
+         fetch("./componentes/show_three.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_show_three").innerHTML = data;
+    
+  });
 
 var activeTelefono=Telefono.getBlank();
 var allPublicadores=[];

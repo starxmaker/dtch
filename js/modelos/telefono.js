@@ -69,15 +69,19 @@ var filters=[];
 		}
 		var stmt=db.prepare(query);
 		stmt.getAsObject(); // {col1:1, col2:111}
+
+		if(cantidad>1) var numeros=[];
 		var candidate;
       
       while(stmt.step()) { //
         var row = stmt.getAsObject();
         candidate=new Telefono(row.id,row.direccion,row.codigo_pais, row.codigo_region,row.numero,row.grupo,row.estado,row.ultima_llamada,row.publicador, row.fuente, row.visualizado_hoy,row.llamado_esta_semana, row.tipo);
+        if(cantidad>1) numeros.push(candidate);
         
       }
       stmt.free();
       if (candidate==null) Telefono.getBlank();
+      if(cantidad>1) return numeros;
       return candidate;
 	}
 	static getDifferentGroups(){
