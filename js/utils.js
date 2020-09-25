@@ -21,6 +21,14 @@ function sendNotification(message, type){
 }).showToast();
 }
 
+function share(){
+    var  digits=document.getElementById("fldTelefono").innerHTML;
+    sendWhatsAppMessage(digits);
+}
+function sendWhatsAppMessage(message){
+    window.open("whatsapp://send?text="+message,"_blank");
+}
+
 const estados=
 	[
 ["grey", "No Utilizado", "fas fa-question"], 
