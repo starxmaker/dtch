@@ -46,6 +46,7 @@ class Historial{
       return records;
   }
 static insert(id_numero, estado, publicador, tiempo, tipo){
+  if(id_numero==0) id_numero=null;
     var hora=getCurrentDatetime();
     db.run("insert into historials (id_numero, estado, hora, publicador, tiempo, tipo) values ("+id_numero+","+estado+",'"+hora+"',"+publicador+","+tiempo+", "+tipo+");");
     var id=getLastInsertedId();

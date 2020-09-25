@@ -122,7 +122,7 @@ fetch("./componentes/historial.html")
 
 var activeTelefono=Telefono.getBlank();
 var allPublicadores=[];
-var keys_enabled=true;
+
 
 window.onbeforeunload = function(e) {
   return '¿Desea recargar la página?';

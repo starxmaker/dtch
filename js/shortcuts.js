@@ -1,4 +1,5 @@
 var map={};
+var keys_enabled=true;
 onkeydown = onkeyup =function(e){
   var isInput=e.target.tagName.toUpperCase()=="INPUT" || e.target.tagName.toUpperCase()=="SELECT" ;
   e=e || event;
@@ -193,3 +194,14 @@ onkeydown = onkeyup =function(e){
     }
 }
 
+
+function activarAtajos(){
+  if(keys_enabled){
+      keys_enabled=false;
+      sendNotification("Atajos desactivados");
+
+    }else{
+      keys_enabled=true;
+      sendNotification("Atajos activados");
+    }
+}
