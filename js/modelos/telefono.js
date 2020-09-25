@@ -57,6 +57,14 @@ var filters=[];
 
 
         //grupo
+        for(var i=0;i<filtros.blockedGrupos.length;i++){
+        	filters.push("t.grupo!="+filtros.blockedGrupos[i]);
+        }
+
+        //fuentes
+        for(var i=0;i<filtros.blockedFuentes.length;i++){
+        	filters.push("fuente!="+filtros.blockedFuentes[i]);
+        }
 
         //otros
         if (!filtros.otros.visualizadoHoy) filters.push("Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer)>=1");
@@ -68,6 +76,7 @@ var filters=[];
 
 		if(grupo==-1 || grupo==-2){
 			var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<=1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<=7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where (estado=1 or estado=4 or estado=6 or estado=9 or estado=0 or estado=12) "+filtro_consulta+" order by ultima_llamada asc limit "+cantidad;
+			console.log(query);
 		
 		}else{
 			var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<=1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<=7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where (estado=1 or estado=4 or estado=6 or estado=9 or estado=0 or estado=12) "+filtro_consulta+" AND t.grupo="+grupo+" order by ultima_llamada asc limit "+cantidad;

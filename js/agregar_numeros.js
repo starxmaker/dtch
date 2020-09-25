@@ -7,11 +7,16 @@ function populateFuentes(){
   if (document.getElementById("inputFuente")==null) return false;
   var fuentes=Fuente.getAll();
   var html="";
+
+  var html2="<label for='inputNumero'>Fuentes</label>";
   for(var i=0;i<fuentes.length;i++){
     html+="<option value='"+fuentes[i].id+"'>"+fuentes[i].nombre+"</option>";
+     html2+="<div class='form-check'><input type='checkbox' class='form-check-input checksFuentes' id='checkFuente"+fuentes[i].id+"' data-value='"+fuentes[i].id+"' checked='true'> <label class='form-check-label' for='checkTelefonoCelular'>"+fuentes[i].nombre+"</label></div>";
   }
   document.getElementById("inputFuente").innerHTML=html;
+  if(document.getElementById("divChecksFuentes")!=null) document.getElementById("divChecksFuentes").innerHTML=html2;
 }
+
 
 function fillCodigosPreferidos(){
 var codigoRegionPreferido="";

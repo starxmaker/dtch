@@ -3,8 +3,7 @@ var filtros={
     fijo: true,
     celular:true
   },
-  fuente:{
-  },
+  blockedFuentes:[],
   respuesta:{
     marca: true,
     ocupado:true,
@@ -12,8 +11,7 @@ var filtros={
     sinInteres:true,
     noUtilizado:true
   },
-  grupo:{
-  },
+  blockedGrupos:[],
   otros:{
     visualizadoHoy: true,
     llamadoSemana:true
@@ -46,6 +44,18 @@ function checksToArray(){
   var checkTelefonoCelular=document.getElementById("checkTelefonoCelular").checked;
 
   //checkbox fuente
+
+   var blockedFuentes=[];
+  var checksFuentes=document.getElementsByClassName("checksFuentes");
+  for(var i=0; i<checksFuentes.length;i++){
+    var current=checksFuentes[i];
+    if (!current.checked){
+      var value=current.getAttribute("data-value");
+      blockedFuentes.push(value);
+    }
+
+  }
+
   //checkbox respuesta
   var checkMarca=document.getElementById("checkMarca").checked;
   var checkOcupado=document.getElementById("checkOcupado").checked;
@@ -53,8 +63,16 @@ function checksToArray(){
   var checkSinInteres=document.getElementById("checkSinInteres").checked;
   var checkNoUtilizado=document.getElementById("checkNoUtilizado").checked;
   //checkbox grupo
+  var blockedGrupos=[];
+  var checksGrupos=document.getElementsByClassName("checksGrupo");
+  for(var i=0; i<checksGrupos.length;i++){
+    var current=checksGrupos[i];
+    if (!current.checked){
+      var value=current.getAttribute("data-value");
+      blockedGrupos.push(value);
+    }
 
-
+  }
 
   //checkbox otros
 
@@ -70,7 +88,8 @@ function checksToArray(){
   filtros.respuesta.receptivo=checkReceptivo;
   filtros.respuesta.sinInteres=checkSinInteres;
   filtros.respuesta.noUtilizado=checkNoUtilizado;
-  //filtros.grupo.grupo0=checkGrupo0;
+  filtros.blockedGrupos=blockedGrupos;
+    filtros.blockedFuentes=blockedFuentes;
   
   filtros.otros.visualizadoHoy=checkVisualizado;
   filtros.otros.llamadoSemana=checkLlamado;
@@ -83,7 +102,18 @@ function arrayToCheck(){
   var checkTelefonoCelular=document.getElementById("checkTelefonoCelular").checked=filtros.tipo.celular;
 
   //checkbox fuente
+var checksFuentes=document.getElementsByClassName("checksFuentes");
+  for(var i=0; i<checksFuentes.length;i++){
+    var current=checksFuentes[i];
+    current.checked=true;
 
+  }
+
+
+  for (var i=0; i<filtros.blockedFuentes.length;i++){
+    var value=filtros.blockedFuentes[i];
+    document.getElementById("checkFuente"+value).checked=false;
+  }
   
 
   //checkbox respuesta
@@ -93,6 +123,19 @@ function arrayToCheck(){
   document.getElementById("checkSinInteres").checked=filtros.respuesta.sinInteres;
   document.getElementById("checkNoUtilizado").checked=filtros.respuesta.noUtilizado;
   //checkbox grupo
+
+var checksGrupos=document.getElementsByClassName("checksGrupo");
+  for(var i=0; i<checksGrupos.length;i++){
+    var current=checksGrupos[i];
+    current.checked=true;
+
+  }
+
+
+  for (var i=0; i<filtros.blockedGrupos.length;i++){
+    var value=filtros.blockedGrupos[i];
+    document.getElementById("checkGrupo"+value).checked=false;
+  }
   //document.getElementById("checkGrupo0").checked=filtros.grupo.grupo0;
 
 

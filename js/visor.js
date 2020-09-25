@@ -8,7 +8,7 @@ for (i = sel.length - 1; i >= 0; i--) {
   sel.remove(i);
 }
 
-
+  var html="<label for='inputNumero'>Grupos</label>";
 	var grupos=Telefono.getDifferentGroups();
 	for(var i=0;i<grupos.length;i++){
 		var valor=grupos[i];
@@ -18,7 +18,10 @@ for (i = sel.length - 1; i >= 0; i--) {
 		}
 		var template="<option value='"+valor+"'>"+descripcion+"</option>";
 		document.getElementById("selectGrupo").innerHTML+=template;
+
+    html+="<div class='form-check'><input type='checkbox' class='form-check-input checksGrupo' id='checkGrupo"+valor+"' data-value='"+valor+"' checked='true'> <label class='form-check-label' for='checkTelefonoCelular'>"+descripcion+"</label></div>";
 	}
+  if(document.getElementById("divChecksGrupos")!=null) document.getElementById("divChecksGrupos").innerHTML=html;
 }
 
 function populatePublicadores(){

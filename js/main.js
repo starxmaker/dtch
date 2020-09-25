@@ -47,6 +47,7 @@ fetch("./componentes/historial.html")
   })
   .then(data => {
     document.getElementById("modal_filtros").innerHTML = data;
+    populateGroupList();
     
   });
   fetch("./componentes/registro_rapido.html")
@@ -91,7 +92,7 @@ fetch("./componentes/historial.html")
     return response.text()
   })
   .then(data => {
-    document.getElementById("modal_lista").innerHTML = data;
+    document.getElementById("modal_fuente").innerHTML = data;
     initAutoCompleteEspera();
     
   });
