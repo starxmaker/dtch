@@ -3,6 +3,10 @@ a.deco-none {
   text-decoration: none;
 }
 
+ul {
+    padding: 0;
+    list-style-type: none;
+}
 .list-group{
     max-height: 400px;
     margin-bottom: 10px;
@@ -13,6 +17,9 @@ a.deco-none {
   font-size:18px;
 }
 
+.page{
+  margin-right: 20px;
+}
 
 .dropdown-submenu {
     position: relative;

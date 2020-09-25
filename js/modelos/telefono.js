@@ -146,6 +146,9 @@ var filters=[];
 	setVisualizacion(){
 		db.run("update telefonos set ultima_visualizacion='"+getCurrentDatetime()+"' where id="+this.id);
 	}
+	delete(){
+		db.run("delete from telefonos where id="+this.id);
+	}
 	updateEstado(newEstado, publicador,tiempo){
 		
 		this.editado=true;
@@ -154,11 +157,13 @@ var filters=[];
 		var idPublicador=Publicador.getIdByName(publicador);
 
 
+
 		if(this.id!=0) db.run("update telefonos set estado='"+newEstado+"', publicador="+idPublicador+",  ultima_llamada='"+getCurrentDatetime()+"' where id="+this.id);
 		Historial.insert(this.id,newEstado,idPublicador,tiempo);
 	}
 	renderRow(){
-		return "<tr><td>"+this.grupo+"</td><td>"+this.direccion+"</td><td>"+this.numero+"</td><td>"+getRenderedEstados(this.estado)+"</td><td>"+this.publicador+"</td><td>"+this.ultima_llamada+"</td><td>"+this.fuente+"</td><td><button type='button' class='btn btn-danger btn-lg mr-3' onclick='eliminarNumero("+this.id+")'>Eliminar</button></td></tr>";
+		var fuente=Fuente.getById(this.fuente);
+		return "<li class='list-group-item list-group-item-action flex-column align-items-start' )'><div class='d-flex w-100 justify-content-between' > <h5 class='numero'>"+this.numero+" ("+getRenderedEstados(this.estado)+")</h5> <small class='text-muted fuente'>"+fuente.nombre+"  <i class='fas fa-trash-alt' onclick='deleteTelefono("+this.id+")' data-dismiss='modal'></i></small></div> <small class='publicador mb-1'>Llamado "+timeSince(this.ultima_llamada).toLowerCase()+" por "+this.publicador+"</small> <br> <small class='direccion text-muted'>"+this.direccion+" (Grupo "+this.grupo+")</small> </li>";
 	}
 	static checkAvailableNumbers(){
 		var query="select count(*) as cantidad from telefonos where estado=0";

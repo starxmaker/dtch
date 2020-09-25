@@ -1,14 +1,26 @@
 
-function eliminarNumero(){
+function deleteTelefono(id){
+	if (confirm("¿Está seguro de borrar el número seleccionado?")){
 
+
+		var telefono=Telefono.getById(id);
+		telefono.delete();
+		sendNotification("Número eliminado");
+	}
 }
- var dataTable;
 function openManage(){
 
 	
 
 	populateManageList();
-	dataTable = new DataTable("#tablaTelefonos");
+	var options = {
+  valueNames: [ 'numero', 'estado', 'publicador', 'direccion'],
+  page:10,
+  pagination: true
+};
+
+// Init list
+var numerosList = new List('divTablaTelefonos', options);
 	document.getElementById("openModalManage").click();
 }
 

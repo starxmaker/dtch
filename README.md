@@ -9,5 +9,6 @@ Easytimer
 Chart.js
 Chart.js plugin labels
 Toastify
-Fontawesome
+FontQwesome
 SQL.js
+List.js
