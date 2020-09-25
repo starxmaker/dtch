@@ -43,7 +43,7 @@ const estados=
 ["brown", "Ocupado", "fas fa-phone-volume"],
 ["brown", "Revisita no encontrada", "fas fa-undo-alt"],
 ["cyan", "Estudio", "fas fa-undo-alt"],
-["grey", "Buzón", "fas fa-undo-alt"],
+["grey", "Buzón", "fas fa-envelope"],
 ["blue", "Ya llamado", "fas fa-clock"]
 
 ];

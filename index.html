@@ -61,7 +61,7 @@ themeConfig.initTheme();
         <nav class="navbar navbar-expand-md shadow-sm" >
             <div class="container">
                 <a class="navbar-brand deco-none" href="#" >
-                    Directorio Telefónico Congregación La Herradura
+                    <i class="far fa-address-book"></i> Directorio Telefónico Congregación La Herradura
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="">
                     <i class="fas fa-bars" style="color:#BEBEBE;"></i>
@@ -78,37 +78,37 @@ themeConfig.initTheme();
                        
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdownArchivo" class="nav-link dropdown-toggle deco-none" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Archivo <span class="caret"></span>
+                                    <i class="far fa-file-alt"></i> Archivo <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownArchivo">
                                     <a class="dropdown-item" href="#"
                                        onclick="if(confirm('Se borrarán los datos guardados')) newDatabase();">
-                                        Nueva base de datos
+                                        <i class="far fa-save"></i> Nueva base de datos
                                     </a>
                                      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modalImportarBaseDeDatos">
-                                        Abrir
+                                        <i class="fas fa-folder-open"></i> Abrir
                                     </a>
                                     <a class="dropdown-item" href="#" onclick="saveStoredDatabase();">
-                                        Guardar
+                                        <i class="far fa-save"></i> Guardar
                                     </a>
                                      <a class="dropdown-item" href="#" onclick="exportDatabase();">
-                                        Exportar
+                                        <i class="fas fa-download"></i> Exportar
                                     </a>
                                      <a class="dropdown-item" href="#" onclick="openPreferencias();">
-                                        Preferencias
+                                        <i class="fas fa-wrench"></i> Preferencias
                                     </a>
                                     
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdownLlamadas" class="nav-link dropdown-toggle deco-none" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Llamadas <span class="caret"></span>
+                                    <i class="fas fa-phone"></i> Llamadas <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownLlamadas">
-                                    <a class="dropdown-item" href="#" onclick="loadNumeroPropio();"><i class="fas fa-plus"></i> Número propio</a>
-                                    <a class="dropdown-item" href="#" onclick="loadNewNumber();"><i class="fas fa-plus"></i> Número del directorio</a>
+                                    <a class="dropdown-item" href="#" onclick="loadNumeroPropio();"><i class="fas fa-user"></i> Número propio</a>
+                                    <a class="dropdown-item" href="#" onclick="loadNewNumber();"><i class="far fa-address-book"></i> Número del directorio</a>
                                      <a class="dropdown-item" href="#" onclick="openShowThreeModal()"><i class="fas fa-dice-three"></i> Mostrar 3 números</a>
               
 
@@ -117,7 +117,7 @@ themeConfig.initTheme();
                             </li>
                              <li class="nav-item dropdown">
                                 <a id="navbarDropdownRegistro" class="nav-link dropdown-toggle deco-none" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                   Registro <span class="caret"></span>
+                                   <i class="fas fa-database"></i> Registro <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownRegistro">
@@ -132,44 +132,44 @@ themeConfig.initTheme();
 
                              <li class="nav-item dropdown">
                                 <a id="navbarDropdownDirectorio" class="nav-link dropdown-toggle deco-none" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Teléfonos<span class="caret"></span>
+                                    <i class="fas fa-hashtag"></i> Teléfonos<span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownDirectorio">
-                                    <a  class="dropdown-item" href="#" onclick="addNewNumber();"><i class="fas fa-pencil-alt"></i> Añadir nuevo número al directorio</a>
-                                    <a  class="dropdown-item" href="#" onclick="openManage();"><i class="fas fa-pencil-alt"></i> Gestionar directorio</a>
-                                     <a  class="dropdown-item" href="#" onclick="openSource();"><i class="far fa-address-card"></i> Fuente del número actual</a>
-                                      <a  class="dropdown-item" href="#" onclick="openModalNuevaFuente();"><i class="far fa-address-card"></i> Nueva fuente</a>
+                                    <a  class="dropdown-item" href="#" onclick="addNewNumber();"><i class="fas fa-plus"></i> Añadir nuevo número al directorio</a>
+                                    <a  class="dropdown-item" href="#" onclick="openManage();"><i class="far fa-address-book"></i> Gestionar directorio</a>
+                                     <a  class="dropdown-item" href="#" onclick="openSource();"><i class="far fa-eye"></i> Fuente del número actual</a>
+                                      <a  class="dropdown-item" href="#" onclick="openModalNuevaFuente();"><i class="fas fa-folder-plus"></i> Nueva fuente</a>
                                       <a  class="dropdown-item" href="#" onclick="gestionarFuentes();"><i class="far fa-address-card"></i> Gestionar fuentes</a>
                                      <a class="dropdown-item" href="#" onclick="loadHistorialEspecifico();">
-                                        Historial de llamados al número actual
+                                        <i class="fas fa-clock"></i> Historial de llamados al número actual
                                     </a>
                                     
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdownFiltros" class="nav-link dropdown-toggle deco-none" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Filtros<span class="caret"></span>
+                                    <i class="fas fa-filter"></i> Filtros<span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownFiltros">
-                                      <a  class="dropdown-item" href="#" onclick="loadFiltros();"><i class="fas fa-filter"></i> Gestionar filtros</a>
+                                      <a  class="dropdown-item" href="#" onclick="loadFiltros();"><i class="fas fa-wrench"></i> Gestionar filtros</a>
                                      <a class="dropdown-item" href="#" onclick="onlyFijos();">
-                                        Sólo teléfonos fijos
+                                        <i class="fas fa-phone"></i> Sólo teléfonos fijos
                                     </a>
                                      <a class="dropdown-item" href="#" onclick="onlyCelulares();">
-                                        Sólo teléfonos celulares
+                                        <i class="fas fa-mobile-alt"></i> Sólo teléfonos celulares
                                     </a>
                                     
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdownOtros" class="nav-link dropdown-toggle deco-none" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Otros<span class="caret"></span>
+                                    <i class="far fa-smile"></i> Más<span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownOtros">
-                                 <a  class="dropdown-item" href="#" onclick="gestionarPublicadores();"><i class="fas fa-ellipsis-h"></i> Gestionar publicadores</a>
+                                 <a  class="dropdown-item" href="#" onclick="gestionarPublicadores();"><i class="fas fa-users"></i> Gestionar publicadores</a>
                                     <a  class="dropdown-item" href="#" onclick="loadModalEspera();"><i class="fas fa-ellipsis-h"></i> Lista de espera</a>
                                        <a class="dropdown-item" href="#" onclick="share()"><i class="fab fa-whatsapp"></i> Compartir número</a>
                                       <a  class="dropdown-item" href="#" onclick="activarAtajos();"><i class="fas fa-key"></i> Activar/desactivar atajos</a>
