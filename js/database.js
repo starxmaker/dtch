@@ -24,8 +24,8 @@ config = {
 
     function createDatabase(){
 
-    	 db.run("CREATE TABLE telefonos (id integer primary key autoincrement,direccion varchar(255),codigo_pais int(11) DEFAULT NULL,codigo_region int(11) DEFAULT NULL,numero varchar(255),grupo int(11) NOT NULL,estado int(11) NOT NULL,ultima_llamada datetime NOT NULL,publicador int(11) NOT NULL,ultima_visualizacion datetime DEFAULT NULL,fuente int(11) DEFAULT '0',tipo int(11) DEFAULT NULL,FOREIGN KEY (publicador) REFERENCES publicadores(id),FOREIGN KEY (fuente) REFERENCES fuentes(id));");
-    	 db.run("CREATE TABLE historials (id integer primary key autoincrement,id_numero int(11) NOT NULL,estado int(11) NOT NULL,hora datetime NOT NULL,publicador int(11) NOT NULL,tiempo int(11) DEFAULT '0',tipo int(11) DEFAULT '0',FOREIGN KEY (publicador) REFERENCES publicadores(id), FOREIGN KEY (id_numero) REFERENCES telefonos(id));");
+    	 db.run("CREATE TABLE telefonos (id integer primary key autoincrement,direccion varchar(255),codigo_pais int(11) DEFAULT NULL,codigo_region int(11) DEFAULT NULL,numero varchar(255),grupo int(11) NOT NULL,estado int(11) NOT NULL,ultima_llamada datetime NOT NULL,publicador int(11) NOT NULL,ultima_visualizacion datetime DEFAULT NULL,fuente int(11) DEFAULT '0',tipo int(11) DEFAULT NULL,FOREIGN KEY (publicador) REFERENCES publicadores(id) ON DELETE CASCADE,FOREIGN KEY (fuente) REFERENCES fuentes(id) ON DELETE CASCADE);");
+    	 db.run("CREATE TABLE historials (id integer primary key autoincrement,id_numero int(11) NOT NULL,estado int(11) NOT NULL,hora datetime NOT NULL,publicador int(11) NOT NULL,tiempo int(11) DEFAULT '0',tipo int(11) DEFAULT '0',FOREIGN KEY (publicador) REFERENCES publicadores(id) ON DELETE CASCADE, FOREIGN KEY (id_numero) REFERENCES telefonos(id) ON DELETE CASCADE);");
     	 db.run("CREATE TABLE IF NOT EXISTS publicadores (id integer primary key autoincrement, nombre varchar(255), grupo int(11) NOT NULL DEFAULT '0', invitado int(11) DEFAULT '1') ;");
     	db.run("create table fuentes(id integer primary key autoincrement, nombre varchar not null, color varchar not null, descripcion varchar not null);");
     }
@@ -42,6 +42,7 @@ config = {
         populatePublicadores();
         populateFuentes();
         showLastSave();
+        enableForeignKeys();
     }
     function saveStoredDatabase(){
     	window.localStorage.setItem("DB",toBinString(db.export()));
@@ -63,6 +64,9 @@ config = {
         var version=window.localStorage.getItem("lastSave");
         if (version==null || version==undefined) version="sin registros";
         return version;
+    }
+    function enableForeignKeys(){
+        db.run("PRAGMA foreign_keys = ON;")
     }
     function getLastInsertedId(){
         var id=0;

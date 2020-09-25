@@ -36,6 +36,9 @@ class Fuente{
   static insert(nombre, color, descripcion){
     db.run("insert into fuentes (nombre, color, descripcion) values('"+nombre+"','"+color+"','"+descripcion+"')");
   }
+  delete(){
+    db.run("delete from fuentes where id="+this.id);
+  }
 	render(isDescripcion){
 
 		var descripcion="";
@@ -44,4 +47,7 @@ class Fuente{
 	return descripcion+" <span style='color: "+this.color+"'>"+this.nombre+"</span>";
 
 	}
+  renderRow(){
+    return "<li class='list-group-item list-group-item-action flex-column align-items-start' )'><div class='d-flex w-100 justify-content-between' > <h5 class='nombre'>"+this.nombre+"</h5> <small class='text-muted'>  <i class='fas fa-trash-alt' onclick='deleteFuente("+this.id+")' data-dismiss='modal'></i></small></div></li>";
+  }
 }

@@ -111,6 +111,14 @@ fetch("./componentes/historial.html")
     document.getElementById("modal_show_three").innerHTML = data;
     
   });
+           fetch("./componentes/manage_fuentes.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_manage_fuentes").innerHTML = data;
+    
+  });
 
 var activeTelefono=Telefono.getBlank();
 var allPublicadores=[];

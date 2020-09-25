@@ -137,7 +137,8 @@ themeConfig.initTheme();
                                     <a  class="dropdown-item" href="#" onclick="openManage();"><i class="fas fa-pencil-alt"></i> Gestionar directorio</a>
                                      <a  class="dropdown-item" href="#" onclick="openSource();"><i class="far fa-address-card"></i> Fuente del número actual</a>
                                       <a  class="dropdown-item" href="#" onclick="openModalNuevaFuente();"><i class="far fa-address-card"></i> Nueva fuente</a>
-                                     <a class="dropdown-item" href="#">
+                                      <a  class="dropdown-item" href="#" onclick="gestionarFuentes();"><i class="far fa-address-card"></i> Gestionar fuentes</a>
+                                     <a class="dropdown-item" href="#" onclick="loadHistorialEspecifico();">
                                         Historial de llamados al número actual
                                     </a>
                                     
@@ -193,6 +194,7 @@ const darkSwitch = writeDarkSwitch(themeConfig);</script>
         <div id="modal_lista"></div>
         <div id="modal_historial_especifico"></div>
          <div id="modal_show_three"></div>
+         <div id="modal_manage_fuentes"></div>
     </div>
         
 </body>
@@ -225,6 +227,7 @@ const darkSwitch = writeDarkSwitch(themeConfig);</script>
 <script src="js/nueva_fuente.js"></script>
 <script src="js/historial_especifico.js"></script>
 <script src="js/show_three.js"></script>
+<script src="js/manage_fuentes.js"></script>
 
 
 
