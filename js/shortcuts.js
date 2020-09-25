@@ -114,28 +114,28 @@ onkeydown = onkeyup =function(e){
               }
             }
              if (map[16] && map[73]){
-             if (activeTelefono.estado==2 || activeTelefono.id==0){
+             if (activeTelefono.estado!=2 || activeTelefono.id==0){
                 revisita();
               }else{
                 sendNotification("Operación no permitida");
               }
             }
             if (map[16] && map[70]){
-              if (activeTelefono.estado==2 || activeTelefono.id==0){
+              if (activeTelefono.estado!=2 || activeTelefono.id==0){
                 receptivo();
               }else{
                 sendNotification("Operación no permitida");
               }
             }
             if (map[16] && map[83]){
-              if (activeTelefono.estado==2 || activeTelefono.id==0){
+              if (activeTelefono.estado!=2 || activeTelefono.id==0){
                 sinInteres();
               }else{
                 sendNotification("Operación no permitida");
               }
             }
             if (map[16] && map[78]){
-             if (activeTelefono.estado==2 || activeTelefono.id==0){
+             if (activeTelefono.estado!=2 || activeTelefono.id==0){
                 noLlamar();
               }else{
                 sendNotification("Operación no permitida");
@@ -152,17 +152,6 @@ onkeydown = onkeyup =function(e){
             }
             if (map[16] && map[69]){
               estudio();
-            }
-            if (map[16] && map[65]){
-              if (filtros.otros.codigoArea){
-                  filtros.otros.codigoArea=false;
-                  sendNotification("No mostrar códigos de área");
-                  loadNewNumber();
-                }else{
-                  filtros.otros.codigoArea=true;
-                  sendNotification("Mostrar código de área");
-                  loadNewNumber();
-                }
             }
             if (map[46]){
               if (filtros.tipo.celular && filtros.tipo.fijo){
