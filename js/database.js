@@ -16,6 +16,7 @@ config = {
     });
     function newDatabase(){
     	db=new sql_config.Database();
+         window.localStorage.setItem("versionDB",null);
     	createDatabase();
     	saveStoredDatabase();
     	afterLoading();
@@ -23,10 +24,9 @@ config = {
 
     function createDatabase(){
 
-    	 db.run("CREATE TABLE IF NOT EXISTS telefonos (id integer primary key autoincrement,direccion varchar(255),codigo_pais int(11) DEFAULT NULL,codigo_region int(11) DEFAULT NULL,numero varchar(255),grupo int(11) NOT NULL,estado int(11) NOT NULL,ultima_llamada datetime NOT NULL,publicador int(11) NOT NULL,ultima_visualizacion datetime DEFAULT NULL,fuente int(11) DEFAULT '0',tipo int(11) DEFAULT NULL) ;");
-    	 db.run("CREATE TABLE IF NOT EXISTS historials (id integer primary key autoincrement, id_numero int(11) NOT NULL, estado int(11) NOT NULL,hora datetime NOT NULL,publicador int(11) NOT NULL,tiempo int(11) DEFAULT '0',tipo int(11) DEFAULT '0');");
+    	 db.run("CREATE TABLE telefonos (id integer primary key autoincrement,direccion varchar(255),codigo_pais int(11) DEFAULT NULL,codigo_region int(11) DEFAULT NULL,numero varchar(255),grupo int(11) NOT NULL,estado int(11) NOT NULL,ultima_llamada datetime NOT NULL,publicador int(11) NOT NULL,ultima_visualizacion datetime DEFAULT NULL,fuente int(11) DEFAULT '0',tipo int(11) DEFAULT NULL,FOREIGN KEY (publicador) REFERENCES publicadores(id),FOREIGN KEY (fuente) REFERENCES fuentes(id));");
+    	 db.run("CREATE TABLE historials (id integer primary key autoincrement,id_numero int(11) NOT NULL,estado int(11) NOT NULL,hora datetime NOT NULL,publicador int(11) NOT NULL,tiempo int(11) DEFAULT '0',tipo int(11) DEFAULT '0',FOREIGN KEY (publicador) REFERENCES publicadores(id), FOREIGN KEY (id_numero) REFERENCES telefonos(id));");
     	 db.run("CREATE TABLE IF NOT EXISTS publicadores (id integer primary key autoincrement, nombre varchar(255), grupo int(11) NOT NULL DEFAULT '0', invitado int(11) DEFAULT '1') ;");
-    	 db.run("create table config(id integer primary key autoincrement, descripcion varchar not null, valor varchar not null);");
     	db.run("create table fuentes(id integer primary key autoincrement, nombre varchar not null, color varchar not null, descripcion varchar not null);");
     }
     function checkDatabaseExistance(){
@@ -41,23 +41,28 @@ config = {
     	populateGroupList();
         populatePublicadores();
         populateFuentes();
+        showLastSave();
     }
     function saveStoredDatabase(){
     	window.localStorage.setItem("DB",toBinString(db.export()));
+        window.localStorage.setItem("lastSave",getCurrentDatetime());
+        showLastSave();
+    }
+    function showLastSave(){
+        if (document.getElementById("lastSaved")==undefined) return false;
+        var momento=lastSave();
+        if (momento!="no definida") momento=timeSince(momento);
+        document.getElementById("lastSaved").innerHTML=momento;
     }
     function databaseVersion(){
-    	var version="no definida";
-    	var stmt = db.prepare("SELECT * FROM config where id=1");
-  stmt.getAsObject(); // {col1:1, col2:111}
-      
-      while(stmt.step()) { //
-        var row = stmt.getAsObject();
-        version=row.valor;
-
-        
-      }
-      stmt.free();
-      return version;
+    	var version=window.localStorage.getItem("versionDB");
+        if (version==null || version==undefined) version="no definida";
+        return version;
+    }
+    function lastSave(){
+        var version=window.localStorage.getItem("lastSave");
+        if (version==null || version==undefined) version="sin registros";
+        return version;
     }
     function getLastInsertedId(){
         var id=0;
@@ -74,8 +79,6 @@ config = {
       return id;
     }
     function exportDatabase(){
-    	db.run("delete from config where id=1;");
-    	db.run("insert into config values(1,'version','"+getTodayDate()+"')");
 
     	saveStoredDatabase();
     	var arraybuff = db.export();

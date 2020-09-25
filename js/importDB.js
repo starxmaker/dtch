@@ -27,8 +27,11 @@ function handleFiles(files) {
   r.onload = function() {
     var Uints = new Uint8Array(r.result);
     db = new sql_config.Database(Uints);
+
+      window.localStorage.setItem("versionDB",getTodayDate());
     saveStoredDatabase();
     afterLoading();
+
     document.getElementById("modal_import_close").click();
     
   }
