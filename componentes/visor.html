@@ -81,9 +81,11 @@
 
 <div class="text-center" style="margin-top: 5%">
 <button type="button" class="btn btn-warning btn-lg mr-3" id="btnPrevious" onclick="loadHistory()" style="visibility: hidden"><i class="fas fa-backward"></i></button>
-<div class="btn-group" role="group">
+<div class="btn-group" role="group" >
     <button id="btnGroupDrop1" type="button" class="btn btn-success btn-lg mr-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="visibility: hidden; border-radius: 4px">
-      <i class="fas fa-phone-volume"></i> Contesta
+      <i class="fas fa-phone-volume"></i>
+
+      
     </button>
     <div class="dropdown-menu p-0 main_menu" aria-labelledby="btnGroupDrop1">
    
@@ -102,11 +104,12 @@
   </div>
   <div class="btn-group" role="group">
     <button id="btnGroupDrop2" type="button" class="btn btn-danger btn-lg mr-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="visibility: hidden; border-radius: 4px">
-      <i class="fas fa-phone-slash" ></i> No contesta
+      <i class="fas fa-phone-slash" ></i> 
     </button>
     <div class="dropdown-menu p-0 main_menu" aria-labelledby="btnGroupDrop2">
       <a class="dropdown-item" href="#" style="background-color: #2FA360; color:white; border-top-left-radius: 4px; border-top-right-radius: 4px; " data-dismiss="modal"  onclick="noContesta();"><i class="fas fa-phone-volume" ></i> Marca</a>
       <a class="dropdown-item" href="#" style="background-color: brown; color:white" data-dismiss="modal"  onclick="ocupado()"><i class="fas fa-briefcase"></i> Ocupado</a>
+      <a class="dropdown-item" href="#" style="background-color: grey; color:white" data-dismiss="modal"  onclick="buzon()"><i class="fas fa-briefcase"></i> Buzón</a>
 
       <a class="dropdown-item" href="#" style="background-color: black; color:white;border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;" data-dismiss="modal"  onclick="noExiste();"><i class="fas fa-phone-slash"  ></i> No existe</a>
     </div>

@@ -45,6 +45,7 @@ const estados=
 ["cyan", "Estudio", "fas fa-undo-alt"],
 ["grey", "Buzón", "fas fa-undo-alt"],
 ["blue", "Ya llamado", "fas fa-clock"]
+
 ];
 
 function getRenderedEstados(index){

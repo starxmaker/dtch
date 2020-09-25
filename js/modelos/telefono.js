@@ -62,10 +62,10 @@ var filters=[];
 
 
 		if(grupo==-1 || grupo==-2){
-			var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<=1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<=7,'true','false')) as llamado_esta_semana from telefonos t inner join publicadores p on t.publicador=p.id where (estado=1 or estado=4 or estado=6 or estado=9 or estado=0) "+filtro_consulta+" order by ultima_llamada asc limit "+cantidad;
+			var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<=1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<=7,'true','false')) as llamado_esta_semana from telefonos t inner join publicadores p on t.publicador=p.id where (estado=1 or estado=4 or estado=6 or estado=9 or estado=0 or estado=12) "+filtro_consulta+" order by ultima_llamada asc limit "+cantidad;
 		
 		}else{
-			var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<=1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<=7,'true','false')) as llamado_esta_semana from telefonos t inner join publicadores p on t.publicador=p.id where (estado=1 or estado=4 or estado=6 or estado=9 or estado=0) "+filtro_consulta+" AND t.grupo="+grupo+" order by ultima_llamada asc limit "+cantidad;
+			var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<=1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<=7,'true','false')) as llamado_esta_semana from telefonos t inner join publicadores p on t.publicador=p.id where (estado=1 or estado=4 or estado=6 or estado=9 or estado=0 or estado=12) "+filtro_consulta+" AND t.grupo="+grupo+" order by ultima_llamada asc limit "+cantidad;
 		}
 		var stmt=db.prepare(query);
 		stmt.getAsObject(); // {col1:1, col2:111}
@@ -118,9 +118,10 @@ var filters=[];
 		var stmt=db.prepare(query);
 		 while(stmt.step()) { //
         	var row = stmt.getAsObject();
-        	if(row.llamado_esta_semana=="true") row.estado=13;
+        	
         	var publicador="";
         	if (row.estado==2 || row.estado==7 || row.estado==8 || row.estado==10 || row.estado==11) publicador="("+row.publicador+")";
+        	if(row.llamado_esta_semana=="true") row.estado=13;
         	telefonos.push([row.id,row.numero,row.estado, publicador]);
         }
         stmt.free();
@@ -150,15 +151,18 @@ var filters=[];
 		db.run("delete from telefonos where id="+this.id);
 	}
 	updateEstado(newEstado, publicador,tiempo){
-		
+		 var isNotEditable=(this.estado==2 || this.estado==3 || this.estado==7 || this.estado==8 || this.estado==10 || this.estado==11) && (newEstado==0 || newEstado==9 || newEstado==4 || newEstado==6 || newEstado==12 || newEstado==this.estado);
 		this.editado=true;
+		if(!isNotEditable){
+		
 		this.estado=newEstado;
 		this.publicador=publicador;
-		var idPublicador=Publicador.getIdByName(publicador);
+		}
+		var idPublicador=Publicador.getIdByName(this.publicador);
 
 
 
-		if(this.id!=0) db.run("update telefonos set estado='"+newEstado+"', publicador="+idPublicador+",  ultima_llamada='"+getCurrentDatetime()+"' where id="+this.id);
+		if(this.id!=0) db.run("update telefonos set estado='"+this.estado+"', publicador="+idPublicador+",  ultima_llamada='"+getCurrentDatetime()+"' where id="+this.id);
 		Historial.insert(this.id,newEstado,idPublicador,tiempo);
 	}
 	renderRow(){
