@@ -57,6 +57,11 @@ function initAutoCompleteQuick(){
         for (i=0; i<choices.length; i++)
             if (~choices[i].toLowerCase().indexOf(term)) matches.push(choices[i]);
         response(matches);
+    },
+    onSelect: function(e, term, item){ //funcion que se realiza cuando se selecciona una sugerencia
+
+        cleanActivity();
+
     }
 });
 }

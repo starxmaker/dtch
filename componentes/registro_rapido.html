@@ -10,44 +10,55 @@
       </div>
       <div class="modal-body">
         <form>
-  <div class="form-group">
-  
-
-    <label for="inputHermanoQuick">Hermano</label>
-    <div class="input-group">
-    <input type="text" class="form-control" id="inputHermanoQuick">
+<div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Hermano</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="inputHermanoQuick">
     </div>
   </div>
-   <div class="form-group">
-    <label for="inputActividadQuick">Actividad</label>
-    <select class="form-control" id="inputActividadQuick">
-    <option value="7" selected>Revisita</option>
-    <option value="11" >Estudio</option>
-    <option value="2" >Interesado</option>
-    <option value="4" >Marca</option>
-    <option value="1">Sin interés</option>
-    <option value="6">Conversación receptiva</option>
-     <option value="3">No llamar</option>
-      <option value="5">No existe</option>
-       <option value="6">Conversación receptiva</option>
-        <option value="8">Ultima revisita</option>
-         <option value="9">Ocupado</option>
-          <option value="10">Revisita no encontrada</option>
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-2 col-form-label" style="color:orange;">¿Revisitas?</label>
+    <div class="col-sm-10">
+      <div class="input-group mb-3">
+  <input type="number" class="form-control" value="0" id="quickRevisitas">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" onclick="addOneRevisita();" style="color:orange;">+</button>
+  </div>
+</div>
+    </div>
+  </div>
 
-    
-    </select>
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-2 col-form-label" style="color:cyan;">¿Estudios?</label>
+    <div class="col-sm-10">
+      <div class="input-group mb-3">
+  <input type="number" class="form-control" value="0" id="quickEstudios">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" style="color:cyan;" onclick="addOneEstudio();">+</button>
   </div>
-   <div class="form-group">
-    <label for="inputCantidadQuick">Cantidad</label>
-    <input type="number" class="form-control" id="inputCantidadQuick" >
+</div>
+    </div>
   </div>
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-2 col-form-label">¿Buzón?</label>
+    <div class="col-sm-10">
+      <div class="input-group mb-3">
+  <input type="number" class="form-control" value="0" id="quickBuzon">
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button" onclick="addOneBuzon();" style="color:grey;">+</button>
+  </div>
+</div>
+    </div>
+  </div>
+
+
+
+
   
   
 </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="agregarRegistroRapido();">Agregar</button>
-      </div>
+      
     </div>
   </div>
 </div>

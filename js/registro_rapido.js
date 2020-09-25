@@ -2,22 +2,30 @@ function registroRapido(){
   document.getElementById("openModalRegistroRapido").click();
 }
 
-function agregarRegistroRapido(){
-  var hermano=document.getElementById("inputHermanoQuick").value;
-  var actividad=document.getElementById("inputActividadQuick").value;
-  var cantidad=document.getElementById("inputCantidadQuick").value;
-  if(hermano.trim()=="" || cantidad.trim()=="" || cantidad<1) return false;
- 	var idPublicador=Publicador.getIdByName(hermano);
-
-   Historial.quickEntries(idPublicador, actividad, cantidad);
-          document.getElementById("inputActividadQuick").value="7";
-  document.getElementById("inputCantidadQuick").value="";
-  document.getElementById("inputHermanoQuick").select();
-            sendNotification("Registro agregado");        
-
-
-  
-
+function addOneRevisita(){
+	var field=document.getElementById("quickRevisitas");
+	field.value=parseInt(field.value)+1;
+	var publicador=document.getElementById("inputHermanoQuick").value;
+	idPublicador=Publicador.getIdByName(publicador);
+	Historial.insert(0,7,idPublicador,0,0);
+}
+function addOneEstudio(){
+	var field=document.getElementById("quickEstudios");
+	field.value=parseInt(field.value)+1;
+	var publicador=document.getElementById("inputHermanoQuick").value;
+	idPublicador=Publicador.getIdByName(publicador);
+	Historial.insert(0,11,idPublicador,0,0);
+}
+function addOneBuzon(){
+	var field=document.getElementById("quickBuzon");
+	field.value=parseInt(field.value)+1;
+	var publicador=document.getElementById("inputHermanoQuick").value;
+	idPublicador=Publicador.getIdByName(publicador);
+	Historial.insert(0,12,idPublicador,0,0);
 }
 
-
+function cleanActivity(){
+	document.getElementById("quickRevisitas").value="0";
+	document.getElementById("quickEstudios").value="0";
+	document.getElementById("quickBuzon").value="0";
+}

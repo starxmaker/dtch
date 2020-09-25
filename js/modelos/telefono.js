@@ -163,7 +163,7 @@ var filters=[];
 
 
 		if(this.id!=0) db.run("update telefonos set estado='"+this.estado+"', publicador="+idPublicador+",  ultima_llamada='"+getCurrentDatetime()+"' where id="+this.id);
-		Historial.insert(this.id,newEstado,idPublicador,tiempo);
+		Historial.insert(this.id,newEstado,idPublicador,tiempo,0);
 	}
 	renderRow(){
 		var fuente=Fuente.getById(this.fuente);

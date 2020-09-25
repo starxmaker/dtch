@@ -33,18 +33,11 @@ class Historial{
       stmt.free();
       return candidate;
 	}
-  static quickEntries(publicador, actividad, cantidad){
-       var hora=getCurrentDatetime();
-    for(var i=0; i<cantidad; i++){
- 
-    db.run("insert into historials (id_numero, estado, hora, publicador, tiempo, tipo) values (0,"+actividad+",'"+hora+"',"+publicador+",0,1);");
-    }
-  }  
-static insert(id_numero, estado, publicador, tiempo){
+static insert(id_numero, estado, publicador, tiempo, tipo){
     var hora=getCurrentDatetime();
-    db.run("insert into historials (id_numero, estado, hora, publicador, tiempo, tipo) values ("+id_numero+","+estado+",'"+hora+"',"+publicador+","+tiempo+", 0);");
+    db.run("insert into historials (id_numero, estado, hora, publicador, tiempo, tipo) values ("+id_numero+","+estado+",'"+hora+"',"+publicador+","+tiempo+", "+tipo+");");
     var id=getLastInsertedId();
-    return new Historial(id, id_numero, estado, hora, publicador, tiempo, 0);  
+    return new Historial(id, id_numero, estado, hora, publicador, tiempo, tipo);  
   }
   delete(){
      db.run("delete from historials where id="+this.id);
