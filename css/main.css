@@ -82,7 +82,7 @@ ul {
 }
 .asd {
   background: rgba(0, 0, 0, 0);
-  border: none;
+  border: 1;
   color: #BEBEBE;
 }
 #modalFuentes{
@@ -90,6 +90,14 @@ ul {
 }
 #modalEstadisticas{
   top:55px;
+}
+
+  .form-control-xs {
+    height: calc(1.5em) !important;
+    padding: .5rem .25rem !important;
+    font-size: 0.5 rem !important;
+    line-height: 2;
+    border-radius: .2 rem;
 }
 
 #drop-area {
