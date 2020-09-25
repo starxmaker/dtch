@@ -9,7 +9,12 @@ onkeydown = onkeyup =function(e){
       map={};
     }
   if(keys_enabled){
+
         if(!isInput){
+          if (document.getElementById("modalRegistroRapido").classList.contains("show")){
+      
+                document.getElementById("inputHermanoQuick").select();
+            }
             if(map[16] && map[72]) $('#modalAtajos').modal(); //SHIFT + H
             if (map[32]){ //Espacio
               e.preventDefault();
