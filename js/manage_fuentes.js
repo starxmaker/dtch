@@ -1,7 +1,7 @@
 function gestionarFuentes(){
 	populateManageFuentesList();
 	var options = {
-  valueNames: [ 'numero', 'estado', 'publicador', 'direccion'],
+  valueNames: [ 'nombre'],
   page:10,
   pagination: true
 };
