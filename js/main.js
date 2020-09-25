@@ -10,6 +10,7 @@ fetch("./componentes/visor.html")
     initAutoComplete();
     initAutoCompleteNombres();
     checkAvailableQuantity();
+    loadPreferencias();
     timer = new easytimer.Timer();
 
 timer.addEventListener('secondsUpdated', function (e) {
@@ -126,6 +127,14 @@ fetch("./componentes/historial.html")
   })
   .then(data => {
     document.getElementById("modal_manage_publicadores").innerHTML = data;
+    
+  });
+               fetch("./componentes/preferencias.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_preferencias").innerHTML = data;
     
   });
 

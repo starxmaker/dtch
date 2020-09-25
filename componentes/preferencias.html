@@ -1,0 +1,42 @@
+<a id="openModalPreferencias" data-toggle="modal" data-target="#modalPreferencias"></a>
+<div class="modal fade" id="modalPreferencias" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Preferencias</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+        <h5>Autoformatear números</h5>
+        <label>Cantidad de dígitos en teléfonos fijos</label>
+  <div class="input-group mb-3">
+
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="checkbox" id="preferenciasCheckAutoformatearFijos">
+    </div>
+  </div>
+  <input type="number" class="form-control" id="preferenciasInputExtensionFijos" value="7">
+</div>
+        <label>Cantidad de dígitos en teléfonos celulares</label>
+  <div class="input-group mb-3">
+
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <input type="checkbox" id="preferenciasCheckAutoformatearCelulares">
+    </div>
+  </div>
+  <input type="number" class="form-control" id="preferenciasInputExtensionCelulares" value="9">
+</div>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" onclick="guardarCambiosPreferencias();">Guardar cambios</button>
+      </div>
+    </div>
+  </div>
+</div>

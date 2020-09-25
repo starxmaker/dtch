@@ -31,8 +31,12 @@ function changeTipoNewNumero(){
   if(document.getElementById("radioCelular").checked){
     document.getElementById("inputCodigoRegion").disabled=true;
     document.getElementById("inputCodigoRegion").value="";
+    document.getElementById("inputCodigoRegion").style.visibility="hidden";
+      document.getElementById("labelInputCodigoRegion").style.visibility="hidden";
   }else{
     document.getElementById("inputCodigoRegion").disabled=false;
+    document.getElementById("inputCodigoRegion").style.visibility="visible";
+    document.getElementById("labelInputCodigoRegion").style.visibility="visible";
     fillCodigosPreferidos();
   }
   checkNumeroExistance();
@@ -51,6 +55,23 @@ function checkNumeroExistance(){
       if (codigoRegion.trim()=="") return false;
     }
   
+
+  if(document.getElementById("radioFijo").checked && settings.autoformatearFijos){
+    if (nuevoNumero.length<settings.extensionFijos){
+        return false;
+      }else{
+        nuevoNumero=nuevoNumero.slice(settings.extensionFijos*-1);
+          document.getElementById("inputNumero").value=nuevoNumero;
+      }
+  }
+   if(!document.getElementById("radioFijo").checked && settings.autoformatearCelulares){
+    if (nuevoNumero.length<settings.extensionCelulare){
+        return false;
+      }else{
+        nuevoNumero=nuevoNumero.slice(settings.extensionCelulares*-1);
+          document.getElementById("inputNumero").value=nuevoNumero;
+      }
+  }
     
       var numeroToCheck=codigoPais+codigoRegion+nuevoNumero;
  
