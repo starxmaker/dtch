@@ -7,21 +7,21 @@ function addOneRevisita(){
 	field.value=parseInt(field.value)+1;
 	var publicador=document.getElementById("inputHermanoQuick").value;
 	idPublicador=Publicador.getIdByName(publicador);
-	Historial.insert(0,7,idPublicador,0,0);
+	Historial.insert(0,7,idPublicador,0,1);
 }
 function addOneEstudio(){
 	var field=document.getElementById("quickEstudios");
 	field.value=parseInt(field.value)+1;
 	var publicador=document.getElementById("inputHermanoQuick").value;
 	idPublicador=Publicador.getIdByName(publicador);
-	Historial.insert(0,11,idPublicador,0,0);
+	Historial.insert(0,11,idPublicador,0,1);
 }
 function addOneBuzon(){
 	var field=document.getElementById("quickBuzon");
 	field.value=parseInt(field.value)+1;
 	var publicador=document.getElementById("inputHermanoQuick").value;
 	idPublicador=Publicador.getIdByName(publicador);
-	Historial.insert(0,12,idPublicador,0,0);
+	Historial.insert(0,12,idPublicador,0,1);
 }
 
 function cleanActivity(){

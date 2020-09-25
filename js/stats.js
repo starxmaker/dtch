@@ -15,6 +15,7 @@ document.getElementById("fldLlamadas").innerHTML=stats.llamadas_realizadas;
                    document.getElementById("fldInteresados").innerHTML=stats.nueva_revisita_primera_visita;
                   //más extensa
                    document.getElementById("fldEstudios").innerHTML=stats.estudios;
+                   document.getElementById("fldBuzones").innerHTML=stats.buzones;
                    //conversaciones por publicador
                    if(stats.publicadores>0){
                    document.getElementById("fldConversacionesPorPublicador").innerHTML=Math.round((stats.conversaciones/stats.publicadores) * 10) / 10;
@@ -26,10 +27,9 @@ document.getElementById("fldLlamadas").innerHTML=stats.llamadas_realizadas;
                 chartReceptividad.data.datasets[0].data=[receptivas, negativas];
               chartReceptividad.update();
                 //grafico pudimos hablar
-                var total_participantes=stats.publicadores;
-                var total_conversantes=stats.conversadores;
-                var total_no_conversantes=total_participantes-total_conversantes;
-                chartPudimosHablar.data.datasets[0].data=[total_conversantes,total_no_conversantes];
+                var total_en_paralelo=stats.conversaciones_paralelas;
+                var total_en_vivo=total_conversaciones-total_en_paralelo;
+                chartPudimosHablar.data.datasets[0].data=[total_en_vivo,total_en_paralelo];
                 chartPudimosHablar.update();
                 //muestra el modal
                document.getElementById("openModalEstadisticas").click();

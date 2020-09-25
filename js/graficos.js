@@ -41,13 +41,13 @@ chartPudimosHablar= new Chart(ctx, {
     type: 'pie',
     data: {
       //   labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        labels: ['Conversó', 'No pudo'],
+        labels: ['En vivo', 'Paralelo'],
         datasets: [{
             label: '#',
             data: [1, 1],
             backgroundColor: [
-                'blue',
-                'black'
+                'purple',
+                'orange'
             ],
              borderWidth: 0
         }]
