@@ -12,3 +12,4 @@ Toastify
 FontQwesome
 SQL.js
 List.js
+Sortable

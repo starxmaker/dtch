@@ -56,14 +56,6 @@ fetch("./componentes/historial.html")
   .then(data => {
     document.getElementById("modal_registro_rapido").innerHTML = data;
     initAutoCompleteQuick();
-    const node = document.getElementById("inputCantidadQuick");
-node.addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        agregarRegistroRapido();
-
-    }
-});
     
   });
 
@@ -85,13 +77,25 @@ node.addEventListener("keydown", function(event) {
     document.getElementById("modal_manage").innerHTML = data;
     
   });
+    fetch("./componentes/lista.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_lista").innerHTML = data;
+    initAutoCompleteEspera();
+    
+  });
 
 var activeTelefono=Telefono.getBlank();
 var allPublicadores=[];
 var keys_enabled=true;
 
 window.onbeforeunload = function(e) {
-  return '¿Desea recargar la página? La lista de espera será reiniciada';
+  return '¿Desea recargar la página?';
 };
 
 
+function openSource(){
+  document.getElementById("openModalFuentes").click();
+}
