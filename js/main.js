@@ -93,7 +93,7 @@ fetch("./componentes/historial.html")
     return response.text()
   })
   .then(data => {
-    document.getElementById("modal_fuente").innerHTML = data;
+    document.getElementById("modal_nueva_fuente").innerHTML = data;
     initAutoCompleteEspera();
     
   });
