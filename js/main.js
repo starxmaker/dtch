@@ -86,6 +86,15 @@ fetch("./componentes/historial.html")
     initAutoCompleteEspera();
     
   });
+      fetch("./componentes/nueva_fuente.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_lista").innerHTML = data;
+    initAutoCompleteEspera();
+    
+  });
 
 var activeTelefono=Telefono.getBlank();
 var allPublicadores=[];

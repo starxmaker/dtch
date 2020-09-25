@@ -33,6 +33,9 @@ class Fuente{
       stmt.free();
       return fuentes;
 	}
+  static insert(nombre, color, descripcion){
+    db.run("insert into fuentes (nombre, color, descripcion) values('"+nombre+"','"+color+"','"+descripcion+"')");
+  }
 	render(isDescripcion){
 
 		var descripcion="";
