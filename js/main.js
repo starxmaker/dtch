@@ -95,6 +95,14 @@ fetch("./componentes/historial.html")
     initAutoCompleteEspera();
     
   });
+       fetch("./componentes/historial_especifico.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_historial_especifico").innerHTML = data;
+    
+  });
 
 var activeTelefono=Telefono.getBlank();
 var allPublicadores=[];

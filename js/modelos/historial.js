@@ -33,6 +33,18 @@ class Historial{
       stmt.free();
       return candidate;
 	}
+  static getByIdNumero(id){
+    var stmt = db.prepare("select t.id as id_numero, h.id as 'registro', t.numero, t.grupo, h.estado, h.hora, h.tipo, p.nombre as 'publicador' from historials h left join telefonos t on (h.id_numero=t.id) left join publicadores p on t.publicador=p.id where t.id="+id);
+  stmt.getAsObject(); // {col1:1, col2:111}
+  var records=[];
+      while(stmt.step()) { //
+        var row = stmt.getAsObject();
+        records.push(new Historial(row.registro,row.id,row.estado,row.hora,row.publicador, secondsToTime(row.tiempo), row.tipo));
+        
+      }
+      stmt.free();
+      return records;
+  }
 static insert(id_numero, estado, publicador, tiempo, tipo){
     var hora=getCurrentDatetime();
     db.run("insert into historials (id_numero, estado, hora, publicador, tiempo, tipo) values ("+id_numero+","+estado+",'"+hora+"',"+publicador+","+tiempo+", "+tipo+");");
