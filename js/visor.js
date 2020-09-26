@@ -7,6 +7,7 @@ for (i = sel.length - 1; i >= 0; i--) {
   if (sel[i].value=="-2" || sel[i].value=="-1") continue;
   sel.remove(i);
 }
+var tiempoAbierto;
 
   var html="<label for='inputNumero'>Grupos</label>";
 	var grupos=Telefono.getDifferentGroups();
@@ -24,6 +25,10 @@ for (i = sel.length - 1; i >= 0; i--) {
   if(document.getElementById("divChecksGrupos")!=null) document.getElementById("divChecksGrupos").innerHTML=html;
 }
 
+function abiertoSince(){
+  document.getElementById("fldAbierto").innerHTML=timeSince(tiempoAbierto);
+}
+
 function populatePublicadores(){
   var publicadores=Publicador.getAll();
   var choices=[];
@@ -34,29 +39,45 @@ function populatePublicadores(){
   resetAutoCompletesNombres();
 }
 function loadNewNumber(){
+  window.clearInterval();
   document.activeElement.blur();
     grupo=document.getElementById("selectGrupo").value; //obtener grupo seleccionado
 
   document.getElementById("fldTelefono").style.visibility="hidden";
   telefono=Telefono.getLastCalled(grupo,filtros,1);
   activeTelefono=telefono;
+  tiempoAbierto=getCurrentDatetime();
+  window.setInterval(function(){
+ abiertoSince();
+}, 5000);
+
   renderTelefono();
 
 
 }
 function loadNumeroPropio(){
+  window.clearInterval();
   document.activeElement.blur();
   telefono=Telefono.getBlank();
   activeTelefono=telefono;
+  tiempoAbierto=getCurrentDatetime();
+  window.setInterval(function(){
+ abiertoSince();
+}, 1000);
   renderTelefono();
 }
 function loadNumeroById(id){
+  window.clearInterval();
   document.activeElement.blur();
     grupo=document.getElementById("selectGrupo").value; //obtener grupo seleccionado
 
   document.getElementById("fldTelefono").style.visibility="hidden";
   telefono=Telefono.getById(id)
   activeTelefono=telefono;
+  tiempoAbierto=getCurrentDatetime();
+  window.setInterval(function(){
+ abiertoSince();
+}, 5000);
   renderTelefono();
 }
 
@@ -284,4 +305,11 @@ function deleteHistoryRecord(id){
 function checkAvailableQuantity(){
   var cantidad=Telefono.checkAvailableNumbers();
   document.getElementById("availableQuantity").innerHTML=cantidad;
+}
+function openMoreInfo(){
+  if (document.getElementById("divMoreInfo").style.display=="none"){
+    document.getElementById("divMoreInfo").style.display="block";
+  }else{
+    document.getElementById("divMoreInfo").style.display="none";
+  }
 }

@@ -28,6 +28,9 @@
         <div class="dropdown-divider"></div>
            <a  class="dropdown-item" href="#" data-toggle="modal" data-target="#modalImportarBaseDeDatos"><i class="fas fa-folder-open"></i> Abrir base de datos</a>
       <a  class="dropdown-item" href="#" onclick="exportDatabase();">  <i class="far fa-save"></i> Descargar base de datos</a>
+      <div class="dropdown-divider"></div>
+       <a  class="dropdown-item" href="#" onclick="openMoreInfo();">  <i class="fas fa-question"></i> Mostrar/ocultar información adicional</a>
+
 
     
   
@@ -84,6 +87,7 @@
     <div class="col-xs-3"><strong class="hiddenAtStart" style="visibility:hidden">Ultima llamada: </strong></div>
     <div class="col" id="fldUltimaLlamada"></div>
   </div>
+   
   <div class="row">
     <div class="col-xs-3"><strong class="hiddenAtStart" style="visibility:hidden">Publicador actual: </strong></div>
     <div class="col" id="fldPublicadorActual">
@@ -152,9 +156,12 @@
     </div>
 </div>
 
-<div class="text-center">
-  Última importación de la base de datos: <b id="dataBaseVersion"></b> <br>
-  Cantidad de números no utilizados disponibles: <b id="availableQuantity"></b> <br>
-  Último guardado: <b id="lastSaved"></b>
+<div class="text-center" id="divMoreInfo" style="display:none">
+Numero cargado: <b id="fldAbierto"></b> <br>
+Cantidad de números no utilizados disponibles: <b id="availableQuantity"></b> <br>
+Último guardado: <b id="lastSaved"></b><br>
+  Última importación de la base de datos: <b id="dataBaseVersion"></b> 
+  
+  
 
 </div>
