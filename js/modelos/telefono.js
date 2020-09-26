@@ -76,7 +76,7 @@ var filters=[];
 
 		if(grupo==-1 || grupo==-2){
 			var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<=1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<=7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where (estado=1 or estado=4 or estado=6 or estado=9 or estado=0 or estado=12) "+filtro_consulta+" order by ultima_llamada asc limit "+cantidad;
-			console.log(query);
+			
 		
 		}else{
 			var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<=1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<=7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where (estado=1 or estado=4 or estado=6 or estado=9 or estado=0 or estado=12) "+filtro_consulta+" AND t.grupo="+grupo+" order by ultima_llamada asc limit "+cantidad;
@@ -121,7 +121,7 @@ var filters=[];
       return exist;
 	}
 	static insert(codigoPais, codigoRegion,numero,direccion,grupo,fuente, tipo){
-		var statement="insert into telefonos (codigo_pais, codigo_region, numero, direccion, grupo, fuente,estado, ultima_llamada, publicador, ultima_visualizacion, tipo) values ("+codigoPais+",'"+codigoRegion+"','"+numero+"','"+direccion+"',"+grupo+","+fuente+",0,'0000-00-00 00:00:00', 0, '0000-00-00 00:00:00',"+tipo+");";
+		var statement="insert into telefonos (codigo_pais, codigo_region, numero, direccion, grupo, fuente,estado, ultima_llamada, publicador, ultima_visualizacion, tipo) values ("+codigoPais+",'"+codigoRegion+"','"+numero+"','"+direccion+"',"+grupo+","+fuente+",0,'0000-00-00 00:00:00', null, '0000-00-00 00:00:00',"+tipo+");";
 		db.run(statement);
 	}
 	static query(search){

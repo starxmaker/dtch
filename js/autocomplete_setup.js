@@ -2,6 +2,16 @@ var fieldAutoComplete; //variable global del campo autocompletar
 var fieldAutoComplete2;
 var fieldAutoComplete3;
 var fieldAutoComplete4;
+
+function resetAutoCompletesNombres(){
+if (fieldAutoComplete2==undefined) return false;
+fieldAutoComplete2.destroy();
+fieldAutoComplete3.destroy();
+fieldAutoComplete4.destroy();
+initAutoCompleteNombres();
+initAutoCompleteQuick();
+initAutoCompleteEspera();
+}
 function initAutoComplete(){
 
 

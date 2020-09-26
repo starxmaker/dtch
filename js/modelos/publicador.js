@@ -35,6 +35,7 @@ class Publicador{
   static insertNewPublicador(nombre){
 
     db.run("insert into publicadores (nombre, grupo, invitado) values ('"+nombre+"',0,1);");
+    populatePublicadores();
     return new Publicador(getLastInsertedId(),nombre,0,1);
   }
   static getAll(){

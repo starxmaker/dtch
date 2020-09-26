@@ -31,6 +31,7 @@ function populatePublicadores(){
     choices.push(publicadores[i].nombre);
   }
   allPublicadores=choices;
+  resetAutoCompletesNombres();
 }
 function loadNewNumber(){
   document.activeElement.blur();
