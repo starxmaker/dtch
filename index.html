@@ -110,6 +110,7 @@ themeConfig.initTheme();
                                     <a class="dropdown-item" href="#" onclick="loadNumeroPropio();"><i class="fas fa-user"></i> Número propio</a>
                                     <a class="dropdown-item" href="#" onclick="loadNewNumber();"><i class="far fa-address-book"></i> Número del directorio</a>
                                      <a class="dropdown-item" href="#" onclick="openShowThreeModal()"><i class="fas fa-dice-three"></i> Mostrar 3 números</a>
+                                       <a  class="dropdown-item" href="#" onclick="loadFiltros();"><i class="fas fa-filter"></i> Gestionar filtros</a>
               
 
                                     
@@ -122,7 +123,10 @@ themeConfig.initTheme();
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownRegistro">
                                     
-                                     <a  class="dropdown-item" href="#" onclick="loadHistory();"><i class="fas fa-clock"></i> Historial</a>
+                                     <a  class="dropdown-item" href="#" onclick="loadHistory();"><i class="fas fa-clock"></i> Historial general</a>
+                                     <a class="dropdown-item" href="#" onclick="loadHistorialEspecifico();">
+                                        <i class="fas fa-clock"></i> Historial de llamados al número actual
+                                    </a>
                                       <a  class="dropdown-item" href="#" onclick="registroRapido();"><i class="fas fa-shipping-fast"></i> Registro Rápido</a>
                                      <a class="dropdown-item" href="#" onclick="showStats()" ><i class="fas fa-chart-bar"></i> Ver estadísticas diarias</a>
                                      
@@ -141,25 +145,20 @@ themeConfig.initTheme();
                                      <a  class="dropdown-item" href="#" onclick="openSource();"><i class="far fa-eye"></i> Fuente del número actual</a>
                                       <a  class="dropdown-item" href="#" onclick="openModalNuevaFuente();"><i class="fas fa-folder-plus"></i> Nueva fuente</a>
                                       <a  class="dropdown-item" href="#" onclick="gestionarFuentes();"><i class="far fa-address-card"></i> Gestionar fuentes</a>
-                                     <a class="dropdown-item" href="#" onclick="loadHistorialEspecifico();">
-                                        <i class="fas fa-clock"></i> Historial de llamados al número actual
-                                    </a>
+                                     
                                     
                                 </div>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdownFiltros" class="nav-link dropdown-toggle deco-none" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="fas fa-filter"></i> Filtros<span class="caret"></span>
+                             <li class="nav-item dropdown">
+                                <a id="navbarDropdownDirectorio" class="nav-link dropdown-toggle deco-none" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="far fa-address-card"></i> Fuentes<span class="caret"></span>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownFiltros">
-                                      <a  class="dropdown-item" href="#" onclick="loadFiltros();"><i class="fas fa-wrench"></i> Gestionar filtros</a>
-                                     <a class="dropdown-item" href="#" onclick="onlyFijos();">
-                                        <i class="fas fa-phone"></i> Sólo teléfonos fijos
-                                    </a>
-                                     <a class="dropdown-item" href="#" onclick="onlyCelulares();">
-                                        <i class="fas fa-mobile-alt"></i> Sólo teléfonos celulares
-                                    </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownDirectorio">
+                                     <a  class="dropdown-item" href="#" onclick="openSource();"><i class="far fa-eye"></i> Fuente del número actual</a>
+                                      <a  class="dropdown-item" href="#" onclick="openModalNuevaFuente();"><i class="fas fa-folder-plus"></i> Nueva fuente</a>
+                                      <a  class="dropdown-item" href="#" onclick="gestionarFuentes();"><i class="far fa-address-card"></i> Gestionar fuentes</a>
+                                     
                                     
                                 </div>
                             </li>

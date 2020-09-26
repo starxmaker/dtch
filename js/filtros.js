@@ -21,11 +21,13 @@ function onlyFijos(){
   filtros.tipo.fijo=true;
   filtros.tipo.celular=false;
   sendNotification("Filtro aplicado");
+  loadNewNumber();
 }
 function onlyCelulares(){
    filtros.tipo.fijo=false;
   filtros.tipo.celular=true;
   sendNotification("Filtro aplicado");
+  loadNewNumber();
 }
 
 function loadFiltros(){
