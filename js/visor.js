@@ -72,7 +72,7 @@ function loadNumeroById(id){
     grupo=document.getElementById("selectGrupo").value; //obtener grupo seleccionado
 
   document.getElementById("fldTelefono").style.visibility="hidden";
-  telefono=Telefono.getById(id)
+  telefono=Telefono.getById(id);
   activeTelefono=telefono;
   tiempoAbierto=getCurrentDatetime();
   window.setInterval(function(){

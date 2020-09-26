@@ -55,6 +55,22 @@ config = {
         if (momento!="no definida") momento=timeSince(momento);
         document.getElementById("lastSaved").innerHTML=momento;
     }
+    function consoleStatement(statement){
+         db.run(statement);
+         console.log("operación realizada");
+    }
+    function consoleQuery(query){
+         var stmt = db.prepare(query);
+  stmt.getAsObject(); // {col1:1, col2:111}
+      var results=[]
+      while(stmt.step()) { //
+        results.push(stmt.getAsObject());
+        
+        
+      }
+  stmt.free();
+  console.log(results);
+    }
     function databaseVersion(){
     	var version=window.localStorage.getItem("versionDB");
         if (version==null || version==undefined) version="no definida";
