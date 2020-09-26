@@ -95,7 +95,7 @@ function renderTelefono(){
                  var numero=telefono.numero;
                  if (telefono.id!=0) numero=formatNumero(numero);
                  var codigo_region="";
-                 if(telefono.codigo_region!="") codigo_region="("+telefono.codigo_region+") ";
+                 if(telefono.tipo==0) codigo_region="("+telefono.codigo_region+") ";
                 document.getElementById("fldTelefono").innerHTML=codigo_region+numero;
                 if (document.getElementById("fldTelefono2")!=null) document.getElementById("fldTelefono2").innerHTML=codigo_region+numero;
                 if(activeTelefono.editado){
