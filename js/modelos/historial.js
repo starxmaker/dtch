@@ -50,7 +50,9 @@ static insert(id_numero, estado, publicador, tiempo, tipo){
     var hora=getCurrentDatetime();
     db.run("insert into historials (id_numero, estado, hora, publicador, tiempo, tipo) values ("+id_numero+","+estado+",'"+hora+"',"+publicador+","+tiempo+", "+tipo+");");
     var id=getLastInsertedId();
-    return new Historial(id, id_numero, estado, hora, publicador, tiempo, tipo);  
+    saveStoredDatabase();
+    return new Historial(id, id_numero, estado, hora, publicador, tiempo, tipo); 
+
   }
   delete(){
      db.run("delete from historials where id="+this.id);
