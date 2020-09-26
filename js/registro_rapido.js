@@ -23,9 +23,17 @@ function addOneBuzon(){
 	idPublicador=Publicador.getIdByName(publicador);
 	Historial.insert(0,12,idPublicador,0,1);
 }
+function addOneInteresado(){
+	var field=document.getElementById("quickInteresado");
+	field.value=parseInt(field.value)+1;
+	var publicador=document.getElementById("inputHermanoQuick").value;
+	idPublicador=Publicador.getIdByName(publicador);
+	Historial.insert(0,2,idPublicador,0,1);
+}
 
 function cleanActivity(){
 	document.getElementById("quickRevisitas").value="0";
 	document.getElementById("quickEstudios").value="0";
 	document.getElementById("quickBuzon").value="0";
+	document.getElementById("quickInteresado").value="0";
 }
