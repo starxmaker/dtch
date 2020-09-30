@@ -56,20 +56,62 @@ config = {
         document.getElementById("lastSaved").innerHTML=momento;
     }
     function consoleStatement(statement){
+        try {
          db.run(statement);
-         console.log("operación realizada");
+         }
+catch(err) {
+  return "<font color='red'>"+err.message+"</font>";
+}
+         return "Operación realizada";
     }
     function consoleQuery(query){
-         var stmt = db.prepare(query);
+        var results=[]
+        try {
+  var stmt = db.prepare(query);
   stmt.getAsObject(); // {col1:1, col2:111}
-      var results=[]
+      
       while(stmt.step()) { //
         results.push(stmt.getAsObject());
         
         
       }
   stmt.free();
-  console.log(results);
+}
+catch(err) {
+  return "<font color='red'>"+err.message+"</font>";
+}
+
+         
+  return results;
+    }
+
+    function performQuery(){
+        var query=document.getElementById("inputQuery").value.trim();
+        var firstCommand=query.slice(0,6).toUpperCase();
+        var output="";
+        if (firstCommand=="SELECT"){
+            var results=consoleQuery(query);
+            if (typeof results==="string"){
+                output=results;
+            }else{
+            for (var i=0; i<results.length;i++){
+                for (aProperty in results[i]) {
+    // do what needed
+    // in case you want just to print it:
+    output+=results[i][aProperty]+"|";
+}
+output+="<br>";
+            }
+        }
+        }else{
+            var output=consoleStatement(query);
+            
+        }
+        document.getElementById("queryResults").innerHTML=output;
+    }
+
+    function openConsole(){
+            document.getElementById("openConsolaSQL").click();
     }
     function databaseVersion(){
     	var version=window.localStorage.getItem("versionDB");

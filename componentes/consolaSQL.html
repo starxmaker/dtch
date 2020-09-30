@@ -1,0 +1,33 @@
+<a id="openConsolaSQL" data-toggle="modal" data-target="#modalConsolaSQL"></a>
+<div class="modal" id="modalConsolaSQL" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fas fa-terminal"></i> Consola SQlite</h5>
+        <button type="button" class="close" data-dismiss="modal" id="closeConsolaSQL" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        
+        </div>
+
+
+      <div class="modal-body">
+      <div class="row">
+    <div class="col-md-2" style="margin-top: 6px;"><strong>Consulta: </strong></div>
+    <div class="col-md-10 input-group" id="fldConsultaSQL">
+      <input type="text" id="inputQuery" class="form-control"/>
+      <div class="input-group-append">
+    <button class="btn btn-success" type="button" onclick="performQuery();" id="buttonPerformQuery">Realizar</button>
+  </div>
+    </div>
+  </div>
+
+         <div class="list-group" id="queryResults" style="padding-top: 20px;">
+  
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -138,6 +138,15 @@ fetch("./componentes/historial.html")
     
   });
 
+                 fetch("./componentes/consolaSQL.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_consola").innerHTML = data;
+    
+  });
+
 var activeTelefono=Telefono.getBlank();
 var allPublicadores=[];
 
