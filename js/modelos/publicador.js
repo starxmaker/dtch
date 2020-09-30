@@ -63,7 +63,7 @@ class Publicador{
 
   }
   renderRow(){
-    return "<li class='list-group-item list-group-item-action flex-column align-items-start' )'><div class='d-flex w-100 justify-content-between' > <h5 class='nombre'>"+this.nombre+"</h5> <small class='text-muted'>  <i class='fas fa-trash-alt' onclick='deletePublicador("+this.id+")' data-dismiss='modal'></i></small></div></li>";
+    return "<li class='list-group-item list-group-item-action flex-column align-items-start' )'><div class='d-flex w-100 justify-content-between' > <h5 class='nombre'>"+this.nombre+"</h5> <small class='text-muted'> <i class='far fa-address-book' onclick='gestionarRevisitas("+this.id+")'  data-dismiss='modal'></i> <i class='fas fa-trash-alt' onclick='deletePublicador("+this.id+")' data-dismiss='modal'></i></small></div></li>";
   }
 }
 

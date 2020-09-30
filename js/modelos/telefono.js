@@ -162,12 +162,29 @@ var filters=[];
         return telefonos;
 
 	}
+
+  static getRevisitasByPublicador(publicador){
+    var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where (t.estado=2 or t.estado=7 or t.estado=10 or t.estado=11) and publicador="+publicador;
+    var telefonos=[];
+    var stmt=db.prepare(query);
+     while(stmt.step()) { //
+          var row = stmt.getAsObject();
+          var currentTelefono=new Telefono(row.id,row.direccion,row.codigo_pais, row.codigo_region,row.numero,row.grupo,row.estado,row.ultima_llamada,row.publicador, row.fuente, row.visualizado_hoy,row.llamado_esta_semana, row.tipo);
+          telefonos.push(currentTelefono);
+        }
+        stmt.free();
+        return telefonos;
+
+  }
 	setVisualizacion(){
 		db.run("update telefonos set ultima_visualizacion='"+getCurrentDatetime()+"' where id="+this.id);
 	}
 	delete(){
 		db.run("delete from telefonos where id="+this.id);
 	}
+  release(){
+    db.run("update telefonos set estado=4, publicador=null where id="+this.id);
+  }
 	updateEstado(newEstado, publicador,tiempo){
 		 var isNotEditable=(this.estado==2 || this.estado==3 || this.estado==7 || this.estado==8 || this.estado==10 || this.estado==11) && (newEstado==0 || newEstado==9 || newEstado==4 || newEstado==6 || newEstado==12 || newEstado==this.estado);
 		this.editado=true;
@@ -187,6 +204,10 @@ var filters=[];
 		var fuente=Fuente.getById(this.fuente);
 		return "<li class='list-group-item list-group-item-action flex-column align-items-start' )'><div class='d-flex w-100 justify-content-between' > <h5 class='numero'>"+this.numero+" ("+getRenderedEstados(this.estado)+")</h5> <small class='text-muted fuente'>"+fuente.nombre+"  <i class='fas fa-trash-alt' onclick='deleteTelefono("+this.id+")' data-dismiss='modal'></i></small></div> <small class='publicador mb-1'>Llamado "+timeSince(this.ultima_llamada).toLowerCase()+" por "+this.publicador+"</small> <br> <small class='direccion text-muted'>"+this.direccion+" (Grupo "+this.grupo+")</small> </li>";
 	}
+  renderRowManageRevisitas(){
+    var fuente=Fuente.getById(this.fuente);
+    return "<li class='list-group-item list-group-item-action flex-column align-items-start' )'><div class='d-flex w-100 justify-content-between' > <h5 class='numero'>"+this.numero+" ("+getRenderedEstados(this.estado)+")</h5> <small class='text-muted fuente'>"+fuente.nombre+"  <i class='fas fa-trash-alt' onclick='deleteRevisita("+this.id+")' data-dismiss='modal'></i></small></div> <small class='publicador mb-1'>Llamado "+timeSince(this.ultima_llamada).toLowerCase()+" por "+this.publicador+"</small> <br> <small class='direccion text-muted'>"+this.direccion+" (Grupo "+this.grupo+")</small> </li>";
+  }
 	static checkAvailableNumbers(){
 		var query="select count(*) as cantidad from telefonos where estado=0";
 		var telefonos=[];

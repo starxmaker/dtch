@@ -146,6 +146,14 @@ fetch("./componentes/historial.html")
     document.getElementById("modal_consola").innerHTML = data;
     
   });
+                   fetch("./componentes/manage_revisitas.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_manage_revisitas").innerHTML = data;
+    
+  });
 
 var activeTelefono=Telefono.getBlank();
 var allPublicadores=[];
