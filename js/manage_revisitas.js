@@ -1,4 +1,7 @@
 function gestionarRevisitas(publicador){
+	var currentPublicador=Publicador.getById(publicador);
+	document.getElementById("labelPublicadorManageRevisita").innerHTML=currentPublicador.nombre;
+	document.getElementById("botonCompartirRevisitas").setAttribute("data-identificador", publicador);
 	populateManageRevisitasList(publicador);
 	var options = {
   valueNames: [ 'numero'],
@@ -29,4 +32,18 @@ function populateManageRevisitasList(publicador){
 		html+=revisitas[i].renderRowManageRevisitas();
 	}
 	document.getElementById("cuerpoTablaRevisitas").innerHTML=html;
+}
+
+function shareRevisitas(){
+	var idPublicador=document.getElementById("botonCompartirRevisitas").getAttribute("data-identificador");
+	var currentPublicador=Publicador.getById(idPublicador);
+
+	var messageRaw=["Revisitas de "+currentPublicador.nombre];
+
+	var revisitas=Telefono.getRevisitasByPublicador(idPublicador);
+	for(var i=0; i<revisitas.length;i++){
+		messageRaw.push(revisitas[i].numero);
+	}
+	var message=messageRaw.join("%0A");
+    sendWhatsAppMessage(message);
 }
