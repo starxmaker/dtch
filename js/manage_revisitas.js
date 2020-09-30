@@ -21,6 +21,8 @@ function deleteRevisita(id){
 		telefono.release();
 
 		sendNotification("Revisita Liberada");
+		var idPublicador=document.getElementById("botonCompartirRevisitas").getAttribute("data-identificador");
+		populateManageRevisitasList(idPublicador);
 	}
 }
 

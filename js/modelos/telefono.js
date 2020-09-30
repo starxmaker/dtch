@@ -206,7 +206,7 @@ var filters=[];
 	}
   renderRowManageRevisitas(){
     var fuente=Fuente.getById(this.fuente);
-    return "<li class='list-group-item list-group-item-action flex-column align-items-start' )'><div class='d-flex w-100 justify-content-between' > <h5 class='numero'>"+this.numero+" ("+getRenderedEstados(this.estado)+")</h5> <small class='text-muted fuente'>"+fuente.nombre+"  <i class='fas fa-trash-alt' onclick='deleteRevisita("+this.id+")' data-dismiss='modal'></i></small></div> <small class='publicador mb-1'>Llamado "+timeSince(this.ultima_llamada).toLowerCase()+" por "+this.publicador+"</small> <br> <small class='direccion text-muted'>"+this.direccion+" (Grupo "+this.grupo+")</small> </li>";
+    return "<li class='list-group-item list-group-item-action flex-column align-items-start' )'><div class='d-flex w-100 justify-content-between' > <h5 class='numero'>"+this.numero+" ("+getRenderedEstados(this.estado)+")</h5> <small class='text-muted fuente'>"+fuente.nombre+"  <i class='fas fa-trash-alt' onclick='deleteRevisita("+this.id+")'></i></small></div> <small class='publicador mb-1'>Llamado "+timeSince(this.ultima_llamada).toLowerCase()+" por "+this.publicador+"</small> <br> <small class='direccion text-muted'>"+this.direccion+" (Grupo "+this.grupo+")</small> </li>";
   }
 	static checkAvailableNumbers(){
 		var query="select count(*) as cantidad from telefonos where estado=0";
