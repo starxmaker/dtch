@@ -39,18 +39,21 @@
                 <div class="form-group">
     <label for="exampleFormControlInput1">Publicador</label>
     <div class="input-group">
-    <select class="form-control selectpicker" data-live-search="true" style="background-color:yellow" id="inputNombres">
+    <select class="form-control" id="inputNombres">
           <option value="0">No especificado</option>
            
         </select>
-        <div class="input-group-append">
-          <button class="btn btn-light" type="button" onclick="addPublicador('visor');"><i class="fas fa-plus"></i></button>
-          <button class="btn btn-dark" type="button" onclick="loadModalEspera();"><i class="fas fa-ellipsis-h"></i></button>
-        </div>
-  </div>
+  <div class="input-group-append">
+         <button class="btn btn-dark btnPublicadores" type="button" onclick="loadModalEspera();" style="float:left"><i class="fas fa-ellipsis-h"></i></button>
+      </div>
+      </div>
+
+         
+        
+ 
   </div>
 
-  <div class="form-group">
+  <div class="form-group" id="divFldGrupo">
     <label for="exampleFormControlInput1">Grupo</label>
     <select class="form-control" id="selectGrupo">
     <option value="-1" selected>Indiferente</option>
@@ -89,10 +92,15 @@
     <label class="col-sm-4 col-form-label"><strong>Tipo:</strong></label>
     <div class="col-sm-8">
     <div class="input-group">
-      <input type="text" class="form-control" id="fldTipoCurrent" value="Propio" readonly>
+      <select class="form-control" id="fldTipoCurrent" onchange="changeTipoCurrent()">
+        <option value="0">Propio</option>
+        <option value="1">Sólo fijos</option>
+        <option value="2">Sólo celulares</option>
+        <option value="4">Guardados</option>
+      </select>
     
     <div class="input-group-append">
-    <button class="btn btn-danger" type="button" onclick="returnToQuickMenu(false)"><i class="fas fa-edit"></i></button>
+    <button class="btn btn-danger" type="button" onclick="returnToQuickMenu(true)"><i class="fas fa-edit"></i></button>
   </div>
   </div>
     </div>
@@ -120,17 +128,6 @@
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-sm-4 col-form-label"><strong>Publicador:</strong></label>
-    <div class="col-sm-8">
-      <div class="input-group">
-        <input type="text" class="form-control" readonly id="fldCurrentPublicador">
-      <div class="input-group-append">
-    <button class="btn btn-success" type="button" onclick="returnToQuickMenu(true)"><i class="fas fa-user-edit"></i></button>
-  </div>
-  </div>
-    </div>
-  </div>
-  <div class="form-group row">
     <label class="col-sm-4 col-form-label"><strong>Cronómetro:</strong></label>
     <div class="col-sm-8" id="fldCronometro">
     <div class="input-group">
@@ -149,13 +146,28 @@
   </div>
     </div>
   </div>
+
+  <div class="form-group row">
+    <label class="col-sm-4 col-form-label"><strong>Publicador:</strong></label>
+    <div class="col-sm-8">
+
+     <div class="input-group">
+        <select class="form-control" id="inputNombresVisor"><option value="0">No especificado</option></select>
+        <div class="input-group-append">
+             <button class="btn btn-success btnPublicadores" type="button" onclick="loadModalEspera();" style="float:left"><i class="fas fa-ellipsis-h"></i></button>
+        </div>
+    </div>
+    </div>
+  </div>
+
+  
 </form>
 
 
 </div>
 
 
-<div class="text-center" style="margin-top: 5%">
+<div class="text-center" >
 <button type="button" class="btn btn-warning btn-lg mr-3" id="btnPrevious" onclick="loadHistory()" style="visibility: hidden"><i class="fas fa-backward"></i></button>
 <div class="btn-group" role="group" >
     <button id="btnGroupDrop1" type="button" class="btn btn-success btn-lg mr-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="visibility: hidden; border-radius: 4px">

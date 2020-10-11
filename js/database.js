@@ -19,7 +19,6 @@ config = {
          window.localStorage.setItem("versionDB",null);
     	createDatabase();
     	saveStoredDatabase();
-    	afterLoading();
     }
 
     function createDatabase(){
@@ -35,7 +34,7 @@ config = {
     }
     function loadStoredDatabase(){
     	db=new sql_config.Database(toBinArray(window.localStorage.getItem("DB")));
-    	afterLoading();
+    
     }
     function afterLoading(){
     	populateGroupList();

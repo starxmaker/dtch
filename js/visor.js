@@ -1,10 +1,4 @@
 
-function handleSelectPicker(index, value){
-
-  let elem=document.getElementsByClassName("filter-option-inner-inner")[index]
-  if (elem!=undefined) elem.innerHTML=value
-    
-}
 function loadProfile(profile){
 
 
@@ -17,8 +11,8 @@ function loadProfile(profile){
     filtros.respuesta.noUtilizado=true;
 
 
-  let publisher=document.getElementById("inputNombres").value
-  if (publisher=="" || publisher=="0"){
+  var publisher=choicesNombreMain.getValue()
+  if (profile==4 && (publisher=="" || publisher=="0")){
     sendNotification("Seleccione un publicador", "error")
     return false;
   }
@@ -54,9 +48,7 @@ function loadProfile(profile){
     filtros.respuesta.noUtilizado=false;
       loadNewNumber()
     }
-  let publica=Publicador.getById(publisher)
-  let namePublisher=publica.nombre
-  if (publica.nombre!=undefined) document.getElementById("fldCurrentPublicador").value=namePublisher
+    choicesNombreVisor.setChoiceByValue(publisher.value)
   document.getElementById("mainBody").style.display="none"
   document.getElementById("visorBody").style.display="block"
 }
@@ -72,8 +64,8 @@ function returnToQuickMenu(refresh){
   }
   
   if (refresh){
-    handleSelectPicker(0,"No especificado")
-    document.getElementById("inputNombres").value=0
+    choicesNombreMain.setChoiceByValue(0)
+    choicesNombreVisor.setChoiceByValue(0)
     
   }
   document.getElementById("mainBody").style.display="block"
@@ -114,25 +106,26 @@ function abiertoSince(){
 }
 
 function populatePublicadores(){
+   allPublicadores=[{
+    value:0,
+    label:"No especificado",
+    selected:true,
+    disabled:true
+   }]
   var publicadores=Publicador.getAll();
-  allPublicadores=publicadores
-  const elem=document.getElementById("inputNombres")
-  const elem2=document.getElementById("inputNombresEspera")
-   const elem3=document.getElementById("inputNombresQuick")
+  
 
-  if (elem==undefined) return false
-  elem.innerHTML="<option value='0' selected='true' disabled>No especificado</option>"
-
-if (elem2==undefined) return false
-  elem2.innerHTML="<option value='0' selected='true' disabled>No especificado</option>"
-if (elem3==undefined) return false
-  elem3.innerHTML="<option value='0' selected='true' disabled>No especificado</option>"
-
-  allPublicadores.map(item=>{
-    elem.innerHTML+="<option value='"+item.id+"'>"+item.nombre+"</option>"
-    elem2.innerHTML+="<option value='"+item.id+"'>"+item.nombre+"</option>"
-     elem3.innerHTML+="<option value='"+item.id+"'>"+item.nombre+"</option>"
+  publicadores.map(item=>{
+    let currentItem={
+    value:item.id,
+    label:item.nombre,
+    selected:false,
+    disabled:false
+   }
+    allPublicadores.push(currentItem)
   })
+ 
+  initChoices()
 }
 function loadNewNumber(){
   window.clearInterval();
@@ -187,7 +180,7 @@ function loadNumeroById(id){
   renderTelefono();
 }
 
-function addPublicador(context){
+function addPublicador(){
   var person = prompt("Ingrese el nombre del nuevo publicador");
 
 if (person != null) {
@@ -196,20 +189,7 @@ if (person != null) {
     let newPublicador=Publicador.insertNewPublicador(person)
 
     populatePublicadores()
-    $('#inputNombres').selectpicker('refresh');
-    $('#inputNombresEspera').selectpicker('refresh');
-    if(context=="visor"){
-    document.getElementById("inputNombres").value=newPublicador.id
-    handleSelectPicker(0,newPublicador.nombre)
-    }
-  if (context=="espera"){
-    document.getElementById("inputNombresEspera").value=newPublicador.id
-    handleSelectPicker(1,newPublicador.nombre)
-  }
-  if (context=="registro"){
-    document.getElementById("inputNombresQuick").value=newPublicador.id
-    handleSelectPicker(2,newPublicador.nombre)
-  }
+    
 
     sendNotification("Publicador agregado")
   }else{
@@ -247,13 +227,8 @@ function renderTelefono(){
                 if(currentGrupo==-1)  currentGrupo="N/A";
                 if ( document.getElementById("fldGrupo")!=null) document.getElementById("fldGrupo").innerHTML=currentGrupo;
 
-                let currentTipo="Propio"
-                if (filtros.perfil==1) currentTipo="Sólo fijos"
-                  if (filtros.perfil==2) currentTipo="Sólo celulares"
-                    if (filtros.perfil==3) currentTipo="Fijos y celulares"
-                      if (filtros.perfil==4) currentTipo="Guardados"
 
-                document.getElementById("fldTipoCurrent").value=currentTipo
+                document.getElementById("fldTipoCurrent").value=filtros.perfil
         
                  
                 
@@ -334,6 +309,10 @@ function showButtons(){
 
 function actualizarEstado(estado){
   var publicador = document.getElementById("inputNombres").value;
+  if (publicador==0 || publicador==""){
+    sendNotification("Seleccione un publicador", "error")
+    return false;
+  }
   var tiempo=chronometer;
     activeTelefono.updateEstado(estado, publicador,tiempo);
     checkAvailableQuantity();
@@ -449,4 +428,86 @@ function openMoreInfo(){
   }else{
     document.getElementById("divMoreInfo").style.display="none";
   }
+}
+
+function initChoices(){
+  let opps={
+    position:"bottom",
+    choices: allPublicadores,
+    noResultsText: 'Sin resultados',
+    noChoicesText: 'Sin elementos',
+    itemSelectText: 'Pulse para seleccionar',
+  }
+
+  if(choicesNombreMain!=undefined){
+    choicesNombreMain.destroy()
+    choicesNombreLista.destroy()
+    choicesNombreRegistro.destroy()
+    choicesNombreVisor.destroy()
+  }
+     var element = document.querySelector('#inputNombres');
+      choicesNombreMain = new Choices(element,opps);
+     var element2 = document.querySelector('#inputNombresEspera');
+      choicesNombreLista = new Choices(element2,opps);
+      var element3= document.querySelector("#inputNombresQuick")
+      choicesNombreRegistro=new Choices(element3,opps)
+      var element4=document.querySelector("#inputNombresVisor")
+      choicesNombreVisor=new Choices(element4, opps)
+
+
+
+element2.addEventListener(
+  'change',
+  function(event) {
+    agregarNombre(event.detail.value)
+    choicesNombreLista.setChoiceByValue(0)
+  },
+  false,
+);
+element3.addEventListener(
+  'change',
+  function(event){
+    cleanActivity()
+  }, false)
+element4.addEventListener(
+  'change',
+  function(event){
+
+    choicesNombreMain.setChoiceByValue(event.detail.value)
+  }, false)
+
+
+    
+}
+let choicesNombreMain, choicesNombreVisor, choicesNombreLista, choicesNombreRegistro
+
+function hideFiltroGrupo(){
+  if(!settings.filtrarGrupo){
+   document.getElementById("divFldGrupo").style.display="none"
+}else{
+   document.getElementById("divFldGrupo").style.display="block"
+}
+}
+
+function changeTipoCurrent(){
+  if (activeTelefono.id!=0 && !activeTelefono.editado){
+    if (!confirm("No se ha actualizado el número actual. ¿Seguro que desea volver?")){
+      return false;
+    }else{
+      activeTelefono.editado=true
+    }
+  }
+
+
+
+
+      let prof=document.getElementById("fldTipoCurrent").value
+      let publish=document.getElementById("inputNombres").value
+      if(prof==4 && (publish==0 || publish=="")){
+        document.getElementById("fldTipoCurrent").value=0
+        sendNotification("Seleccione un publicador", "error")
+      }else{
+  loadProfile(prof)
+}
+  
 }

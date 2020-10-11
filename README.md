@@ -13,4 +13,4 @@ FontQwesome
 SQL.js
 List.js
 Sortable
-Bootstrap-select
+Choices.js

@@ -3,7 +3,8 @@ var settings={
 	autoformatearCelulares:false,
 	extensionFijos:0,
 	extensionCelulares:0,
-	atajos:false
+	atajos:false,
+	filtrarGrupo:false
 }
 function openPreferencias(){
 	setPreferencias();
@@ -16,15 +17,18 @@ function guardarCambiosPreferencias(){
 	var extensionFijos=document.getElementById("preferenciasInputExtensionFijos").value;
 	var extensionCelulares=document.getElementById("preferenciasInputExtensionCelulares").value;
 	var atajos=document.getElementById("preferenciasCheckAtajos").checked;
+	var filtrarGrupo=document.getElementById("preferenciasCheckGrupos").checked;
 
 	settings.autoformatearFijos=autoformatearFijos;
 	settings.autoformatearCelulares=autoformatearCelulares;
 	settings.extensionFijos=extensionFijos;
 	settings.extensionCelulares=extensionCelulares;
 	settings.atajos=atajos;
+	settings.filtrarGrupo=filtrarGrupo;
 
 	window.localStorage.setItem("settings",JSON.stringify(settings));
 	sendNotification("Cambios guardados");
+	hideFiltroGrupo()
 
 
 }
@@ -44,4 +48,5 @@ function setPreferencias(){
 	document.getElementById("preferenciasInputExtensionFijos").value=settings.extensionFijos;
 	document.getElementById("preferenciasInputExtensionCelulares").value=settings.extensionCelulares;
 	if (settings.atajos) document.getElementById("preferenciasCheckAtajos").checked=true;
+	if (settings.filtrarGrupo) document.getElementById("preferenciasCheckGrupos").checked=true;
 }

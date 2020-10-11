@@ -1,14 +1,31 @@
 
-button[data-id="inputNombres"] {
-  background: transparent !important;
+
+.choices{
+  position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+    margin-bottom: 0;
+}
+.btnPublicadores{
+  height: 48px
 }
 
-button[data-id="inputNombresEspera"] {
-  background: transparent !important;
+.choices__inner {
+    background: transparent !important;
 }
-
-button[data-id="inputNombresQuick"] {
-  background: transparent !important;
+.choices__list--dropdown{
+  background-color: #181818 !important;
+  color:#BEBEBE;
+}
+.is-highlighted{
+  background-color: #202020 !important;
+  color:#BEBEBE;
+}
+.choices__input{
+  background-color: #181818 !important;
+  color:#BEBEBE;
 }
 
 /* 1. Change color of the first option [Nothing selected] when select menu is closed? */

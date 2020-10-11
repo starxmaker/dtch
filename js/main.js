@@ -8,7 +8,7 @@
    
     
   });
-  
+
    fetch("./componentes/lista.html")
   .then(response => {
     return response.text()
@@ -33,13 +33,16 @@ fetch("./componentes/visor.html")
   })
   .then(data => {
     document.getElementById("main").innerHTML = data;
-    afterLoading();
+    
     loadNumeroPropio();
     document.getElementById("dataBaseVersion").innerHTML=databaseVersion();
     initAutoComplete();
     checkAvailableQuantity();
+
     loadPreferencias();
+    hideFiltroGrupo()
     timer = new easytimer.Timer();
+    afterLoading();
 
 timer.addEventListener('secondsUpdated', function (e) {
    document.getElementById("basicUsage").value=timer.getTimeValues().toString();
@@ -172,3 +175,4 @@ window.onbeforeunload = function(e) {
 function openSource(){
   document.getElementById("openModalFuentes").click();
 }
+

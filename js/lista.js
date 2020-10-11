@@ -50,8 +50,7 @@ function modifyCurrentName(index){
 
  
   let publisher=Publicador.getIdByName(nombre)
-  document.getElementById("inputNombres").value=publisher;
-  handleSelectPicker(0,nombre)
+  choicesNombreMain.setChoiceByValue(publisher)
   hermanosHistory.push(nombre);
   document.getElementById("openModalEspera").click();
 }
@@ -80,8 +79,7 @@ Array.prototype.insert = function ( index, item ) {
 };
 
 
-function agregarNombre(){
-  var publisherID= document.getElementById("inputNombresEspera").value;
+function agregarNombre(publisherID){
   if (publisherID==0 || publisherID=="") return false
   let publisher=Publicador.getById(publisherID)
   updateListaEspera(publisher.nombre);
