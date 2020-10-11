@@ -17,12 +17,12 @@ class Telefono{
             if(id!=0) this.setVisualizacion();
 	}
 	static getById(id){
-		var stmt = db.prepare("select t.id, t.direccion,t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where t.id="+id);
+		var stmt = db.prepare("select t.id, t.direccion,t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.publicador as idPublicador, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where t.id="+id);
   		stmt.getAsObject(); // {col1:1, col2:111}
       var candidate=null;
       while(stmt.step()) { //
         var row = stmt.getAsObject();
-        candidate=new Telefono(row.id,row.direccion,row.codigo_pais, row.codigo_region,row.numero,row.grupo,row.estado,row.ultima_llamada,row.publicador, row.fuente, row.visualizado_hoy,row.llamado_esta_semana, row.tipo);
+        candidate=new Telefono(row.id,row.direccion,row.codigo_pais, row.codigo_region,row.numero,row.grupo,row.estado,row.ultima_llamada,row.idPublicador, row.fuente, row.visualizado_hoy,row.llamado_esta_semana, row.tipo);
       }
       if (candidate==null) candidate=Telefono.getBlank();
       stmt.free();
@@ -39,7 +39,6 @@ class Telefono{
 
 	static getLastCalled(grupo,filtros,cantidad){
 
-
 var filters=[];
         var filtro_consulta="";
 
@@ -54,6 +53,11 @@ var filters=[];
            if (!filtros.respuesta.receptivo) filters.push("estado!=6");
             if (!filtros.respuesta.sinInteres) filters.push("estado!=1");
             if (!filtros.respuesta.noUtilizado) filters.push("estado!=0");
+            if (!filtros.respuesta.revisita){
+              filters.push("estado!=7 and estado!=2 and estado!=10 and estado!=11")
+            }else{
+              filters.push("publicador="+filtros.respuesta.revisitaPublisher)
+            }
 
 
         //grupo
@@ -71,16 +75,14 @@ var filters=[];
         if (!filtros.otros.llamadoSemana) filters.push("Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer)>=7");
 
            if(filters.length>0) filtro_consulta=" AND ("+filters.join(" AND ")+") ";
-        
+      
+      if(grupo==-1 || grupo==-2){
 
-
-		if(grupo==-1 || grupo==-2){
-			var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where (estado=1 or estado=4 or estado=6 or estado=9 or estado=0 or estado=12) "+filtro_consulta+" order by ultima_llamada asc limit "+cantidad;
-			
+			var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.publicador as idPublicador, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where (estado!=3 and estado!=8 and estado!=5) "+filtro_consulta+" order by ultima_llamada asc limit "+cantidad;
+			}else{
+       var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.publicador as idPublicador, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where (estado!=3 and estado!=8 and estado!=5) "+filtro_consulta+" and t.grupo="+grupo+" order by ultima_llamada asc limit "+cantidad; 
+      }
 		
-		}else{
-			var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where (estado=1 or estado=4 or estado=6 or estado=9 or estado=0 or estado=12) "+filtro_consulta+" AND t.grupo="+grupo+" order by ultima_llamada asc limit "+cantidad;
-		}
 		var stmt=db.prepare(query);
 		stmt.getAsObject(); // {col1:1, col2:111}
 
@@ -89,7 +91,7 @@ var filters=[];
       
       while(stmt.step()) { //
         var row = stmt.getAsObject();
-        candidate=new Telefono(row.id,row.direccion,row.codigo_pais, row.codigo_region,row.numero,row.grupo,row.estado,row.ultima_llamada,row.publicador, row.fuente, row.visualizado_hoy,row.llamado_esta_semana, row.tipo);
+        candidate=new Telefono(row.id,row.direccion,row.codigo_pais, row.codigo_region,row.numero,row.grupo,row.estado,row.ultima_llamada,row.idPublicador, row.fuente, row.visualizado_hoy,row.llamado_esta_semana, row.tipo);
         if(cantidad>1) numeros.push(candidate);
         
       }
@@ -127,10 +129,10 @@ var filters=[];
 	static query(search){
 		var query;
 		if (isNaN(search)){
-			query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where p.nombre like '%"+search+"%' and (estado=2 or estado=7 or estado=8 or estado=10 or estado=11) order by t.id asc";
+			query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.publicador as idPublicador,  t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where p.nombre like '%"+search+"%' and (estado=2 or estado=7 or estado=8 or estado=10 or estado=11) order by t.id asc";
 		}else{
 
-		query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where codigo_pais || codigo_region || numero like '%"+search+"%' order by t.id asc";
+		query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.publicador as idPublicador, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where codigo_pais || codigo_region || numero like '%"+search+"%' order by t.id asc";
 		}
 		var telefonos=[];
 		var stmt=db.prepare(query);
@@ -147,7 +149,7 @@ var filters=[];
 
 	}
 	static getAll(){
-		var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where estado!=5 order by t.id asc";
+		var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.publicador as idPublicador,  t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where estado!=5 order by t.id asc";
 		var telefonos=[];
 		var stmt=db.prepare(query);
 		 while(stmt.step()) { //
@@ -155,7 +157,7 @@ var filters=[];
         	if(row.llamado_esta_semana=="true") row.estado=13;
         	var publicador="";
         	if (row.estado==2 || row.estado==7 || row.estado==8 || row.estado==10 || row.estado==11) publicador="("+row.publicador+")";
-        	var currentTelefono=new Telefono(row.id,row.direccion,row.codigo_pais, row.codigo_region,row.numero,row.grupo,row.estado,row.ultima_llamada,row.publicador, row.fuente, row.visualizado_hoy,row.llamado_esta_semana, row.tipo);
+        	var currentTelefono=new Telefono(row.id,row.direccion,row.codigo_pais, row.codigo_region,row.numero,row.grupo,row.estado,row.ultima_llamada,row.idPublicador, row.fuente, row.visualizado_hoy,row.llamado_esta_semana, row.tipo);
         	telefonos.push(currentTelefono);
         }
         stmt.free();
@@ -164,12 +166,12 @@ var filters=[];
 	}
 
   static getRevisitasByPublicador(publicador){
-    var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado, t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where (t.estado=2 or t.estado=7 or t.estado=10 or t.estado=11) and publicador="+publicador;
+    var query="select t.id, t.direccion, t.codigo_pais, t.codigo_region, t.numero, t.grupo, t.estado,t.publicador as idPublicador,  t.ultima_llamada, t.tipo, p.nombre as 'publicador', t.fuente, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_visualizacion))) as Integer) from telefonos t2 where t.id=t2.id)<1,'true','false')) as visualizado_hoy, (select iif((select Cast((JulianDay(date('now'))-JulianDay(date(ultima_llamada))) as Integer) from telefonos t2 where t.id=t2.id)<7,'true','false')) as llamado_esta_semana from telefonos t left join publicadores p on t.publicador=p.id where (t.estado=2 or t.estado=7 or t.estado=10 or t.estado=11) and publicador="+publicador;
     var telefonos=[];
     var stmt=db.prepare(query);
      while(stmt.step()) { //
           var row = stmt.getAsObject();
-          var currentTelefono=new Telefono(row.id,row.direccion,row.codigo_pais, row.codigo_region,row.numero,row.grupo,row.estado,row.ultima_llamada,row.publicador, row.fuente, row.visualizado_hoy,row.llamado_esta_semana, row.tipo);
+          var currentTelefono=new Telefono(row.id,row.direccion,row.codigo_pais, row.codigo_region,row.numero,row.grupo,row.estado,row.ultima_llamada,row.idPublicador, row.fuente, row.visualizado_hoy,row.llamado_esta_semana, row.tipo);
           telefonos.push(currentTelefono);
         }
         stmt.free();
@@ -193,7 +195,7 @@ var filters=[];
 		this.estado=newEstado;
 		this.publicador=publicador;
 		}
-		var idPublicador=Publicador.getIdByName(this.publicador);
+		var idPublicador=publicador;
 
 
 

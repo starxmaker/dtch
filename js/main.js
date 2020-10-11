@@ -1,3 +1,32 @@
+
+     fetch("./componentes/registro_rapido.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_registro_rapido").innerHTML = data;
+   
+    
+  });
+  
+   fetch("./componentes/lista.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_lista").innerHTML = data;
+    
+    
+  });
+
+      fetch("./componentes/historial_especifico.html")
+  .then(response => {
+    return response.text()
+  })  .then(data => {
+    document.getElementById("modal_historial_especifico").innerHTML = data;
+    
+  });
+
 fetch("./componentes/visor.html")
   .then(response => {
     return response.text()
@@ -8,13 +37,12 @@ fetch("./componentes/visor.html")
     loadNumeroPropio();
     document.getElementById("dataBaseVersion").innerHTML=databaseVersion();
     initAutoComplete();
-    initAutoCompleteNombres();
     checkAvailableQuantity();
     loadPreferencias();
     timer = new easytimer.Timer();
 
 timer.addEventListener('secondsUpdated', function (e) {
-   document.getElementById("basicUsage").innerHTML=timer.getTimeValues().toString();
+   document.getElementById("basicUsage").value=timer.getTimeValues().toString();
 });
   });
 
@@ -51,15 +79,7 @@ fetch("./componentes/historial.html")
     populateGroupList();
     
   });
-  fetch("./componentes/registro_rapido.html")
-  .then(response => {
-    return response.text()
-  })
-  .then(data => {
-    document.getElementById("modal_registro_rapido").innerHTML = data;
-    initAutoCompleteQuick();
-    
-  });
+
 
   fetch("./componentes/agregar_numeros.html")
   .then(response => {
@@ -79,32 +99,17 @@ fetch("./componentes/historial.html")
     document.getElementById("modal_manage").innerHTML = data;
     
   });
-    fetch("./componentes/lista.html")
-  .then(response => {
-    return response.text()
-  })
-  .then(data => {
-    document.getElementById("modal_lista").innerHTML = data;
-    initAutoCompleteEspera();
-    
-  });
+ 
       fetch("./componentes/nueva_fuente.html")
   .then(response => {
     return response.text()
   })
   .then(data => {
     document.getElementById("modal_nueva_fuente").innerHTML = data;
-    initAutoCompleteEspera();
     
   });
-       fetch("./componentes/historial_especifico.html")
-  .then(response => {
-    return response.text()
-  })
-  .then(data => {
-    document.getElementById("modal_historial_especifico").innerHTML = data;
-    
-  });
+ 
+
          fetch("./componentes/show_three.html")
   .then(response => {
     return response.text()

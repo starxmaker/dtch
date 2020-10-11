@@ -28,7 +28,7 @@ class Publicador{
         
       }
       stmt.free();
-      if (candidate==null) candidate=Publicador.insertNewPublicador(nombre);
+      if (candidate==null) return 0
       return candidate.id;
 	}
 
@@ -39,7 +39,7 @@ class Publicador{
     return new Publicador(getLastInsertedId(),nombre,0,1);
   }
   static getAll(){
-    var stmt = db.prepare("SELECT * FROM publicadores");
+    var stmt = db.prepare("SELECT * FROM publicadores order by nombre");
   stmt.getAsObject(); // {col1:1, col2:111}
       var publicadores=[];
       while(stmt.step()) { //

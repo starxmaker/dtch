@@ -44,12 +44,17 @@ function refreshListaEspera(){
 
 
 function modifyCurrentName(index){
+  if (returnToQuickMenu(true)){
   var nombre=listaEspera[index];
   deleteEspera(index,true);
-  loadNumeroPropio();
-  document.getElementById("inputNombres").value=nombre;
+
+ 
+  let publisher=Publicador.getIdByName(nombre)
+  document.getElementById("inputNombres").value=publisher;
+  handleSelectPicker(0,nombre)
   hermanosHistory.push(nombre);
   document.getElementById("openModalEspera").click();
+}
   
 
 }
@@ -76,12 +81,12 @@ Array.prototype.insert = function ( index, item ) {
 
 
 function agregarNombre(){
-  var nombre= document.getElementById("inputNombresEspera").value.trim();
-  if (nombre=="") return false;
-  document.getElementById("inputNombresEspera").value="";
-  updateListaEspera(nombre);
+  var publisherID= document.getElementById("inputNombresEspera").value;
+  if (publisherID==0 || publisherID=="") return false
+  let publisher=Publicador.getById(publisherID)
+  updateListaEspera(publisher.nombre);
   refreshListaEspera();
-  sendNotification(nombre+" agregado a la lista de espera");
+  sendNotification(publisher.nombre+" agregado a la lista de espera");
 
 }
 

@@ -1,3 +1,23 @@
+
+button[data-id="inputNombres"] {
+  background: transparent !important;
+}
+
+button[data-id="inputNombresEspera"] {
+  background: transparent !important;
+}
+
+button[data-id="inputNombresQuick"] {
+  background: transparent !important;
+}
+
+/* 1. Change color of the first option [Nothing selected] when select menu is closed? */
+.filter-option{
+  color:#BEBEBE;
+}
+
+
+
 a.deco-none {
   color: inherit;
   text-decoration: none;

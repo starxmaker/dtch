@@ -1,3 +1,87 @@
+
+function handleSelectPicker(index, value){
+
+  let elem=document.getElementsByClassName("filter-option-inner-inner")[index]
+  if (elem!=undefined) elem.innerHTML=value
+    
+}
+function loadProfile(profile){
+
+
+  filtros.respuesta.revisita=false;
+      filtros.respuesta.revisitaPublisher=0;
+      filtros.respuesta.marca=true;
+    filtros.respuesta.ocupado=true;
+    filtros.respuesta.receptivo=true;
+    filtros.respuesta.sinInteres=true;
+    filtros.respuesta.noUtilizado=true;
+
+
+  let publisher=document.getElementById("inputNombres").value
+  if (publisher=="" || publisher=="0"){
+    sendNotification("Seleccione un publicador", "error")
+    return false;
+  }
+  filtros.perfil=profile;
+
+    if(profile==0){
+      loadNumeroPropio()
+    }
+    if(profile==1){
+      filtros.tipo.fijo=true;
+      filtros.tipo.celular=false;
+      loadNewNumber();
+
+    }
+     if(profile==2){
+      filtros.tipo.fijo=false;
+      filtros.tipo.celular=true;
+      loadNewNumber();
+    }
+     if(profile==3){
+      filtros.tipo.fijo=true;
+      filtros.tipo.celular=true;
+      loadNewNumber();
+
+    }
+    if (profile==4){
+      filtros.respuesta.revisita=true;
+      filtros.respuesta.revisitaPublisher=publisher;
+      filtros.respuesta.marca=false;
+    filtros.respuesta.ocupado=false;
+    filtros.respuesta.receptivo=false;
+    filtros.respuesta.sinInteres=false;
+    filtros.respuesta.noUtilizado=false;
+      loadNewNumber()
+    }
+  let publica=Publicador.getById(publisher)
+  let namePublisher=publica.nombre
+  if (publica.nombre!=undefined) document.getElementById("fldCurrentPublicador").value=namePublisher
+  document.getElementById("mainBody").style.display="none"
+  document.getElementById("visorBody").style.display="block"
+}
+
+function returnToQuickMenu(refresh){
+
+  if (activeTelefono.id!=0 && !activeTelefono.editado){
+    if (!confirm("No se ha actualizado el número actual. ¿Seguro que desea volver?")){
+      return false;
+    }else{
+      activeTelefono.editado=true
+    }
+  }
+  
+  if (refresh){
+    handleSelectPicker(0,"No especificado")
+    document.getElementById("inputNombres").value=0
+    
+  }
+  document.getElementById("mainBody").style.display="block"
+  document.getElementById("visorBody").style.display="none"
+  return true
+
+
+}
 function populateGroupList(){
 	if(document.getElementById("selectGrupo")==null) return false;
 
@@ -31,20 +115,33 @@ function abiertoSince(){
 
 function populatePublicadores(){
   var publicadores=Publicador.getAll();
-  var choices=[];
-  for (var i=0; i<publicadores.length;i++){
-    choices.push(publicadores[i].nombre);
-  }
-  allPublicadores=choices;
-  resetAutoCompletesNombres();
+  allPublicadores=publicadores
+  const elem=document.getElementById("inputNombres")
+  const elem2=document.getElementById("inputNombresEspera")
+   const elem3=document.getElementById("inputNombresQuick")
+
+  if (elem==undefined) return false
+  elem.innerHTML="<option value='0' selected='true' disabled>No especificado</option>"
+
+if (elem2==undefined) return false
+  elem2.innerHTML="<option value='0' selected='true' disabled>No especificado</option>"
+if (elem3==undefined) return false
+  elem3.innerHTML="<option value='0' selected='true' disabled>No especificado</option>"
+
+  allPublicadores.map(item=>{
+    elem.innerHTML+="<option value='"+item.id+"'>"+item.nombre+"</option>"
+    elem2.innerHTML+="<option value='"+item.id+"'>"+item.nombre+"</option>"
+     elem3.innerHTML+="<option value='"+item.id+"'>"+item.nombre+"</option>"
+  })
 }
 function loadNewNumber(){
   window.clearInterval();
   document.activeElement.blur();
-    grupo=document.getElementById("selectGrupo").value; //obtener grupo seleccionado
 
   document.getElementById("fldTelefono").style.visibility="hidden";
+  let grupo=document.getElementById("selectGrupo").value
   telefono=Telefono.getLastCalled(grupo,filtros,1);
+
   activeTelefono=telefono;
   tiempoAbierto=getCurrentDatetime();
   window.setInterval(function(){
@@ -67,13 +164,22 @@ function loadNumeroPropio(){
   renderTelefono();
 }
 function loadNumeroById(id){
+
   window.clearInterval();
   document.activeElement.blur();
-    grupo=document.getElementById("selectGrupo").value; //obtener grupo seleccionado
 
   document.getElementById("fldTelefono").style.visibility="hidden";
+
   telefono=Telefono.getById(id);
   activeTelefono=telefono;
+  let currentPublisher=Publicador.getById(telefono.publicador)
+  if (currentPublisher.nombre!=undefined ) document.getElementById("fldCurrentPublicador").value=currentPublisher.nombre
+    document.getElementById("inputNombres").value=telefono.publicador
+  if (currentPublisher.nombre!=undefined ) handleSelectPicker(0, currentPublisher.nombre)
+    filtros.perfil=4
+  document.getElementById("mainBody").style.display="none"
+  document.getElementById("visorBody").style.display="block"
+
   tiempoAbierto=getCurrentDatetime();
   window.setInterval(function(){
  abiertoSince();
@@ -81,13 +187,39 @@ function loadNumeroById(id){
   renderTelefono();
 }
 
+function addPublicador(context){
+  var person = prompt("Ingrese el nombre del nuevo publicador");
+
+if (person != null) {
+  let result=Publicador.getIdByName(person.trim())
+  if (result==0){
+    let newPublicador=Publicador.insertNewPublicador(person)
+
+    populatePublicadores()
+    $('#inputNombres').selectpicker('refresh');
+    $('#inputNombresEspera').selectpicker('refresh');
+    if(context=="visor"){
+    document.getElementById("inputNombres").value=newPublicador.id
+    handleSelectPicker(0,newPublicador.nombre)
+    }
+  if (context=="espera"){
+    document.getElementById("inputNombresEspera").value=newPublicador.id
+    handleSelectPicker(1,newPublicador.nombre)
+  }
+  if (context=="registro"){
+    document.getElementById("inputNombresQuick").value=newPublicador.id
+    handleSelectPicker(2,newPublicador.nombre)
+  }
+
+    sendNotification("Publicador agregado")
+  }else{
+    sendNotification("Publicador ya está registrado", "error")
+  }
+}
+}
 function renderTelefono(){
   telefono=activeTelefono;
   if (timer!=null) resetTimer();
-  	var isVisualizado="";
-                 if (telefono.visualizado_hoy=="true"){
-                    isVisualizado=" <b>(número ya se ha visualizado hoy)</b>";
-                 }
 
                 toggleRevisitaButtons();
 
@@ -104,21 +236,27 @@ function renderTelefono(){
                 }
                
                 document.getElementById("fldTelefono").style.visibility="visible"; //hace que el telefono sea visible
-                document.getElementById("fldDireccion").innerHTML=telefono.direccion;
-                document.getElementById("fldEstado").innerHTML=getRenderedEstados(telefono.estado)+isVisualizado;
-                document.getElementById("fldPublicador").innerHTML=telefono.publicador;
+                if (document.getElementById("fldDireccion")!=null) document.getElementById("fldDireccion").innerHTML=telefono.direccion;
                 var fuente=Fuente.getById(telefono.fuente);
-                document.getElementById("fldFuente").innerHTML= fuente.render(false);
+                document.getElementById("fldFuente").value = fuente.nombre
+                 document.getElementById("fldFuente").style.color=fuente.color
                if ( document.getElementById("fldFuente2")!=null) document.getElementById("fldFuente2").innerHTML= fuente.render(true);
 
                 var currentGrupo=telefono.grupo;
                 if(currentGrupo==0)  currentGrupo="Desconocido";
                 if(currentGrupo==-1)  currentGrupo="N/A";
-                document.getElementById("fldGrupo").innerHTML=currentGrupo;
+                if ( document.getElementById("fldGrupo")!=null) document.getElementById("fldGrupo").innerHTML=currentGrupo;
 
-                if(telefono.estado==2 || telefono.estado==8 || telefono.estado==10 || telefono.estado==7){
-                  document.getElementById("inputNombres").value=telefono.publicador;
-                }
+                let currentTipo="Propio"
+                if (filtros.perfil==1) currentTipo="Sólo fijos"
+                  if (filtros.perfil==2) currentTipo="Sólo celulares"
+                    if (filtros.perfil==3) currentTipo="Fijos y celulares"
+                      if (filtros.perfil==4) currentTipo="Guardados"
+
+                document.getElementById("fldTipoCurrent").value=currentTipo
+        
+                 
+                
 
 
                 //da formato a la fecha
@@ -127,15 +265,18 @@ function renderTelefono(){
                 var finaldate;
                 if(telefono.ultima_llamada=="0000-00-00 00:00:00"){
                     finaldate="N/A";
-                    document.getElementById("fldUltimaLlamada").innerHTML=finaldate;
+                    document.getElementById("fldUltimaLlamada").value=estados[telefono.estado][1]+" (Desconocido)";
+                    document.getElementById("fldUltimaLlamada").style.color=estados[telefono.estado][0]
                 }else{
                 var t = telefono.ultima_llamada.split(/[- :]/);
-                finaldate = t[2]+"/"+t[1]+"/"+t[0]+" a las "+t[3]+":"+t[4];
+                finaldate = t[2]+"/"+t[1]+"/"+t[0];
 
                 if(telefono.llamado_esta_semana=="true"){
-                    document.getElementById("fldUltimaLlamada").innerHTML="<font color='blue'><b>"+finaldate+" (menos de una semana)</b></font>";
+                    document.getElementById("fldUltimaLlamada").value=estados[telefono.estado][1]+" ("+finaldate+") (menos de una semana)";
+                    document.getElementById("fldUltimaLlamada").style.color="blue"
                 }else{
-                        document.getElementById("fldUltimaLlamada").innerHTML=finaldate;
+                        document.getElementById("fldUltimaLlamada").value=estados[telefono.estado][1]+" ("+finaldate+")";
+                        document.getElementById("fldUltimaLlamada").style.color=estados[telefono.estado][0]
                 }
                 }
                 showButtons();
@@ -262,16 +403,12 @@ function liberarRevisita(){
 }
 
 function siguiente(){
-  if(activeTelefono.id==0){
-    loadNewNumber();
-    return false;
-  } 
       document.getElementById("btnNext").setAttribute("disabled", "true"); //deshabilita temporalmente el boton siguiente
     if(!activeTelefono.editado){
       noContesta();
 
     }
-    loadNewNumber();
+    loadProfile(filtros.perfil)
     
 }
 

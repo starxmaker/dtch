@@ -1,17 +1,6 @@
 var fieldAutoComplete; //variable global del campo autocompletar
-var fieldAutoComplete2;
-var fieldAutoComplete3;
-var fieldAutoComplete4;
 
-function resetAutoCompletesNombres(){
-if (fieldAutoComplete2==undefined) return false;
-fieldAutoComplete2.destroy();
-fieldAutoComplete3.destroy();
-fieldAutoComplete4.destroy();
-initAutoCompleteNombres();
-initAutoCompleteQuick();
-initAutoCompleteEspera();
-}
+
 function initAutoComplete(){
 
 
@@ -39,52 +28,6 @@ function initAutoComplete(){
         fieldAutoComplete.destroy();
         initAutoComplete();
 
-    }
-});
-}
-//autocomplete nombres
-function initAutoCompleteNombres(){
-    fieldAutoComplete2=new autoComplete({
-    selector: '#inputNombres', //elemento del dom que tiene el buscador
-    source: function(term, response){ //fuente de los datos
-        term = term.toLowerCase();
-        var choices = allPublicadores;
-        var matches = [];
-        for (i=0; i<choices.length; i++)
-            if (~choices[i].toLowerCase().indexOf(term)) matches.push(choices[i]);
-        response(matches);
-    }
-});
-}
-//autocomplete nombres
-function initAutoCompleteQuick(){
-    fieldAutoComplete4=new autoComplete({
-    selector: '#inputHermanoQuick', //elemento del dom que tiene el buscador
-    source: function(term, response){ //fuente de los datos
-        term = term.toLowerCase();
-        var choices = allPublicadores;
-        var matches = [];
-        for (i=0; i<choices.length; i++)
-            if (~choices[i].toLowerCase().indexOf(term)) matches.push(choices[i]);
-        response(matches);
-    },
-    onSelect: function(e, term, item){ //funcion que se realiza cuando se selecciona una sugerencia
-
-        cleanActivity();
-
-    }
-});
-}
-function initAutoCompleteEspera(){
-    fieldAutoComplete3=new autoComplete({
-    selector: '#inputNombresEspera', //elemento del dom que tiene el buscador
-    source: function(term, response){ //fuente de los datos
-        term = term.toLowerCase();
-        var choices = allPublicadores;
-        var matches = [];
-        for (i=0; i<choices.length; i++)
-            if (~choices[i].toLowerCase().indexOf(term)) matches.push(choices[i]);
-        response(matches);
     }
 });
 }

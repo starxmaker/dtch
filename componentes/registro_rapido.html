@@ -13,7 +13,17 @@
 <div class="form-group row">
     <label for="staticEmail" class="col-sm-2 col-form-label">Hermano</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputHermanoQuick">
+      <div class="input-group">
+
+    <select class="form-control selectpicker" data-live-search="true" style="background-color:yellow" id="inputNombresQuick" onchange="cleanActivity()">
+          <option value="0">No especificado</option>
+           
+        </select>
+        <div class="input-group-append">
+          <button class="btn btn-light" type="button" onclick="addPublicador('registro');"><i class="fas fa-plus"></i></button>
+        </div>
+  </div>
+    </div>
     </div>
   </div>
   <div class="form-group row">
