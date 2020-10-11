@@ -56,7 +56,7 @@ var filters=[];
             if (!filtros.respuesta.revisita){
               filters.push("estado!=7 and estado!=2 and estado!=10 and estado!=11")
             }else{
-              filters.push("publicador="+filtros.respuesta.revisitaPublisher)
+              filters.push("t.publicador="+filtros.respuesta.revisitaPublisher.value)
             }
 
 

@@ -12,7 +12,7 @@ function loadProfile(profile){
 
 
   var publisher=choicesNombreMain.getValue()
-  if (profile==4 && (publisher=="" || publisher=="0")){
+  if (profile==4 && (publisher.value=="" || publisher.value=="0")){
     sendNotification("Seleccione un publicador", "error")
     return false;
   }
