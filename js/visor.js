@@ -158,6 +158,15 @@ function loadNumeroPropio(){
 }
 function loadNumeroById(id){
 
+   if (activeTelefono.id!=0 && !activeTelefono.editado){
+    if (!confirm("No se ha actualizado el número actual. ¿Seguro que desea continuar?")){
+      return false;
+    }else{
+      activeTelefono.editado=true
+    }
+  }
+
+
   window.clearInterval();
   document.activeElement.blur();
 
@@ -165,10 +174,8 @@ function loadNumeroById(id){
 
   telefono=Telefono.getById(id);
   activeTelefono=telefono;
-  let currentPublisher=Publicador.getById(telefono.publicador)
-  if (currentPublisher.nombre!=undefined ) document.getElementById("fldCurrentPublicador").value=currentPublisher.nombre
-    document.getElementById("inputNombres").value=telefono.publicador
-  if (currentPublisher.nombre!=undefined ) handleSelectPicker(0, currentPublisher.nombre)
+  choicesNombreMain.setChoiceByValue(telefono.publicador)
+    choicesNombreVisor.setChoiceByValue(telefono.publicador)
     filtros.perfil=4
   document.getElementById("mainBody").style.display="none"
   document.getElementById("visorBody").style.display="block"
@@ -460,7 +467,7 @@ element2.addEventListener(
   'change',
   function(event) {
     agregarNombre(event.detail.value)
-    choicesNombreLista.setChoiceByValue(0)
+    //choicesNombreLista.setChoiceByValue(0)
   },
   false,
 );
