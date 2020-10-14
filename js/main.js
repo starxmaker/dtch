@@ -27,6 +27,17 @@
     
   });
 
+  fetch("./componentes/agregar_numeros.html")
+  .then(response => {
+    return response.text()
+  })
+  .then(data => {
+    document.getElementById("modal_agregar_numero").innerHTML = data;
+     checkAvailableQuantity();
+    
+  });
+
+
 fetch("./componentes/visor.html")
   .then(response => {
     return response.text()
@@ -37,12 +48,13 @@ fetch("./componentes/visor.html")
     loadNumeroPropio();
     document.getElementById("dataBaseVersion").innerHTML=databaseVersion();
     initAutoComplete();
-    checkAvailableQuantity();
+   
 
     loadPreferencias();
     hideFiltroGrupo()
-    timer = new easytimer.Timer();
     afterLoading();
+    timer = new easytimer.Timer();
+    
 
 timer.addEventListener('secondsUpdated', function (e) {
    document.getElementById("basicUsage").value=timer.getTimeValues().toString();
@@ -84,15 +96,7 @@ fetch("./componentes/historial.html")
   });
 
 
-  fetch("./componentes/agregar_numeros.html")
-  .then(response => {
-    return response.text()
-  })
-  .then(data => {
-    document.getElementById("modal_agregar_numero").innerHTML = data;
-    populateFuentes();
-    
-  });
+  
 
    fetch("./componentes/manage.html")
   .then(response => {

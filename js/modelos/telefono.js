@@ -125,6 +125,7 @@ var filters=[];
 	static insert(codigoPais, codigoRegion,numero,direccion,grupo,fuente, tipo){
 		var statement="insert into telefonos (codigo_pais, codigo_region, numero, direccion, grupo, fuente,estado, ultima_llamada, publicador, ultima_visualizacion, tipo) values ("+codigoPais+",'"+codigoRegion+"','"+numero+"','"+direccion+"',"+grupo+","+fuente+",0,'0000-00-00 00:00:00', null, '0000-00-00 00:00:00',"+tipo+");";
 		db.run(statement);
+    saveStoredDatabase();
 	}
 	static query(search){
 		var query;

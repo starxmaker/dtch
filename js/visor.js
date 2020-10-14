@@ -427,7 +427,7 @@ function deleteHistoryRecord(id){
 
 function checkAvailableQuantity(){
   var cantidad=Telefono.checkAvailableNumbers();
-  document.getElementById("availableQuantity").innerHTML=cantidad;
+  document.getElementById("availableQuantity2").innerHTML=cantidad;
 }
 function openMoreInfo(){
   if (document.getElementById("divMoreInfo").style.display=="none"){

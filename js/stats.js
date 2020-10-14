@@ -1,7 +1,6 @@
 function showStats(){
 	setFechaHoy();
 	var date=getCurrentDatetime();
-	//var date="2020-09-21";
 	var stats=Historial.getStats(date);
 document.getElementById("fldLlamadas").innerHTML=stats.llamadas_realizadas;
                   //conversaciones
