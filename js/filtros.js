@@ -1,4 +1,5 @@
 var filtros={
+  perfil:0,
   tipo:{
     fijo: true,
     celular:true
@@ -9,7 +10,9 @@ var filtros={
     ocupado:true,
     receptivo:true,
     sinInteres:true,
-    noUtilizado:true
+    noUtilizado:true,
+    revisitas: false,
+    revisitaPublisher:0
   },
   blockedGrupos:[],
   otros:{

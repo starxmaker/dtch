@@ -12,7 +12,7 @@ onkeydown = onkeyup =function(e){
         if(!isInput){
           if (document.getElementById("modalRegistroRapido").classList.contains("show")){
       
-                document.getElementById("inputHermanoQuick").select();
+                document.getElementById("inputNombresQuick").select();
             }
             if(map[16] && map[72]) $('#modalAtajos').modal(); //SHIFT + H
             if (map[32]){ //Espacio
@@ -35,68 +35,12 @@ onkeydown = onkeyup =function(e){
             if (map[37]){
               if (document.getElementById("modalEstadisticas").classList.contains("show")){
                 document.getElementsByClassName("carousel-control-prev")[0].click();
-              }else{
-            loadHistory(); //Izquierda
-          }
-          }
-            if (map[39]) { //derecha
-              if (document.getElementById("modalEstadisticas").classList.contains("show")){
-                document.getElementsByClassName("carousel-control-next")[0].click();
-              }else{
-              if (document.getElementById("fldTelefono").style.visibility=="hidden"){
-                  document.getElementById("selectGrupo").value=-1;
-                  loadNewNumber();
-              }else{
-                omitir();
               }
-            }
           }
-            if (map[45]) document.getElementById("inputNombres").select(); //SHIFT + ENTER
+           
             if (map[16] && map[8]) document.getElementById("inputBuscar").select(); //SHIFT + Retroceso
             if (map[16] && map[38]) showStats(); //SHIFT + ARRIBA
-            if (map[16] && map[49]){ //shift + numero
-              document.getElementById("selectGrupo").value=1;
-              loadNewNumber();
-            }
-            if (map[16] && map[50]){
-              document.getElementById("selectGrupo").value=2;
-              loadNewNumber();
-            }
-            if (map[16] && map[51]){
-              document.getElementById("selectGrupo").value=3;
-              loadNewNumber();
-            }
-            if (map[16] && map[52]){
-              document.getElementById("selectGrupo").value=4;
-              loadNewNumber();
-            }
-            if (map[16] && map[53]){
-              document.getElementById("selectGrupo").value=5;
-              loadNewNumber();
-            }
-            if (map[16] && map[54]){
-              document.getElementById("selectGrupo").value=6;
-              loadNewNumber();
-            }
-            if (map[16] && map[55]){
-              document.getElementById("selectGrupo").value=7;
-              loadNewNumber();
-            }
-            if (map[16] && map[56]){
-              document.getElementById("selectGrupo").value=8;
-              loadNewNumber();
-            }
-            if (map[16] && map[57]){
-              document.getElementById("selectGrupo").value=-1;
-              loadNewNumber();
-            }
-            if (map[16] && map[48]){
-              document.getElementById("selectGrupo").value=0;
-              loadNewNumber();
-            }
-            if (map[16] && map[80]){
-              loadNumeroPropio();
-            }
+           
             if (map[16] && map[82]){
               if (activeTelefono.estado==2 || activeTelefono.id==0){
                 revisitaExitosa();
@@ -158,26 +102,7 @@ onkeydown = onkeyup =function(e){
             if (map[16] && map[69]){
               estudio();
             }
-            if (map[46]){
-              if (filtros.tipo.celular && filtros.tipo.fijo){
-                  filtros.tipo.celular=false;
-                  filtros.tipo.fijo=true;
-                  sendNotification("Filtro activado: sólo teléfonos fijos");
-                  loadNewNumber();
-                }else{
-                  if (!filtros.tipo.celular){
-                    filtros.tipo.celular=true;
-                    filtros.tipo.fijo=false;
-                    sendNotification("Filtro activado: sólo teléfonos celulares");
-                  loadNewNumber();
-                  }else{
-                  filtros.tipo.celular=false;
-                  filtros.tipo.fijo=true;
-                  sendNotification("Filtro activado: sólo teléfonos fijos");
-                  loadNewNumber();
-                }
-                }
-            }
+            
             if(map[17]){
               loadModalEspera();
             }
@@ -189,7 +114,6 @@ onkeydown = onkeyup =function(e){
           if (map[19] || map[13]){
             document.activeElement.blur(); //pausa
             if (document.getElementById("modalEspera").classList.contains("show")){
-              document.getElementById("buttonAgregarEspera").click();
               document.getElementById("inputNombresEspera").select();
             }
           }

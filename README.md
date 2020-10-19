@@ -13,3 +13,4 @@ FontQwesome
 SQL.js
 List.js
 Sortable
+Choices.js

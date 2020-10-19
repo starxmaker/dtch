@@ -44,12 +44,16 @@ function refreshListaEspera(){
 
 
 function modifyCurrentName(index){
+  if (returnToQuickMenu(true)){
   var nombre=listaEspera[index];
   deleteEspera(index,true);
-  loadNumeroPropio();
-  document.getElementById("inputNombres").value=nombre;
+
+ 
+  let publisher=Publicador.getIdByName(nombre)
+  choicesNombreMain.setChoiceByValue(publisher)
   hermanosHistory.push(nombre);
   document.getElementById("openModalEspera").click();
+}
   
 
 }
@@ -75,13 +79,12 @@ Array.prototype.insert = function ( index, item ) {
 };
 
 
-function agregarNombre(){
-  var nombre= document.getElementById("inputNombresEspera").value.trim();
-  if (nombre=="") return false;
-  document.getElementById("inputNombresEspera").value="";
-  updateListaEspera(nombre);
+function agregarNombre(publisherID){
+  if (publisherID==0 || publisherID=="") return false
+  let publisher=Publicador.getById(publisherID)
+  updateListaEspera(publisher.nombre);
   refreshListaEspera();
-  sendNotification(nombre+" agregado a la lista de espera");
+  sendNotification(publisher.nombre+" agregado a la lista de espera");
 
 }
 

@@ -33,7 +33,6 @@
 
 
 
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -44,6 +43,20 @@
 
      <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 
+
+
+
+<!-- Include Choices CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+/>
+<!-- Or versioned -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/styles/choices.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
 
 
 
@@ -168,6 +181,7 @@ themeConfig.initTheme();
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownOtros">
+                                <a  class="dropdown-item" href="#" onclick="addPublicador();"><i class="fas fa-users"></i> Añadir publicadores</a>
                                  <a  class="dropdown-item" href="#" onclick="gestionarPublicadores();"><i class="fas fa-users"></i> Gestionar publicadores</a>
                                   <a  class="dropdown-item" href="#" onclick="openConsole();"><i class="fas fa-terminal"></i> Abrir Consola SQL</a>
                                     <a  class="dropdown-item" href="#" onclick="loadModalEspera();"><i class="fas fa-ellipsis-h"></i> Lista de espera</a>
@@ -192,7 +206,7 @@ const darkSwitch = writeDarkSwitch(themeConfig);</script>
         <div id="modal_fuente"></div>
         <div id="modal_nueva_fuente"></div>
         <div id="modal_filtros"></div>
-        <div id="modal_registro_rapido"></div>
+        
         <div id="modal_agregar_numero"></div>
         <div id="modal_manage"></div>
         <div id="modal_lista"></div>
@@ -200,6 +214,7 @@ const darkSwitch = writeDarkSwitch(themeConfig);</script>
          <div id="modal_show_three"></div>
          <div id="modal_manage_fuentes"></div>
           <div id="modal_manage_publicadores"></div>
+          <div id="modal_registro_rapido"></div>
           <div id="modal_preferencias"></div>
           <div id="modal_consola"></div>
           <div id="modal_manage_revisitas"></div>
