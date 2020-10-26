@@ -1,0 +1,40 @@
+<a id="openModalLogin" data-toggle="modal" data-target="#modalLogin"></a>
+<div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Iniciar sesión</h5>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+
+      <div class="modal-body">
+        <form>
+
+
+        
+  
+   <div class="form-group">
+    <label for="inputServidor">Servidor</label>
+    <input type="text" class="form-control" id="inputServidor" >
+  </div>
+  <div class="form-group">
+    <label for="inputUsuario">Usuario</label>
+    <input type="text" class="form-control" id="inputUsuario" >
+  </div>
+  <div class="form-group">
+    <label for="inputPassword">Contraseña</label>
+    <input type="password" class="form-control" id="inputPassword" >
+  </div>
+  
+</form>
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-block btn-primary" onclick={loggingAttempt()}>Iniciar sesión</button>
+        <button type="button" class="btn btn-block btn-secondary" data-dismiss="modal">Utilizar versión offline</button>
+      </div>
+    </div>
+  </div>
+</div>

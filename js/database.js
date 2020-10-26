@@ -1,24 +1,87 @@
-let db, sql_config;
+let db, sql_config, server, isOnline, jwt;
 config = {
       locateFile: filename => `/dist/${filename}`
     }
-    // The `initSqlJs` function is globally provided by all of the main dist files if loaded in the browser.
-    // We must specify this locateFile function if we are loading a wasm file from anywhere other than the current html page's folder.
-    initSqlJs(config).then(function(SQL){
-    sql_config=SQL;
-    if (checkDatabaseExistance()){
-    	loadStoredDatabase();
-    }else{
-    	newDatabase();
+
+    const initDatabase=async() =>{
+        const SQL = await initSqlJs(config)
+        sql_config=SQL;
+        if (checkDatabaseExistance()){
+            loadStoredDatabase();
+        }else{
+            newDatabase();
+        }
     }
-    
-    
-    });
     function newDatabase(){
     	db=new sql_config.Database();
          window.localStorage.setItem("versionDB",null);
     	createDatabase();
     	saveStoredDatabase();
+    }
+
+    const setServerDetails= async(serverP,jwtP)=>{
+        server=serverP
+        jwt=jwtP
+        const result=await tryConnection()
+        if (result){
+            isOnline=true
+        }else{
+            isOnline=false
+        }
+        return result
+    }
+
+    const getInformation=async(route)=>{
+        try{
+            const response=await axios.get(server+route, {withCredentials: true, headers: {'access-token': jwt}})
+            return response.data
+        }catch(err){
+            Notiflix.Report.Failure('Información','Sin conexión con el servidor. Vuelva a iniciar sesión','OK');
+            return false
+        }
+    }
+    const deleteInformation=async(route)=>{
+        try{
+            const response=await axios.delete(server+route, {withCredentials: true, headers: {'access-token': jwt}})
+            return response.status==200
+        }catch(err){
+            Notiflix.Report.Failure('Información','Sin conexión con el servidor. Vuelva a iniciar sesión','OK');
+            return false
+        }
+    }
+    const postInformation=async(route, data)=>{
+        try{
+            const response=await axios.post(server+route, data, {withCredentials: true, headers: {'access-token': jwt}})
+            return response.data
+        }catch(err){
+            Notiflix.Report.Failure('Información','Sin conexión con el servidor. Vuelva a iniciar sesión','OK');
+            return false
+        }
+    }
+
+    const patchInformation=async(route, data)=>{
+        try{
+            const response=await axios.patch(server+route, data, {withCredentials: true, headers: {'access-token': jwt}})
+            return response.data
+        }catch(err){
+            Notiflix.Report.Failure('Información','Sin conexión con el servidor. Vuelva a iniciar sesión','OK');
+            return false
+        }
+    }
+
+    const tryConnection= async ()=>{
+        try{
+            const response=await axios.get(server+"/misc/test", {
+                withCredentials: true,
+                headers: {
+                  'access-token': jwt,
+                }
+              })
+              
+             return response.status===200
+            }catch(err){
+                return false
+            }
     }
 
     function createDatabase(){
@@ -36,12 +99,14 @@ config = {
     	db=new sql_config.Database(toBinArray(window.localStorage.getItem("DB")));
     
     }
-    function afterLoading(){
-    	populateGroupList();
-        populatePublicadores();
-        populateFuentes();
-        showLastSave();
-        enableForeignKeys();
+    const afterLoading = async () => {
+    	await populateGroupList();
+        await populatePublicadores();
+        await populateFuentes();
+        if (!isOnline){
+            showLastSave();
+            enableForeignKeys();
+        }
     }
     function saveStoredDatabase(){
     	window.localStorage.setItem("DB",toBinString(db.export()));

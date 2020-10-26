@@ -12,22 +12,22 @@ var fuentesList = new List('divTablaFuentes', options);
 }
 
 
-function deleteFuente(id){
+async function deleteFuente(id){
 	if (confirm("¿Está seguro de borrar la fuente seleccionada?")){
 
 
-		var fuente=Fuente.getById(id);
-		fuente.delete();
+		var fuente=await Fuente.getById(id);
+		await fuente.delete();
 		sendNotification("Fuente eliminada");
 	}
 }
 
 
-function populateManageFuentesList(){
-	var fuentes=Fuente.getAll();
+async function populateManageFuentesList(){
+	var fuentes=await Fuente.getAll();
 	var html="";
 	for(var i=0; i<fuentes.length;i++){
-		html+=fuentes[i].renderRow();
+		 html+=fuentes[i].renderRow();
 	}
 	document.getElementById("cuerpoTablaFuentes").innerHTML=html;
 }

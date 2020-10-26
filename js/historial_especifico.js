@@ -1,7 +1,7 @@
-function loadHistorialEspecifico(){
+async function loadHistorialEspecifico(){
   if (activeTelefono.id==0) return false;
   
-                var registros= Historial.getByIdNumero(activeTelefono.id);
+                var registros= await Historial.getByIdNumero(activeTelefono.id);
                 var i;
                 var html="";
                 var numeroH="";

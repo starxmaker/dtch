@@ -1,8 +1,9 @@
-function showStats(){
+async function showStats(){
 	setFechaHoy();
-	var date=getCurrentDatetime();
-	var stats=Historial.getStats(date);
-document.getElementById("fldLlamadas").innerHTML=stats.llamadas_realizadas;
+  //var date=getCurrentDatetime();
+  var date="2020-10-23"
+	var stats= await Historial.getStats(date);
+document.getElementById("fldLlamadas").innerHTML=stats.llamadas;
                   //conversaciones
                   document.getElementById("fldConversaciones").innerHTML=stats.conversaciones;
                   //hermanos

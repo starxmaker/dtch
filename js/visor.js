@@ -74,7 +74,7 @@ function returnToQuickMenu(refresh){
 
 
 }
-function populateGroupList(){
+async function populateGroupList(){
 	if(document.getElementById("selectGrupo")==null) return false;
 
 
@@ -86,7 +86,7 @@ for (i = sel.length - 1; i >= 0; i--) {
 var tiempoAbierto;
 
   var html="<label for='inputNumero'>Grupos</label>";
-	var grupos=Telefono.getDifferentGroups();
+	var grupos=await Telefono.getDifferentGroups();
 	for(var i=0;i<grupos.length;i++){
 		var valor=grupos[i];
 		var descripcion="Grupo "+valor;
@@ -105,14 +105,14 @@ function abiertoSince(){
   document.getElementById("fldAbierto").innerHTML=timeSince(tiempoAbierto);
 }
 
-function populatePublicadores(){
+const populatePublicadores= async() =>{
    allPublicadores=[{
     value:0,
     label:"No especificado",
     selected:true,
     disabled:true
    }]
-  var publicadores=Publicador.getAll();
+  var publicadores=await Publicador.getAll();
   
 
   publicadores.map(item=>{
@@ -127,13 +127,13 @@ function populatePublicadores(){
  
   initChoices()
 }
-function loadNewNumber(){
+async function loadNewNumber(){
   window.clearInterval();
   document.activeElement.blur();
 
   document.getElementById("fldTelefono").style.visibility="hidden";
   let grupo=document.getElementById("selectGrupo").value
-  telefono=Telefono.getLastCalled(grupo,filtros,1);
+  telefono=await Telefono.getLastCalled(grupo,filtros,1);
 
   activeTelefono=telefono;
   tiempoAbierto=getCurrentDatetime();
@@ -156,7 +156,7 @@ function loadNumeroPropio(){
 }, 1000);
   renderTelefono();
 }
-function loadNumeroById(id){
+async function loadNumeroById(id){
 
    if (activeTelefono.id!=0 && !activeTelefono.editado){
     if (!confirm("No se ha actualizado el número actual. ¿Seguro que desea continuar?")){
@@ -172,7 +172,7 @@ function loadNumeroById(id){
 
   document.getElementById("fldTelefono").style.visibility="hidden";
 
-  telefono=Telefono.getById(id);
+  telefono=await Telefono.getById(id);
   activeTelefono=telefono;
   choicesNombreMain.setChoiceByValue(telefono.publicador)
     choicesNombreVisor.setChoiceByValue(telefono.publicador)
@@ -187,15 +187,15 @@ function loadNumeroById(id){
   renderTelefono();
 }
 
-function addPublicador(){
+const addPublicador= async() =>{
   var person = prompt("Ingrese el nombre del nuevo publicador");
 
 if (person != null) {
-  let result=Publicador.getIdByName(person.trim())
-  if (result==0){
-    let newPublicador=Publicador.insertNewPublicador(person)
+  let result=await Publicador.getIdByName(person.trim())
+  if (result==0 || result == null){
+    let newPublicador=await Publicador.insertNewPublicador(person)
 
-    populatePublicadores()
+    await populatePublicadores()
     
 
     sendNotification("Publicador agregado")
@@ -204,7 +204,7 @@ if (person != null) {
   }
 }
 }
-function renderTelefono(){
+async function renderTelefono(){
   telefono=activeTelefono;
   if (timer!=null) resetTimer();
 
@@ -224,7 +224,7 @@ function renderTelefono(){
                
                 document.getElementById("fldTelefono").style.visibility="visible"; //hace que el telefono sea visible
                 if (document.getElementById("fldDireccion")!=null) document.getElementById("fldDireccion").innerHTML=telefono.direccion;
-                var fuente=Fuente.getById(telefono.fuente);
+                var fuente=await Fuente.getById(telefono.fuente);
                 document.getElementById("fldFuente").value = fuente.nombre
                  document.getElementById("fldFuente").style.color=fuente.color
                if ( document.getElementById("fldFuente2")!=null) document.getElementById("fldFuente2").innerHTML= fuente.render(true);
@@ -314,15 +314,15 @@ function showButtons(){
     }
 }
 
-function actualizarEstado(estado){
+async function actualizarEstado(estado){
   var publicador = document.getElementById("inputNombres").value;
   if (publicador==0 || publicador==""){
     sendNotification("Seleccione un publicador", "error")
     return false;
   }
   var tiempo=chronometer;
-    activeTelefono.updateEstado(estado, publicador,tiempo);
-    checkAvailableQuantity();
+    await activeTelefono.updateEstado(estado, publicador,tiempo);
+    await checkAvailableQuantity();
     renderTelefono();
 }
 
@@ -343,9 +343,9 @@ function noLlamar(){
   var estado=3;
   actualizarEstado(estado);
 }
-function noContesta(){
+async function noContesta(){
     var estado=4;
-    actualizarEstado(estado);
+    await actualizarEstado(estado);
     
 }
 function ocupado(){
@@ -388,24 +388,20 @@ function liberarRevisita(){
 
 }
 
-function siguiente(){
+async function siguiente(){
       document.getElementById("btnNext").setAttribute("disabled", "true"); //deshabilita temporalmente el boton siguiente
     if(!activeTelefono.editado){
-      noContesta();
+      await noContesta();
 
     }
     loadProfile(filtros.perfil)
     
 }
 
-function loadHistory(){
-  
-
-  
-                var registros= Historial.getLastCalls(50);
-                var html="";
-
-                for (var i=0; i<registros.length;i++){
+async function loadHistory(){
+  var registros= await Historial.getLastCalls(50);
+  var html="";
+  for (var i=0; i<registros.length;i++){
                   html+=registros[i].render();
                 }
                 
@@ -420,13 +416,13 @@ function loadHistory(){
 }
 
 
-function deleteHistoryRecord(id){
-  var record=Historial.getById(id);
-  record.delete();
+async function deleteHistoryRecord(id){
+  var record=await Historial.getById(id);
+  await record.delete();
 }
 
-function checkAvailableQuantity(){
-  var cantidad=Telefono.checkAvailableNumbers();
+async function checkAvailableQuantity(){
+  var cantidad=await Telefono.checkAvailableNumbers();
   document.getElementById("availableQuantity2").innerHTML=cantidad;
 }
 function openMoreInfo(){

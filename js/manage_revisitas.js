@@ -1,5 +1,5 @@
-function gestionarRevisitas(publicador){
-	var currentPublicador=Publicador.getById(publicador);
+async function gestionarRevisitas(publicador){
+	var currentPublicador=await Publicador.getById(publicador);
 	document.getElementById("labelPublicadorManageRevisita").innerHTML=currentPublicador.nombre;
 	document.getElementById("botonCompartirRevisitas").setAttribute("data-identificador", publicador);
 	populateManageRevisitasList(publicador);
@@ -15,10 +15,10 @@ var revisitasList = new List('divTablaRevisitas', options);
 }
 
 
-function deleteRevisita(id){
+async function deleteRevisita(id){
 	if (confirm("¿Está seguro de liberar la revisita seleccionada")){
-		var telefono=Telefono.getById(id);
-		telefono.release();
+		var telefono=await Telefono.getById(id);
+		await telefono.release();
 
 		sendNotification("Revisita Liberada");
 		var idPublicador=document.getElementById("botonCompartirRevisitas").getAttribute("data-identificador");
@@ -27,8 +27,8 @@ function deleteRevisita(id){
 }
 
 
-function populateManageRevisitasList(publicador){
-	var revisitas=Telefono.getRevisitasByPublicador(publicador);
+async function populateManageRevisitasList(publicador){
+	var revisitas=await Telefono.getRevisitasByPublicador(publicador);
 	var html="";
 	for(var i=0; i<revisitas.length;i++){
 		html+=revisitas[i].renderRowManageRevisitas();
@@ -36,13 +36,13 @@ function populateManageRevisitasList(publicador){
 	document.getElementById("cuerpoTablaRevisitas").innerHTML=html;
 }
 
-function shareRevisitas(){
+async function shareRevisitas(){
 	var idPublicador=document.getElementById("botonCompartirRevisitas").getAttribute("data-identificador");
-	var currentPublicador=Publicador.getById(idPublicador);
+	var currentPublicador=await Publicador.getById(idPublicador);
 
 	var messageRaw=["Revisitas de "+currentPublicador.nombre];
 
-	var revisitas=Telefono.getRevisitasByPublicador(idPublicador);
+	var revisitas=await Telefono.getRevisitasByPublicador(idPublicador);
 	for(var i=0; i<revisitas.length;i++){
 		messageRaw.push(revisitas[i].numero);
 	}

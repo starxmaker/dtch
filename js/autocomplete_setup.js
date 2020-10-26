@@ -1,7 +1,7 @@
 var fieldAutoComplete; //variable global del campo autocompletar
 
 
-function initAutoComplete(){
+async function initAutoComplete(){
 
 
   
@@ -9,8 +9,8 @@ function initAutoComplete(){
     selector: '#inputBuscar', //elemento del dom que tiene el buscador
     cache:false, //genera problemas de busqueda si está en true
     minChars: 4, //numero minimo de caracteres para comenzar a buscar
-    source: function(term, response){ //fuente de los datos
-        var data=Telefono.query(term);
+    source: async function(term, response){ //fuente de los datos
+        var data=await Telefono.query(term);
      	response(data); //manda la respuesta como sugerencias
        
     },

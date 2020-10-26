@@ -43,13 +43,13 @@ function refreshListaEspera(){
 
 
 
-function modifyCurrentName(index){
+async function modifyCurrentName(index){
   if (returnToQuickMenu(true)){
   var nombre=listaEspera[index];
   deleteEspera(index,true);
 
  
-  let publisher=Publicador.getIdByName(nombre)
+  let publisher=awaitPublicador.getIdByName(nombre)
   choicesNombreMain.setChoiceByValue(publisher)
   hermanosHistory.push(nombre);
   document.getElementById("openModalEspera").click();
@@ -79,9 +79,9 @@ Array.prototype.insert = function ( index, item ) {
 };
 
 
-function agregarNombre(publisherID){
+async function agregarNombre(publisherID){
   if (publisherID==0 || publisherID=="") return false
-  let publisher=Publicador.getById(publisherID)
+  let publisher= await Publicador.getById(publisherID)
   updateListaEspera(publisher.nombre);
   refreshListaEspera();
   sendNotification(publisher.nombre+" agregado a la lista de espera");
