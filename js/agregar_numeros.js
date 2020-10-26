@@ -1,4 +1,5 @@
-function addNewNumber(){
+async function addNewNumber(){
+  await checkAvailableQuantity();
   document.getElementById("openModalNuevoNumero").click();
   fillCodigosPreferidos();
 }
@@ -73,7 +74,7 @@ async function checkNumeroExistance(){
       }
   }
     
-      var numeroToCheck=codigoPais+codigoRegion+nuevoNumero;
+      var numeroToCheck=nuevoNumero;
   const check=await Telefono.checkExistance(numeroToCheck)
   
   
@@ -104,6 +105,7 @@ async function agregarNumeroDirectorio(){
   if(numeroExiste=="true" || nuevoNumero.length==0 || codigoPais.length==0 || nuevaDireccion.length==0 || nuevoGrupo.trim()=="" || nuevaFuente.trim()=="") return false;
 
   if (tipo==0 && codigoRegion.length==0) return false;
+  Notiflix.Loading.Arrows('Agregando teléfono');
   await Telefono.insert(codigoPais,codigoRegion, nuevoNumero,nuevaDireccion,nuevoGrupo,nuevaFuente, tipo);
           document.getElementById("inputNumeroExist").value="true";
   document.getElementById("inputNumero").value="";
@@ -112,6 +114,7 @@ async function agregarNumeroDirectorio(){
             sendNotification("Número agregado al directorio");  
 window.localStorage.setItem("prefferedCodigoRegion", codigoRegion);
     window.localStorage.setItem("prefferedCodigoPais", codigoPais);
+    Notiflix.Loading.Remove()
 
         await populateGroupList();      
         await checkAvailableQuantity();

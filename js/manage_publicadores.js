@@ -1,5 +1,5 @@
-function gestionarPublicadores(){
-	populateManagePublicadoresList();
+async function gestionarPublicadores(){
+	await populateManagePublicadoresList();
 	var options = {
   valueNames: [ 'nombre'],
   page:10,

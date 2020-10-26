@@ -58,7 +58,7 @@ class Fuente{
     }else{
       db.run("insert into fuentes (nombre, color, descripcion) values('"+nombre+"','"+color+"','"+descripcion+"')");
     }
-    populateFuentes()
+    await populateFuentes()
   }
   async delete(){
     if (isOnline){
@@ -66,7 +66,7 @@ class Fuente{
     }else{
       db.run("delete from fuentes where id="+this.id);
     }
-    populateFuentes()
+    await populateFuentes()
     
   }
 	render(isDescripcion){

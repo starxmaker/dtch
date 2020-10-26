@@ -125,6 +125,7 @@ async function loadElements(){
   }else{
     openLogin()
   }
+  toggleOnline()
   await postLoading()
   
   Notiflix.Loading.Remove()
@@ -150,6 +151,14 @@ const postLoading= async() =>{
 
 var activeTelefono=Telefono.getBlank();
 var allPublicadores=[];
+
+function toggleOnline(){
+ if (isOnline){
+  Array.from(document.getElementsByClassName("offlineItem")).forEach(item => item.style.display="none")
+ }else{
+  Array.from(document.getElementsByClassName("onlineItem")).forEach(item => item.style.display="none")
+ }
+}
 
 
 

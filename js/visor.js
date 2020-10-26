@@ -128,7 +128,7 @@ const populatePublicadores= async() =>{
   initChoices()
 }
 async function loadNewNumber(){
-  window.clearInterval();
+  Notiflix.Loading.Arrows('Cargando número');
   document.activeElement.blur();
 
   document.getElementById("fldTelefono").style.visibility="hidden";
@@ -136,25 +136,22 @@ async function loadNewNumber(){
   telefono=await Telefono.getLastCalled(grupo,filtros,1);
 
   activeTelefono=telefono;
-  tiempoAbierto=getCurrentDatetime();
-  window.setInterval(function(){
- abiertoSince();
-}, 5000);
+  
 
   renderTelefono();
+  Notiflix.Loading.Remove()
 
 
 }
 function loadNumeroPropio(){
-  window.clearInterval();
+  Notiflix.Loading.Arrows('Cargando número');
   document.activeElement.blur();
   telefono=Telefono.getBlank();
   activeTelefono=telefono;
   tiempoAbierto=getCurrentDatetime();
-  window.setInterval(function(){
- abiertoSince();
-}, 1000);
+  
   renderTelefono();
+  Notiflix.Loading.Remove()
 }
 async function loadNumeroById(id){
 
@@ -165,9 +162,9 @@ async function loadNumeroById(id){
       activeTelefono.editado=true
     }
   }
+  Notiflix.Loading.Arrows('Cargando número');
 
 
-  window.clearInterval();
   document.activeElement.blur();
 
   document.getElementById("fldTelefono").style.visibility="hidden";
@@ -179,29 +176,31 @@ async function loadNumeroById(id){
     filtros.perfil=4
   document.getElementById("mainBody").style.display="none"
   document.getElementById("visorBody").style.display="block"
-
-  tiempoAbierto=getCurrentDatetime();
-  window.setInterval(function(){
- abiertoSince();
-}, 5000);
+  
   renderTelefono();
+  Notiflix.Loading.Remove()
 }
 
 const addPublicador= async() =>{
   var person = prompt("Ingrese el nombre del nuevo publicador");
 
 if (person != null) {
+
+  Notiflix.Loading.Arrows('Agregando publicador');
   let result=await Publicador.getIdByName(person.trim())
   if (result==0 || result == null){
     let newPublicador=await Publicador.insertNewPublicador(person)
-
+    sendNotification("Publicador agregado")
+    Notiflix.Loading.Remove()
     await populatePublicadores()
     
 
-    sendNotification("Publicador agregado")
+    
   }else{
     sendNotification("Publicador ya está registrado", "error")
+    Notiflix.Loading.Remove()
   }
+  
 }
 }
 async function renderTelefono(){
@@ -320,10 +319,13 @@ async function actualizarEstado(estado){
     sendNotification("Seleccione un publicador", "error")
     return false;
   }
+  Notiflix.Loading.Arrows('Actualizando estado');
   var tiempo=chronometer;
     await activeTelefono.updateEstado(estado, publicador,tiempo);
-    await checkAvailableQuantity();
+   
     renderTelefono();
+    Notiflix.Loading.Remove()
+    
 }
 
 //funciones de cada boton
@@ -399,6 +401,7 @@ async function siguiente(){
 }
 
 async function loadHistory(){
+  Notiflix.Loading.Arrows('Abriendo Historial');
   var registros= await Historial.getLastCalls(50);
   var html="";
   for (var i=0; i<registros.length;i++){
@@ -412,13 +415,15 @@ async function loadHistory(){
                  document.getElementById("openModalHistorial").click();
         
 
-
+                 Notiflix.Loading.Remove()
 }
 
 
 async function deleteHistoryRecord(id){
+  Notiflix.Loading.Arrows('Eliminando');
   var record=await Historial.getById(id);
   await record.delete();
+  Notiflix.Loading.Remove()
 }
 
 async function checkAvailableQuantity(){

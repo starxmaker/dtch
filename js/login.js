@@ -28,6 +28,7 @@ const loggingAttempt= async () =>{
             document.getElementById("openModalLogin").click()
             Notiflix.Loading.Arrows('Cargando ambiente');
             await setServerDetails(chosenServidor, response.data.token )
+            toggleOnline()
             await afterLoading()
             Notiflix.Loading.Remove()
          }else{
@@ -40,6 +41,7 @@ const loggingAttempt= async () =>{
 }
 
 const cerrarSesion = () =>{
+    Notiflix.Loading.Arrows('Cerrando sesión');
     window.localStorage.removeItem("access-token")
     window.location.reload()
 }

@@ -28,7 +28,7 @@ class Publicador{
       const results=await getInformation("/publicadores/nombre/"+nombre)
       var publicador=null
       if (results!=null) publicador=new Publicador(results.idPublicador, results.nombre, results.grupo, results.invitado)
-      return publicador
+      return publicador.id
 
     }else{
       if (nombre.trim()==""|| nombre=="No Especificado") return 0;

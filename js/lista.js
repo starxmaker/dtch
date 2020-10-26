@@ -1,6 +1,14 @@
-function loadModalEspera(){
+async function loadModalEspera(){
+  Notiflix.Loading.Arrows('Cargando lista');
+  if (isOnline){
+    const results=await getInformation("/listas")
+
+    listaEspera=results.lista
+    hermanosHistory=results.historial
+  }
 	refreshListaEspera();   
-	document.getElementById("openModalEspera").click();
+  document.getElementById("openModalEspera").click();
+  Notiflix.Loading.Remove()
 
 }
 
@@ -17,7 +25,7 @@ function checkParticipacion(name){
 
 
 
-function refreshListaEspera(){
+async function refreshListaEspera(){
    var i;
                 var html="";
                 for (i=0;i<listaEspera.length;i++){
@@ -44,16 +52,19 @@ function refreshListaEspera(){
 
 
 async function modifyCurrentName(index){
+  
   if (returnToQuickMenu(true)){
+    document.getElementById("openModalEspera").click();
   var nombre=listaEspera[index];
-  deleteEspera(index,true);
-
- 
-  let publisher=awaitPublicador.getIdByName(nombre)
+  await deleteEspera(index,true);
+  let publisher=await Publicador.getIdByName(nombre)
   choicesNombreMain.setChoiceByValue(publisher)
   hermanosHistory.push(nombre);
-  document.getElementById("openModalEspera").click();
+  
+  
+await postInformation("/listas",{lista:listaEspera, historial: hermanosHistory})
 }
+
   
 
 }
@@ -85,6 +96,7 @@ async function agregarNombre(publisherID){
   updateListaEspera(publisher.nombre);
   refreshListaEspera();
   sendNotification(publisher.nombre+" agregado a la lista de espera");
+  await postInformation("/listas",{lista:listaEspera, historial: hermanosHistory})
 
 }
 
@@ -107,7 +119,7 @@ function updateListaEspera(nombre){
   }
 }
 
-function deleteEspera(index,again){
+async function deleteEspera(index,again){
   var nombre=listaEspera[index];
   listaEspera.splice(index,1);
   
@@ -115,4 +127,5 @@ function deleteEspera(index,again){
       listaEspera.push(nombre);
   }
   refreshListaEspera();
+  await postInformation("/listas",{lista:listaEspera, historial: hermanosHistory})
 }

@@ -2,7 +2,7 @@ async function gestionarRevisitas(publicador){
 	var currentPublicador=await Publicador.getById(publicador);
 	document.getElementById("labelPublicadorManageRevisita").innerHTML=currentPublicador.nombre;
 	document.getElementById("botonCompartirRevisitas").setAttribute("data-identificador", publicador);
-	populateManageRevisitasList(publicador);
+	await populateManageRevisitasList(publicador);
 	var options = {
   valueNames: [ 'numero'],
   page:10,
@@ -22,7 +22,7 @@ async function deleteRevisita(id){
 
 		sendNotification("Revisita Liberada");
 		var idPublicador=document.getElementById("botonCompartirRevisitas").getAttribute("data-identificador");
-		populateManageRevisitasList(idPublicador);
+		await populateManageRevisitasList(idPublicador);
 	}
 }
 

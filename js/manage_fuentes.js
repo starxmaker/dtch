@@ -1,5 +1,5 @@
-function gestionarFuentes(){
-	populateManageFuentesList();
+async function gestionarFuentes(){
+	await populateManageFuentesList();
 	var options = {
   valueNames: [ 'nombre'],
   page:10,

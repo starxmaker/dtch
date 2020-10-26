@@ -1,7 +1,7 @@
 async function showStats(){
+  Notiflix.Loading.Arrows('Cargando estadísticas');
 	setFechaHoy();
-  //var date=getCurrentDatetime();
-  var date="2020-10-23"
+  var date=getCurrentDatetime();
 	var stats= await Historial.getStats(date);
 document.getElementById("fldLlamadas").innerHTML=stats.llamadas;
                   //conversaciones
@@ -33,6 +33,7 @@ document.getElementById("fldLlamadas").innerHTML=stats.llamadas;
                 chartPudimosHablar.update();
                 //muestra el modal
                document.getElementById("openModalEstadisticas").click();
+               Notiflix.Loading.Remove()
  
    
   

@@ -8,11 +8,11 @@ async function deleteTelefono(id){
 		sendNotification("Número eliminado");
 	}
 }
-function openManage(){
+async function openManage(){
 
 	
 
-	populateManageList();
+	await populateManageList();
 	var options = {
   valueNames: [ 'numero', 'estado', 'publicador', 'direccion'],
   page:10,

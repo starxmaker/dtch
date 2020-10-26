@@ -5,15 +5,16 @@
             <div class="card">
                 <div class="card-header"><i class="fas fa-cog" data-toggle="dropdown"></i>
   </a>          <div class="dropdown-menu configuracion">
+    <a class="dropdown-item onlineItem" href="#" onclick="cerrarSesion()" ><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
                    
-           <a  class="dropdown-item" href="#" data-toggle="modal" data-target="#modalImportarBaseDeDatos"><i class="fas fa-folder-open"></i> Abrir base de datos</a>
-      <a  class="dropdown-item" href="#" onclick="exportDatabase();">  <i class="far fa-save"></i> Descargar base de datos</a>
+           <a  class="dropdown-item offlineItem" href="#" data-toggle="modal" data-target="#modalImportarBaseDeDatos"><i class="fas fa-folder-open"></i> Abrir base de datos</a>
+      <a  class="dropdown-item offlineItem" href="#" onclick="exportDatabase();">  <i class="far fa-save"></i> Descargar base de datos</a>
       <div class="dropdown-divider"></div>
     <a class="dropdown-item" href="#" onclick="loadHistory();"> <i class="fas fa-history"></i> Ver historial</a>                    
     <a class="dropdown-item" href="#" onclick="returnToQuickMenu(true)"> <i class="fas fa-user"></i> Próximo publicador</a>
      <a  class="dropdown-item" href="#" onclick="registroRapido();"><i class="fas fa-shipping-fast"></i> Registro Rápido</a>
                    <a class="dropdown-item" href="#" onclick="showStats()" ><i class="fas fa-chart-bar"></i> Estadísticas</a>
-                   <a class="dropdown-item" href="#" onclick="cerrarSesion()" ><i class="fas fa-chart-bar"></i> Cerrar sesión</a>
+                   
         
 
 

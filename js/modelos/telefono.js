@@ -31,7 +31,7 @@ class Telefono{
 				  results.grupo,
 				  results.estado,
 				  joinDate(results.ultima_llamada_year, results.ultima_llamada_month, results.ultima_llamada_day, results.ultima_llamada_hour, results.ultima_llamada_minute, results.ultima_llamada_second),
-				  results.idPublicador,
+				  results.publicador,
 				  results.fuente,
 				  false,
 				  results.dias_desde<7,
@@ -69,7 +69,6 @@ class Telefono{
 	static async getLastCalled(grupo,filtros,cantidad){
 		if (isOnline){
 			let candidate
-			console.log(filtros)
 			const nextTelefono=await postInformation("/telefonos/nextNumber", {filtro:filtros, quantity: cantidad})
 			if(cantidad>1) var numeros=[];
 			if (nextTelefono.length>0){
@@ -83,7 +82,7 @@ class Telefono{
 						results.grupo,
 						results.estado,
 						joinDate(results.ultima_llamada_year, results.ultima_llamada_month, results.ultima_llamada_day, results.ultima_llamada_hour, results.ultima_llamada_minute, results.ultima_llamada_second),
-						results.idPublicador,
+						results.publicador,
 						results.fuente,
 						false,
 						results.dias_desde<7,
@@ -167,7 +166,7 @@ class Telefono{
 			const exists= await getInformation("/telefonos/checkExistance/"+numero)
 			return exists.exists
 		}else{
-			var query="select numero from telefonos where codigo_pais || codigo_region || numero='"+numero+"'";
+			var query="select numero from telefonos where numero='"+numero+"'";
 			var stmt=db.prepare(query);
 			stmt.getAsObject(); // {col1:1, col2:111}
 			var exist=false;
@@ -250,7 +249,7 @@ class Telefono{
 						results.grupo,
 						results.estado,
 						joinDate(results.ultima_llamada_year, results.ultima_llamada_month, results.ultima_llamada_day, results.ultima_llamada_hour, results.ultima_llamada_minute, results.ultima_llamada_second),
-						results.idPublicador,
+						results.publicador,
 						results.fuente,
 						false,
 						results.dias_desde<7,
@@ -295,7 +294,7 @@ class Telefono{
 					results.grupo,
 					results.estado,
 					joinDate(results.ultima_llamada_year, results.ultima_llamada_month, results.ultima_llamada_day, results.ultima_llamada_hour, results.ultima_llamada_minute, results.ultima_llamada_second),
-					results.idPublicador,
+					results.publicador,
 					results.fuente,
 					false,
 					results.dias_desde<7,
