@@ -119,8 +119,8 @@ async function loadElements(){
   await initDatabase()
   
   
-  if (window.localStorage.getItem("DTCH_SERVER") && window.localStorage.getItem("access-token")){
-    const result= await setServerDetails(window.localStorage.getItem("DTCH_SERVER"), window.localStorage.getItem("access-token"))
+  if (window.localStorage.getItem("DTCH_SERVER") && window.sessionStorage.getItem("csrfToken")){
+    const result= await setServerDetails()
     if (!result) openLogin()
   }else{
     openLogin()
@@ -155,8 +155,10 @@ var allPublicadores=[];
 function toggleOnline(){
  if (isOnline){
   Array.from(document.getElementsByClassName("offlineItem")).forEach(item => item.style.display="none")
+  Array.from(document.getElementsByClassName("onlineItem")).forEach(item => item.style.display="block")
  }else{
   Array.from(document.getElementsByClassName("onlineItem")).forEach(item => item.style.display="none")
+  Array.from(document.getElementsByClassName("offlineItem")).forEach(item => item.style.display="block")
  }
 }
 

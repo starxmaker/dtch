@@ -22,12 +22,12 @@ const loggingAttempt= async () =>{
        
          if (response.status==200){
             window.localStorage.setItem("DTCH_SERVER",chosenServidor)
-            window.localStorage.setItem("access-token", response.data.token)
+            window.sessionStorage.setItem("csrfToken", response.data.csrfToken)
             
             Notiflix.Report.Success('Información','Inicio de sesión exitoso','Aceptar');
             document.getElementById("openModalLogin").click()
             Notiflix.Loading.Arrows('Cargando ambiente');
-            await setServerDetails(chosenServidor, response.data.token )
+            await setServerDetails()
             toggleOnline()
             await afterLoading()
             Notiflix.Loading.Remove()
@@ -42,6 +42,6 @@ const loggingAttempt= async () =>{
 
 const cerrarSesion = () =>{
     Notiflix.Loading.Arrows('Cerrando sesión');
-    window.localStorage.removeItem("access-token")
+    window.sessionStorage.removeItem("csrfToken")
     window.location.reload()
 }

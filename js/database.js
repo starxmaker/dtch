@@ -1,4 +1,4 @@
-let db, sql_config, server, isOnline, jwt;
+let db, sql_config, server, isOnline;
 config = {
       locateFile: filename => `/dist/${filename}`
     }
@@ -19,9 +19,9 @@ config = {
     	saveStoredDatabase();
     }
 
-    const setServerDetails= async(serverP,jwtP)=>{
-        server=serverP
-        jwt=jwtP
+    const setServerDetails= async()=>{
+        server=window.localStorage.getItem("DTCH_SERVER")
+        
         const result=await tryConnection()
         if (result){
             isOnline=true
@@ -33,7 +33,10 @@ config = {
 
     const getInformation=async(route)=>{
         try{
-            const response=await axios.get(server+route, {withCredentials: true, headers: {'access-token': jwt}})
+            const response=await axios.get(server+route, {withCredentials: true, headers: {
+                'csrfToken': window.sessionStorage.getItem("csrfToken")
+              }
+            })
             return response.data
         }catch(err){
             Notiflix.Report.Failure('Información','Sin conexión con el servidor. Vuelva a iniciar sesión','OK');
@@ -42,7 +45,10 @@ config = {
     }
     const deleteInformation=async(route)=>{
         try{
-            const response=await axios.delete(server+route, {withCredentials: true, headers: {'access-token': jwt}})
+            const response=await axios.delete(server+route, {withCredentials: true, headers: {
+                'csrfToken': window.sessionStorage.getItem("csrfToken")
+              }
+            })
             return response.status==200
         }catch(err){
             Notiflix.Report.Failure('Información','Sin conexión con el servidor. Vuelva a iniciar sesión','OK');
@@ -51,7 +57,11 @@ config = {
     }
     const postInformation=async(route, data)=>{
         try{
-            const response=await axios.post(server+route, data, {withCredentials: true, headers: {'access-token': jwt}})
+            const response=await axios.post(server+route, data, {withCredentials: true, 
+                headers: {
+                    'csrfToken': window.sessionStorage.getItem("csrfToken")
+                  }
+                })
             return response.data
         }catch(err){
             Notiflix.Report.Failure('Información','Sin conexión con el servidor. Vuelva a iniciar sesión','OK');
@@ -61,7 +71,10 @@ config = {
 
     const patchInformation=async(route, data)=>{
         try{
-            const response=await axios.patch(server+route, data, {withCredentials: true, headers: {'access-token': jwt}})
+            const response=await axios.patch(server+route, data, {withCredentials: true, headers: {
+                'csrfToken': window.sessionStorage.getItem("csrfToken")
+              }
+            })
             return response.data
         }catch(err){
             Notiflix.Report.Failure('Información','Sin conexión con el servidor. Vuelva a iniciar sesión','OK');
@@ -74,9 +87,9 @@ config = {
             const response=await axios.get(server+"/misc/test", {
                 withCredentials: true,
                 headers: {
-                  'access-token': jwt,
-                }
-              })
+                    'csrfToken': window.sessionStorage.getItem("csrfToken")
+                  }
+                })
               
              return response.status===200
             }catch(err){

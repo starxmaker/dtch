@@ -236,7 +236,7 @@ class Telefono{
 
 		if (isOnline){
 			let candidate
-			const nextTelefono=await postInformation("/telefonos/getAll")
+			const nextTelefono=await getInformation("/telefonos/getAll")
 			var numeros=[];
 			if (nextTelefono.length>0){
 				nextTelefono.forEach(results=>{
@@ -253,9 +253,9 @@ class Telefono{
 						results.fuente,
 						false,
 						results.dias_desde<7,
-						results.tipo)})
-					numeros.push(candidate);
-
+						results.tipo)
+						numeros.push(candidate);
+					})
 			}
 			return numeros;
 
@@ -281,7 +281,7 @@ class Telefono{
   static async getRevisitasByPublicador(publicador){
 	if (isOnline){
 		let candidate
-		const nextTelefono=await postInformation("/telefonos/revisitasByPublicador/"+publicador)
+		const nextTelefono=await getInformation("/telefonos/revisitasByPublicador/"+publicador)
 		var numeros=[];
 		if (nextTelefono.length>0){
 			nextTelefono.forEach(results =>{
@@ -298,8 +298,10 @@ class Telefono{
 					results.fuente,
 					false,
 					results.dias_desde<7,
-					results.tipo)})
-				numeros.push(candidate);
+					results.tipo)
+					numeros.push(candidate);
+				})
+				
 
 		}
 		return numeros;
