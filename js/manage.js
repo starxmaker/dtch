@@ -1,18 +1,18 @@
 
-function deleteTelefono(id){
+async function deleteTelefono(id){
 	if (confirm("¿Está seguro de borrar el número seleccionado?")){
 
 
-		var telefono=Telefono.getById(id);
-		telefono.delete();
+		var telefono=await Telefono.getById(id);
+		await telefono.delete();
 		sendNotification("Número eliminado");
 	}
 }
-function openManage(){
+async function openManage(){
 
 	
 
-	populateManageList();
+	await populateManageList();
 	var options = {
   valueNames: [ 'numero', 'estado', 'publicador', 'direccion'],
   page:10,
@@ -24,8 +24,8 @@ var numerosList = new List('divTablaTelefonos', options);
 	document.getElementById("openModalManage").click();
 }
 
-function populateManageList(){
-	var telefonos=Telefono.getAll();
+async function populateManageList(){
+	var telefonos=await Telefono.getAll();
 	var html="";
 	for(var i=0; i<telefonos.length;i++){
 		html+=telefonos[i].renderRow();

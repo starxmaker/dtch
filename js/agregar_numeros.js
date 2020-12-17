@@ -1,11 +1,12 @@
-function addNewNumber(){
+async function addNewNumber(){
+  await checkAvailableQuantity();
   document.getElementById("openModalNuevoNumero").click();
   fillCodigosPreferidos();
 }
 
-function populateFuentes(){
+async function populateFuentes(){
   if (document.getElementById("inputFuente")==null) return false;
-  var fuentes=Fuente.getAll();
+  var fuentes=await Fuente.getAll();
   var html="";
 
   var html2="<label for='inputNumero'>Fuentes</label>";
@@ -27,7 +28,7 @@ var codigoRegionPreferido="";
    document.getElementById("inputCodigoRegion").value=codigoRegionPreferido;
 }
 
-function changeTipoNewNumero(){
+async function changeTipoNewNumero(){
   if(document.getElementById("radioCelular").checked){
     document.getElementById("inputCodigoRegion").disabled=true;
     document.getElementById("inputCodigoRegion").value="";
@@ -39,10 +40,10 @@ function changeTipoNewNumero(){
     document.getElementById("labelInputCodigoRegion").style.visibility="visible";
     fillCodigosPreferidos();
   }
-  checkNumeroExistance();
+  await checkNumeroExistance();
 }
 
-function checkNumeroExistance(){
+async function checkNumeroExistance(){
   document.getElementById("inputNumeroExist").value="true";
   var nuevoNumero=document.getElementById("inputNumero").value.trim();
   var codigoPais=document.getElementById("inputCodigoPais").value.trim();
@@ -73,12 +74,12 @@ function checkNumeroExistance(){
       }
   }
     
-      var numeroToCheck=codigoPais+codigoRegion+nuevoNumero;
- 
+      var numeroToCheck=nuevoNumero;
+  const check=await Telefono.checkExistance(numeroToCheck)
   
   
   
-            if(Telefono.checkExistance(numeroToCheck)){
+            if(check){
               sendNotification("Número ya existe", "error");   
               document.getElementById("inputNumeroExist").value="true";
             }else{
@@ -88,7 +89,7 @@ function checkNumeroExistance(){
         
 }
 
-function agregarNumeroDirectorio(){
+async function agregarNumeroDirectorio(){
   var numeroExiste=document.getElementById("inputNumeroExist").value;
   var codigoPais=document.getElementById("inputCodigoPais").value.trim();
    var codigoRegion=document.getElementById("inputCodigoRegion").value.trim();
@@ -104,7 +105,8 @@ function agregarNumeroDirectorio(){
   if(numeroExiste=="true" || nuevoNumero.length==0 || codigoPais.length==0 || nuevaDireccion.length==0 || nuevoGrupo.trim()=="" || nuevaFuente.trim()=="") return false;
 
   if (tipo==0 && codigoRegion.length==0) return false;
-  Telefono.insert(codigoPais,codigoRegion, nuevoNumero,nuevaDireccion,nuevoGrupo,nuevaFuente, tipo);
+  Notiflix.Loading.Arrows('Agregando teléfono');
+  await Telefono.insert(codigoPais,codigoRegion, nuevoNumero,nuevaDireccion,nuevoGrupo,nuevaFuente, tipo);
           document.getElementById("inputNumeroExist").value="true";
   document.getElementById("inputNumero").value="";
  document.getElementById("inputDireccion").value="";
@@ -112,9 +114,10 @@ function agregarNumeroDirectorio(){
             sendNotification("Número agregado al directorio");  
 window.localStorage.setItem("prefferedCodigoRegion", codigoRegion);
     window.localStorage.setItem("prefferedCodigoPais", codigoPais);
+    Notiflix.Loading.Remove()
 
-            populateGroupList();      
-        checkAvailableQuantity();
+        await populateGroupList();      
+        await checkAvailableQuantity();
 }
 
 

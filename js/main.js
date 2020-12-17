@@ -1,5 +1,6 @@
 
 async function loadElements(){
+  Notiflix.Loading.Arrows('Cargando ambiente');
   let promiseRegistroRapido=new Promise((resolve, reject) =>{
       fetch("./componentes/registro_rapido.html").then(response => { return response.text() }).then(data => {
         document.getElementById("modal_registro_rapido").innerHTML = data;
@@ -107,47 +108,60 @@ async function loadElements(){
       resolve()
     });
   })
-  let promises=[promiseRegistroRapido,promiseLista, promiseHistorialEspecifico,promiseAgregarNumeros, promiseVisor, promiseHistorial,promiseStats,promiseFuente,promiseFiltros, promiseManage, promiseNuevaFuente,promiseShowThree,promiseManageFuentes, promiseManagePublicadores, promisePreferencias, promiseConsolaSQL, promiseManageRevisitas]
+  let promiseLogin=new Promise((resolve, reject) =>{
+    fetch("./componentes/login.html").then(response => {return response.text()}).then(data => {
+      document.getElementById("modal_login").innerHTML = data;
+      resolve()
+    });
+  })
+  let promises=[promiseRegistroRapido,promiseLista, promiseHistorialEspecifico,promiseAgregarNumeros, promiseVisor, promiseHistorial,promiseStats,promiseFuente,promiseFiltros, promiseManage, promiseNuevaFuente,promiseShowThree,promiseManageFuentes, promiseManagePublicadores, promisePreferencias, promiseConsolaSQL, promiseManageRevisitas, promiseLogin]
   await Promise.all(promises)
-  postLoading()
+  await initDatabase()
+  
+  
+  if (window.localStorage.getItem("DTCH_SERVER") && window.sessionStorage.getItem("csrfToken")){
+    const result= await setServerDetails()
+    if (!result) openLogin()
+  }else{
+    openLogin()
+  }
+  toggleOnline()
+  await postLoading()
+  
+  Notiflix.Loading.Remove()
 }
 
 loadElements()
-function postLoading(){
-    loadNumeroPropio();
-      document.getElementById("dataBaseVersion").innerHTML=databaseVersion();
+
+const postLoading= async() =>{
+      await afterLoading();
+      loadNumeroPropio();
       initAutoComplete();
       loadPreferencias();
       hideFiltroGrupo()
-      populateGroupList();
        initCharts();
-       checkAvailableQuantity();
+       await checkAvailableQuantity();
       
       timer = new easytimer.Timer();
       timer.addEventListener('secondsUpdated', function (e) {
          document.getElementById("basicUsage").value=timer.getTimeValues().toString();
       });
-      afterLoading();
+      
 }
-
- 
- 
-
- 
-          
-             
-               
-
-  
-                   
 
 var activeTelefono=Telefono.getBlank();
 var allPublicadores=[];
 
+function toggleOnline(){
+ if (isOnline){
+  Array.from(document.getElementsByClassName("offlineItem")).forEach(item => item.style.display="none")
+  Array.from(document.getElementsByClassName("onlineItem")).forEach(item => item.style.display="block")
+ }else{
+  Array.from(document.getElementsByClassName("onlineItem")).forEach(item => item.style.display="none")
+  Array.from(document.getElementsByClassName("offlineItem")).forEach(item => item.style.display="block")
+ }
+}
 
-window.onbeforeunload = function(e) {
-  return '¿Desea recargar la página?';
-};
 
 
 function openSource(){

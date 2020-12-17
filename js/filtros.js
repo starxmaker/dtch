@@ -11,6 +11,7 @@ var filtros={
     receptivo:true,
     sinInteres:true,
     noUtilizado:true,
+    buzon:true,
     revisitas: false,
     revisitaPublisher:0
   },

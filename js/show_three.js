@@ -1,8 +1,8 @@
-function openShowThreeModal(){
+async function openShowThreeModal(){
     var grupo=document.getElementById("selectGrupo").value; //averigua el grupo seleccionado
 
     var quantity=3;
-    var telefonos=Telefono.getLastCalled(grupo,filtros,quantity);
+    var telefonos=await Telefono.getLastCalled(grupo,filtros,quantity);
      if (quantity>telefonos.length){
      	document.getElementById("fldNextTelefono1").innerHTML="Propio";
                 document.getElementById("fldNextTelefono2").innerHTML="Propio";

@@ -1,8 +1,9 @@
-function showStats(){
+async function showStats(){
+  Notiflix.Loading.Arrows('Cargando estadísticas');
 	setFechaHoy();
-	var date=getCurrentDatetime();
-	var stats=Historial.getStats(date);
-document.getElementById("fldLlamadas").innerHTML=stats.llamadas_realizadas;
+  var date=getCurrentDatetime();
+	var stats= await Historial.getStats(date);
+document.getElementById("fldLlamadas").innerHTML=stats.llamadas;
                   //conversaciones
                   document.getElementById("fldConversaciones").innerHTML=stats.conversaciones;
                   //hermanos
@@ -32,6 +33,7 @@ document.getElementById("fldLlamadas").innerHTML=stats.llamadas_realizadas;
                 chartPudimosHablar.update();
                 //muestra el modal
                document.getElementById("openModalEstadisticas").click();
+               Notiflix.Loading.Remove()
  
    
   

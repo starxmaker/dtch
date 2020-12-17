@@ -1,5 +1,5 @@
-function gestionarPublicadores(){
-	populateManagePublicadoresList();
+async function gestionarPublicadores(){
+	await populateManagePublicadoresList();
 	var options = {
   valueNames: [ 'nombre'],
   page:10,
@@ -12,19 +12,19 @@ var publicadoresList = new List('divTablaPublicadores', options);
 }
 
 
-function deletePublicador(id){
+async function deletePublicador(id){
 	if (confirm("¿Está seguro de borrar el publicador seleccionado?")){
 
 
-		var publicador=Publicador.getById(id);
-		publicador.delete();
+		var publicador=await Publicador.getById(id);
+		await publicador.delete();
 		sendNotification("Publicador eliminado");
 	}
 }
 
 
-function populateManagePublicadoresList(){
-	var publicadores=Publicador.getAll();
+async function populateManagePublicadoresList(){
+	var publicadores=await Publicador.getAll();
 	var html="";
 	for(var i=0; i<publicadores.length;i++){
 		html+=publicadores[i].renderRow();
