@@ -59,6 +59,7 @@ async function checkNumeroExistance(){
 
   if(document.getElementById("radioFijo").checked && settings.autoformatearFijos){
     if (nuevoNumero.length<settings.extensionFijos){
+      sendNotification("Formato incorrecto", "error");  
         return false;
       }else{
         nuevoNumero=nuevoNumero.slice(settings.extensionFijos*-1);
@@ -66,7 +67,8 @@ async function checkNumeroExistance(){
       }
   }
    if(!document.getElementById("radioFijo").checked && settings.autoformatearCelulares){
-    if (nuevoNumero.length<settings.extensionCelulare){
+    if (nuevoNumero.length<settings.extensionCelulares){
+      sendNotification("Formato incorrecto", "error");  
         return false;
       }else{
         nuevoNumero=nuevoNumero.slice(settings.extensionCelulares*-1);
