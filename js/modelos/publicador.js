@@ -27,8 +27,13 @@ class Publicador{
     if (isOnline){
       const results=await getInformation("/publicadores/nombre/"+nombre)
       var publicador=null
-      if (results!=null) publicador=new Publicador(results.idPublicador, results.nombre, results.grupo, results.invitado)
-      return publicador.id
+      if (results!=null){
+        publicador=new Publicador(results.idPublicador, results.nombre, results.grupo, results.invitado)
+        return publicador.id
+      }else{
+        return null
+      }
+      
 
     }else{
       if (nombre.trim()==""|| nombre=="No Especificado") return 0;

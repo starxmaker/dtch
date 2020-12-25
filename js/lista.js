@@ -93,6 +93,9 @@ Array.prototype.insert = function ( index, item ) {
 async function agregarNombre(publisherID){
   if (publisherID==0 || publisherID=="") return false
   let publisher= await Publicador.getById(publisherID)
+  if (listaEspera.indexOf(publisher.nombre)!=-1){
+    return false;
+  }
   updateListaEspera(publisher.nombre);
   refreshListaEspera();
   sendNotification(publisher.nombre+" agregado a la lista de espera");

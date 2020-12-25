@@ -30,8 +30,16 @@ async function addOneInteresado(){
 	if (publicador=="" || publicador==0) return false;
 	await Historial.insert(0,2,publicador,0,1);
 }
+async function addOneLlamada(){
+	var field=document.getElementById("quickLlamadas");
+	field.value=parseInt(field.value)+1;
+	var publicador=document.getElementById("inputNombresQuick").value;
+	if (publicador=="" || publicador==0) return false;
+	await Historial.insert(0,4,publicador,0,1);
+}
 
 function cleanActivity(){
+	document.getElementById("quickLlamadas").value="0";
 	document.getElementById("quickRevisitas").value="0";
 	document.getElementById("quickEstudios").value="0";
 	document.getElementById("quickBuzon").value="0";

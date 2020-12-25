@@ -188,6 +188,7 @@ if (person != null) {
 
   Notiflix.Loading.Arrows('Agregando publicador');
   let result=await Publicador.getIdByName(person.trim())
+  console.log(result)
   if (result==0 || result == null){
     let newPublicador=await Publicador.insertNewPublicador(person)
     sendNotification("Publicador agregado")

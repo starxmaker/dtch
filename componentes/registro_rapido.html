@@ -10,7 +10,6 @@
       </div>
       <div class="modal-body">
 
-
     <div class="row">
     <div class="col-md-2" style="margin-top: 6px;"><strong>Publicador: </strong></div>
     <div class="col-md-10 input-group" id="fldPublicadorEspera">
@@ -26,7 +25,7 @@
     <label for="inputPassword" class="col-sm-2 col-form-label" style="color:orange;">¿Revisitas?</label>
     <div class="col-sm-10">
       <div class="input-group mb-3">
-  <input type="number" class="form-control" value="0" id="quickRevisitas">
+  <input type="text" class="form-control" value="0" id="quickRevisitas" readonly="true">
   <div class="input-group-append">
     <button class="btn btn-outline-secondary" type="button" onclick="addOneRevisita();" style="color:orange;">+</button>
   </div>
@@ -38,7 +37,7 @@
     <label for="inputPassword" class="col-sm-2 col-form-label" style="color:cyan;">¿Estudios?</label>
     <div class="col-sm-10">
       <div class="input-group mb-3">
-  <input type="number" class="form-control" value="0" id="quickEstudios">
+  <input type="text" class="form-control" value="0" id="quickEstudios" readonly="true">
   <div class="input-group-append">
     <button class="btn btn-outline-secondary" type="button" style="color:cyan;" onclick="addOneEstudio();">+</button>
   </div>
@@ -50,7 +49,7 @@
     <label for="inputPassword" class="col-sm-2 col-form-label" style="color:purple;">¿Interesados?</label>
     <div class="col-sm-10">
       <div class="input-group mb-3">
-  <input type="number" class="form-control" value="0" id="quickInteresado">
+  <input type="text" class="form-control" value="0" id="quickInteresado" readonly="true">
   <div class="input-group-append">
     <button class="btn btn-outline-secondary" type="button" style="color:purple;" onclick="addOneInteresado();">+</button>
   </div>
@@ -62,11 +61,23 @@
     <label for="inputPassword" class="col-sm-2 col-form-label">¿Buzón?</label>
     <div class="col-sm-10">
       <div class="input-group mb-3">
-  <input type="number" class="form-control" value="0" id="quickBuzon">
-  <div class="input-group-append">
-    <button class="btn btn-outline-secondary" type="button" onclick="addOneBuzon();" style="color:grey;">+</button>
+        <input type="text" class="form-control" value="0" id="quickBuzon" readonly="true">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" onclick="addOneBuzon();" style="color:grey;">+</button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-2 col-form-label">Llamadas</label>
+    <div class="col-sm-10">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" value="0" id="quickLlamadas" readonly="true">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" onclick="addOneLlamada();" style="color:grey;">+</button>
+        </div>
+      </div>
     </div>
   </div>
 
