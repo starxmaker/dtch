@@ -9,7 +9,7 @@ var filtros={
     marca: true,
     ocupado:true,
     receptivo:true,
-    sinInteres:true,
+    sinInteres:false,
     noUtilizado:true,
     buzon:true,
     revisitas: false,
