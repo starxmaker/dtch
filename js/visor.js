@@ -7,7 +7,7 @@ function loadProfile(profile){
       filtros.respuesta.marca=true;
     filtros.respuesta.ocupado=true;
     filtros.respuesta.receptivo=true;
-    filtros.respuesta.sinInteres=true;
+    filtros.respuesta.sinInteres=false;
     filtros.respuesta.noUtilizado=true;
 
 
